@@ -14,7 +14,7 @@ import com.bridgelabz.dao.UserDao;
 import com.bridgelabz.model.User;
 import com.bridgelabz.service.Mailer;
 import com.bridgelabz.service.UserService;
-import com.bridgelabz.valdation.Validator;
+import com.bridgelabz.validation.Validator;
 
 @RestController
 public class UserController {
@@ -53,7 +53,7 @@ public class UserController {
 			if(user.getPassword().equals(password)){
 				if(user.isActivated()){
 				HttpSession session=((HttpServletRequest) request).getSession();
-				session.setAttribute("currentUser", user);
+				session.setAttribute(session.getId(), user);
 				return ResponseEntity.ok("Login Successful");
 				}else{
 					return ResponseEntity.status(HttpStatus.CONFLICT).body("User is not actiavted");
@@ -80,11 +80,15 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User Does not Exist");
 		}
 	}
-	
-	
+	@RequestMapping(value="/logout",method=RequestMethod.GET)
+	public ResponseEntity logout(HttpSession session){
+		session.removeAttribute(session.getId());
+		return ResponseEntity.ok("Logged out");
+	}
 	@RequestMapping(value = "/isactive", method = RequestMethod.GET)
 	public ResponseEntity<User> isActivated(HttpSession session){
-		User user =(User) session.getAttribute("currentUser");
+		User user =(User) session.getAttribute(session.getId());
+		if(user!=null)
 		System.out.println(user.getEmail());
 		return ResponseEntity.ok().body(user);
 	}

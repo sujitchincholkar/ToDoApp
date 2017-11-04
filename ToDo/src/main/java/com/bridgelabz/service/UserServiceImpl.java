@@ -22,8 +22,6 @@ public class UserServiceImpl implements UserService {
 		return userDao.getUserByEmail(email);
 	}
 
-
-
 	public boolean updateUser(User user) {
 		
 		return userDao.updateUser(user);

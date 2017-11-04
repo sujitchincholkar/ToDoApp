@@ -1,4 +1,4 @@
-package com.bridgelabz.valdation;
+package com.bridgelabz.validation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import com.bridgelabz.dao.UserDao;

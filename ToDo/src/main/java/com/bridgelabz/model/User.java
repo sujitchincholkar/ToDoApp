@@ -30,14 +30,14 @@ public class User {
 	@Column(name="isActivated")
 	private boolean isActivated;
 
-	/*@OneToMany(mappedBy="user")
+	@OneToMany(mappedBy="user")
 	Set<Note> notes;
 	public Set<Note> getNotes() {
 		return notes;
 	}
 	public void setNotes(Set<Note> notes) {
 		this.notes = notes;
-	}*/
+	}
 	public int getUserId() {
 		return userId;
 	}
