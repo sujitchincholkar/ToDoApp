@@ -24,7 +24,7 @@ public class NoteController {
 	@Autowired
 	NoteService noteService;
 	@RequestMapping(value="/addNote",method=RequestMethod.POST)
-	public ResponseEntity addNote(@RequestBody Note note,HttpSession session){
+	public ResponseEntity<String> addNote(@RequestBody Note note,HttpSession session){
 		User user=(User) session.getAttribute(session.getId());
 		if(user!=null){
 			Date date=new Date();
@@ -45,17 +45,13 @@ public class NoteController {
 	public ResponseEntity deleteNote(@PathVariable("id") int id,HttpSession session){
 		User user=(User) session.getAttribute(session.getId());
 		if(user!=null){
-			Set<Note> notes=user.getNotes();
-			Iterator itrate=notes.iterator();
-			while(itrate.hasNext()){
-				
-				Note note =(Note) itrate.next();
-				if(note.getNoteId()==id){
+			Note note=noteService.getNoteById(id);
+				if(note.getUser().getUserId()==user.getUserId()){
 					if(noteService.deleteNote(note)){
 					 	return ResponseEntity.ok("Note deleted");
 				}else{
 					return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Failed");
-				}
+				
 			}
 		}
 			return ResponseEntity.ok("Note is not Present");
@@ -84,8 +80,7 @@ public class NoteController {
 	public ResponseEntity<Set<Note>> getNotes(HttpSession  session){
 		User user=(User) session.getAttribute(session.getId());
 		if(user!=null){
-		
-		Set<Note> notes=user.getNotes();
+		Set<Note> notes=noteService.getNotes(user.getUserId());
 		return ResponseEntity.ok(notes);
 		}else{
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(null);

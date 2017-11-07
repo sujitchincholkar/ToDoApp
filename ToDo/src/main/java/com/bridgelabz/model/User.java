@@ -29,7 +29,7 @@ public class User {
 	private String password;
 	@Column(name="isActivated")
 	private boolean isActivated;
-
+	
 	@OneToMany(mappedBy="user")
 	Set<Note> notes;
 	public Set<Note> getNotes() {

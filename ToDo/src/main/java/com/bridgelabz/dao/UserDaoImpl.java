@@ -80,8 +80,9 @@ public class UserDaoImpl implements UserDao{
 
 	public User getUserByEmail(String email) {
 		User user=null;
+		Session session=null;
 		try{
-		Session session=factory.openSession();
+		session=factory.openSession();
 		TypedQuery<User> query=session.createQuery("From User where email=:email");
 		query.setParameter("email", email);
 		List emails=query.getResultList();
@@ -89,6 +90,8 @@ public class UserDaoImpl implements UserDao{
 		user=query.getResultList().get(0);
 		}catch(Exception e){
 			e.printStackTrace();
+		}finally{
+			session.close();
 		}
 		return user;
 	}

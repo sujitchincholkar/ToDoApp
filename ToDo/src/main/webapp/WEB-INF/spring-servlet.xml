@@ -54,6 +54,7 @@
         </props>
     </property>
 </bean>
+<bean class="com.bridgelabz.service.TokenServiceImpl"></bean>
     <bean id="noteDao" class="com.bridgelabz.dao.NoteDaoImpl"></bean>
     <bean class="com.bridgelabz.service.NoteServiceImpl"></bean>
     <bean class="com.bridgelabz.service.MailerImpl"></bean>

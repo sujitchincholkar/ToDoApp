@@ -6,11 +6,8 @@ import org.springframework.mail.SimpleMailMessage;
 
 public class MailerImpl implements Mailer {
 	@Autowired
-	 private MailSender mailSender;  
-	   
-	    public void setMailSender(MailSender mailSender) {  
-	        this.mailSender = mailSender;  
-	    }  
+	private MailSender mailSender;  
+	
 	public  void  send(String to,String message){
 	
 		        //creating message  

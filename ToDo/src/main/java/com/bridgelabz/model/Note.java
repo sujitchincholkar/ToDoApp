@@ -67,8 +67,8 @@ public class Note {
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
-	public String getLastUpdated() {
-		return (new SimpleDateFormat("dd-MM-yyyy").format(lastUpdated));
+	public Date getLastUpdated() {
+		return lastUpdated;
 	}
 	public void setLastUpdated(Date lastUpdated) {
 		this.lastUpdated = lastUpdated;

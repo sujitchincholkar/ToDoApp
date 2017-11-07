@@ -67,14 +67,18 @@ public class NoteDaoImpl implements NoteDao{
 	}
 
 	public Set<Note> getNotes(int userId) {
-		User user =userDao.getUserById(userId);
+		Session session=factory.openSession();
+		User user =session.get(User.class,userId);
 		Set<Note> notes=user.getNotes();
+		notes.size();
+		session.close();
 		return notes;
 	}
 
 	public Note getNoteById(int noteId) {
 		Session session =factory.openSession();
 		Note note=session.get(Note.class, noteId);
+		session.close();
 		return note;
 	}
 
