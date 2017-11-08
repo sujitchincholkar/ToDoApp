@@ -1,7 +1,10 @@
 package com.bridgelabz.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import com.bridgelabz.dao.UserDao;
 import com.bridgelabz.model.User;
 import com.bridgelabz.service.Mailer;
 import com.bridgelabz.service.TokenService;
 import com.bridgelabz.service.UserService;
-import com.bridgelabz.validation.Validator;
+import com.bridgelabz.util.PasswordChecker;
+import com.bridgelabz.util.Validator;
 
 @RestController
 public class UserController {
@@ -27,12 +30,15 @@ public class UserController {
 	Mailer mailer;
 	@Autowired
 	TokenService tokenService;
+	@Autowired
+	PasswordChecker passwordChecker;
+	
 	@RequestMapping(value = "/Register", method = RequestMethod.POST)
 	public ResponseEntity<String> registerUser(@RequestBody User user,HttpServletRequest request) {
 
 		if (validator.userValidate(user)) {
 			user.setActivated(false);
-			
+			user.setPassword(passwordChecker.encodePassword(user.getPassword()));
 			int id = userService.saveUserData(user);
 			if (id > 0) {
 				String token=tokenService.generateToken(user.getEmail(), id);
@@ -48,17 +54,21 @@ public class UserController {
 			return new ResponseEntity<String>("Invalid data", HttpStatus.BAD_REQUEST);
 		}
 	}
+	
 	@RequestMapping(value = "/Login", method = RequestMethod.POST)
-	public ResponseEntity logIn(@RequestBody User userData,HttpServletRequest request){
+	public ResponseEntity logIn(@RequestBody User userData,HttpServletRequest request,HttpServletResponse response){
 		String email=userData.getEmail();
 		String password=userData.getPassword();
 		System.out.println(email);
 		User user=userService.getUserByEmail(email);
 		if(userService.getUserByEmail(email)!=null){
-			if(user.getPassword().equals(password)){
+			
+			if(passwordChecker.checkPassword(password, user.getPassword())){
 				if(user.isActivated()){
-				HttpSession session=((HttpServletRequest) request).getSession();
-				session.setAttribute(session.getId(), user);
+					String token=tokenService.generateToken(user.getEmail(), user.getUserId());
+					response.setHeader("Authorization", token);
+				/*HttpSession session=((HttpServletRequest) request).getSession();
+				session.setAttribute(session.getId(), user);*/
 				return ResponseEntity.ok("Login Successful");
 				}else{
 					return ResponseEntity.status(HttpStatus.CONFLICT)
@@ -97,16 +107,17 @@ public class UserController {
 					.body("Sorry token is expired or invalid");
 		}
 	}
+	
 	@RequestMapping(value="/logout",method=RequestMethod.GET)
 	public ResponseEntity logout(HttpSession session){
 		session.removeAttribute(session.getId());
 		return ResponseEntity.ok("Logged out");
 	}
+	
 	@RequestMapping(value = "/isactive", method = RequestMethod.GET)
 	public ResponseEntity<String> isActivated(HttpSession session){
 		User user =(User) session.getAttribute(session.getId());
 		if(user!=null)
-		System.out.println(user.getEmail());
 		return ResponseEntity.ok().body(user.getFirstName()+" "+user.getLastName());
 	}
 }

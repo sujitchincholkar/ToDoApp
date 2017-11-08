@@ -60,5 +60,6 @@
     <bean class="com.bridgelabz.service.MailerImpl"></bean>
     <bean class="com.bridgelabz.service.UserServiceImpl"></bean>
 	<bean id="userDao" class="com.bridgelabz.dao.UserDaoImpl"></bean>
-	<bean id="validator" class="com.bridgelabz.validation.Validator"></bean>
+	<bean id="validator" class="com.bridgelabz.util.Validator"></bean>
+	<bean class="com.bridgelabz.util.PasswordChecker"></bean>
 </beans>

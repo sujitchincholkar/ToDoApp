@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +19,24 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bridgelabz.model.Note;
 import com.bridgelabz.model.User;
 import com.bridgelabz.service.NoteService;
+import com.bridgelabz.service.TokenService;
+import com.bridgelabz.service.UserService;
 
 @RestController
 public class NoteController {
 	@Autowired
+	UserService userService;
+	@Autowired
 	NoteService noteService;
+	@Autowired
+	TokenService tokenService;
 	@RequestMapping(value="/addNote",method=RequestMethod.POST)
-	public ResponseEntity<String> addNote(@RequestBody Note note,HttpSession session){
-		User user=(User) session.getAttribute(session.getId());
+	public ResponseEntity<String> addNote(@RequestBody Note note,HttpSession session,HttpServletRequest request){
+		//User user=(User) session.getAttribute(session.getId());
+		
+		String token=request.getHeader("Authorization");
+		System.out.println(token);
+		User user=userService.getUserById(tokenService.verifyToken(token));
 		if(user!=null){
 			Date date=new Date();
 			note.setUser(user);
@@ -42,8 +53,10 @@ public class NoteController {
 		}
 	}
 	@RequestMapping(value="/deletenote/{id}",method=RequestMethod.GET)
-	public ResponseEntity deleteNote(@PathVariable("id") int id,HttpSession session){
-		User user=(User) session.getAttribute(session.getId());
+	public ResponseEntity deleteNote(@PathVariable("id") int id,HttpSession session,HttpServletRequest request){
+		//User user=(User) session.getAttribute(session.getId());
+		String token=request.getHeader("Authorization");
+		User user=userService.getUserById(tokenService.verifyToken(token));
 		if(user!=null){
 			Note note=noteService.getNoteById(id);
 				if(note.getUser().getUserId()==user.getUserId()){
@@ -60,8 +73,9 @@ public class NoteController {
 		}
 	}
 	@RequestMapping(value="/updateNote",method=RequestMethod.POST)
-	public ResponseEntity updateNote(@RequestBody Note note,HttpSession session ){
-			User user=(User) session.getAttribute(session.getId());
+	public ResponseEntity updateNote(@RequestBody Note note,HttpSession session ,HttpServletRequest request){
+		String token=request.getHeader("Authorization");
+		User user=userService.getUserById(tokenService.verifyToken(token));
 			if(user!=null){
 				Date date=new Date();
 				note.setLastUpdated(date);
@@ -76,9 +90,12 @@ public class NoteController {
 			}
 			
 	}
-	@RequestMapping(value="/getAllNotes",method=RequestMethod.GET)
-	public ResponseEntity<Set<Note>> getNotes(HttpSession  session){
-		User user=(User) session.getAttribute(session.getId());
+	@RequestMapping(value="/getAllNotes",method=RequestMethod.POST)
+	public ResponseEntity<Set<Note>> getNotes(HttpSession  session,HttpServletRequest request){
+		//User user=(User) session.getAttribute(session.getId());
+		String token=request.getHeader("Authorization");
+		System.out.println(token);
+		User user=userService.getUserById(tokenService.verifyToken(token));
 		if(user!=null){
 		Set<Note> notes=noteService.getNotes(user.getUserId());
 		return ResponseEntity.ok(notes);

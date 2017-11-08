@@ -12,7 +12,7 @@ import io.jsonwebtoken.MissingClaimException;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 public class TokenServiceImpl implements TokenService {
-	private String key="mykey";
+	private String key="hsgamxkasdSxdq";
 	public String generateToken(String email, int id) {
 		String token="";
 		try {
@@ -39,7 +39,7 @@ public class TokenServiceImpl implements TokenService {
 		    Claims claims = Jwts.parser()         
 		       .setSigningKey(key)
 		       .parseClaimsJws(token).getBody();
-		    
+		  
 		    	id=Integer.parseInt(claims.getId());
 		    	System.out.println(id);
 		   
