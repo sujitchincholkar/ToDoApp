@@ -9,16 +9,13 @@ public class Validator {
 	UserDao userDao;
 	public  boolean userValidate(User user){
 		boolean isValid=true;
-		String nameValidator="^[a-zA-Z]{3,}?$";
+		String nameValidator="^[a-zA-Z\\s]{3,}?$";
 		String emailPattern = "^[A-Za-z0-9._]+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$";
 		String  mobilePattern="^((\\+)?(\\d{2}[-]))?(\\d{10})?$";
-		if(user.getFirstName()==null||!user.getFirstName().matches(nameValidator)){ 	
+		if(user.getFullName()==null||!user.getFullName().matches(nameValidator)){ 	
 			isValid=false;
 		}
 		if(user.getEmail()==null||!user.getEmail().matches(emailPattern)){
-			isValid=false;
-		}
-		if(user.getLastName()==null||!user.getLastName().matches(nameValidator)){
 			isValid=false;
 		}
 		if(user.getContactNo()==null||!user.getContactNo().matches(mobilePattern)){

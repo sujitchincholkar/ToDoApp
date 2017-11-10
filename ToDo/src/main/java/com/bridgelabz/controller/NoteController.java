@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,7 @@ public class NoteController {
 	NoteService noteService;
 	@Autowired
 	TokenService tokenService;
+	static  Logger logger=Logger.getLogger(NoteController.class);
 	@RequestMapping(value="/addNote",method=RequestMethod.POST)
 	public ResponseEntity<String> addNote(@RequestBody Note note,HttpSession session,HttpServletRequest request){
 		//User user=(User) session.getAttribute(session.getId());
@@ -72,6 +74,7 @@ public class NoteController {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body("User is not logged in");
 		}
 	}
+	
 	@RequestMapping(value="/updateNote",method=RequestMethod.POST)
 	public ResponseEntity updateNote(@RequestBody Note note,HttpSession session ,HttpServletRequest request){
 		String token=request.getHeader("Authorization");
@@ -90,6 +93,7 @@ public class NoteController {
 			}
 			
 	}
+	
 	@RequestMapping(value="/getAllNotes",method=RequestMethod.POST)
 	public ResponseEntity<Set<Note>> getNotes(HttpSession  session,HttpServletRequest request){
 		//User user=(User) session.getAttribute(session.getId());

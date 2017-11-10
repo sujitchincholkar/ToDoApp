@@ -18,9 +18,7 @@ public class User {
 	@GeneratedValue
 	private int userId;
 	@Column(name="first_name")
-	private String firstName;
-	@Column(name="last_name")
-	private String lastName;
+	private String fullName;
 	@Column(name="email")
 	private String email;
 	@Column(name="contact_no")
@@ -29,7 +27,9 @@ public class User {
 	private String password;
 	@Column(name="isActivated")
 	private boolean isActivated;
-	
+	@Column(name="profile_url")
+	private String profileUrl;
+
 	@OneToMany(mappedBy="user")
 	Set<Note> notes;
 	public Set<Note> getNotes() {
@@ -44,17 +44,11 @@ public class User {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-	public String getFirstName() {
-		return firstName;
+	public String getFullName() {
+		return fullName;
 	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-	public String getLastName() {
-		return lastName;
-	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setFullName(String firstName) {
+		this.fullName = firstName;
 	}
 	public String getEmail() {
 		return email;
@@ -80,5 +74,10 @@ public class User {
 	public void setActivated(boolean isActivated) {
 		this.isActivated = isActivated;
 	}
-	
+	public String getProfileUrl() {
+		return profileUrl;
+	}
+	public void setProfileUrl(String profileUrl) {
+		this.profileUrl = profileUrl;
+	}
 }

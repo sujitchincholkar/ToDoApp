@@ -62,4 +62,7 @@
 	<bean id="userDao" class="com.bridgelabz.dao.UserDaoImpl"></bean>
 	<bean id="validator" class="com.bridgelabz.util.Validator"></bean>
 	<bean class="com.bridgelabz.util.PasswordChecker"></bean>
+	<bean class="com.bridgelabz.social.GoogleConnection"></bean>
+		<bean class="com.bridgelabz.social.FBConnnection"></bean>
+	<mvc:resources location="/template/" mapping="/template/**" />
 </beans>

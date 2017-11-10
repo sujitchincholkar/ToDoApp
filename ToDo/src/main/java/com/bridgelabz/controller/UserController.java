@@ -1,10 +1,12 @@
 package com.bridgelabz.controller;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.bridgelabz.dao.UserDao;
 import com.bridgelabz.model.User;
 import com.bridgelabz.service.Mailer;
 import com.bridgelabz.service.TokenService;
@@ -32,11 +36,12 @@ public class UserController {
 	TokenService tokenService;
 	@Autowired
 	PasswordChecker passwordChecker;
-	
+	static  Logger logger=Logger.getLogger(UserController.class);
 	@RequestMapping(value = "/Register", method = RequestMethod.POST)
 	public ResponseEntity<String> registerUser(@RequestBody User user,HttpServletRequest request) {
 
 		if (validator.userValidate(user)) {
+			logger.info("User register");
 			user.setActivated(false);
 			user.setPassword(passwordChecker.encodePassword(user.getPassword()));
 			int id = userService.saveUserData(user);
@@ -65,6 +70,7 @@ public class UserController {
 			
 			if(passwordChecker.checkPassword(password, user.getPassword())){
 				if(user.isActivated()){
+					logger.warn("User logged in"+user.getUserId());
 					String token=tokenService.generateToken(user.getEmail(), user.getUserId());
 					response.setHeader("Authorization", token);
 				/*HttpSession session=((HttpServletRequest) request).getSession();
@@ -93,6 +99,7 @@ public class UserController {
 		if(user!=null){
 		user.setActivated(true);
 		if(userService.updateUser(user)){
+			logger.info("User activated "+id);
 			return ResponseEntity.ok("User Activated");
 		}else{
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -114,10 +121,61 @@ public class UserController {
 		return ResponseEntity.ok("Logged out");
 	}
 	
+	@RequestMapping(value="/forgetpassword" ,method=RequestMethod.POST)
+	public ResponseEntity<String> forgetPassword(@RequestBody User userData,HttpServletRequest request,HttpServletResponse response){
+		String email=userData.getEmail();
+		User user=userService.getUserByEmail(email);
+		if(user!=null){
+		String token=tokenService.generateToken(email, user.getUserId());
+		String url=url="http://localhost:8080/ToDo/resetpw/"+token;
+		mailer.send(email,url);
+		return ResponseEntity.ok("Redirect");
+		}else{
+			return ResponseEntity.ok("User Does not exist");
+		}
+	}
+	@RequestMapping(value="/resetpw/{token:.+}",method=RequestMethod.POST)
+	public ResponseEntity<String> resetPassword(@PathVariable("token") String token,HttpServletRequest request,HttpServletResponse response,@RequestBody User userData) throws IOException{
+			/*String headerToken=request.getHeader("pwtoken");
+			if(headerToken!=null){*/
+				int userId=tokenService.verifyToken(token);
+				if(userId>0){
+					User user=userService.getUserById(userId);
+					String password=userData.getPassword();
+					if(password.length()>=8){
+					password=passwordChecker.encodePassword(password);
+					user.setPassword(password);
+					if(userService.updateUser(user)){
+						return ResponseEntity.ok("password changed");
+					}else{
+						return ResponseEntity.ok("Some problem occured");
+					}
+					}else{
+						return ResponseEntity.ok("password is short");
+					}
+					
+				}else{
+					return ResponseEntity.ok("Invalid token");
+				}
+		/*	}else{
+				if(tokenService.verifyToken(token)>0){
+				response.setHeader("pwtoken", token);
+				//response.sendRedirect("www.google.com");
+				return ResponseEntity.ok("User redirect");
+				}else{
+					return ResponseEntity.ok("Invalid token");
+				}
+			}*/
+			
+		
+			
+		}
+	
 	@RequestMapping(value = "/isactive", method = RequestMethod.GET)
 	public ResponseEntity<String> isActivated(HttpSession session){
 		User user =(User) session.getAttribute(session.getId());
 		if(user!=null)
-		return ResponseEntity.ok().body(user.getFirstName()+" "+user.getLastName());
+		return ResponseEntity.ok().body(user.getFullName());
+		return ResponseEntity.ok("user is not logged in");
 	}
 }
