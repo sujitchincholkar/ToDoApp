@@ -82,12 +82,17 @@ public class NoteController {
 			if(user!=null){
 				Date date=new Date();
 				note.setLastUpdated(date);
+				if(note.getUser().getUserId()==user.getUserId()){
 				note.setUser(user);
 				if(noteService.updateNote(note)){
 					return ResponseEntity.ok("Note Updated");
 				}else{
 					return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Failed");
+					}
+				}else{
+					return ResponseEntity.status(HttpStatus.CONFLICT).body("Note doesnt exist");
 				}
+				
 			}else{
 				return ResponseEntity.status(HttpStatus.CONFLICT).body("User is not logged in");
 			}

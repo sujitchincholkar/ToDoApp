@@ -32,26 +32,27 @@ public class SocialController {
 	@Autowired
 	TokenService tokenService;
 	@RequestMapping(value = "/loginWithGoogle")
-	public void googleConnection(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		System.out.println(" in googleLoginURL  ");
-		//String unid = UUID.randomUUID().toString();
-		
-		//request.getSession().setAttribute("STATE", unid);
+	public void googleConnection(HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
 		String googleLoginURL = googleConnection.getURI();
-		System.out.println("googleLoginURL  " + googleLoginURL);
 		response.sendRedirect(googleLoginURL);
 	}
+	
 	@RequestMapping(value = "/googlelogin")
-	public void connectGoogle(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException{
+	public void connectGoogle(HttpServletRequest request,HttpServletResponse response)
+			throws IOException, ServletException{
 		String error = request.getParameter("error");
 		System.out.println(error);
+		if(error!=null){
+			response.sendRedirect("Login");
+		}
 		String code = request.getParameter("code");
 		System.out.println(code);
 		String googleAccessToken = googleConnection.getAccessToken(code);
 		System.out.println(googleAccessToken);
 		JsonNode profileData=googleConnection.getUserProfile(googleAccessToken);
 		User user=new User();
-		if(profileData.get("displayName").asText()!=null){
+		if(profileData.get("displayName")!=null){
 			user.setFullName(profileData.get("displayName").asText());
 			user.setActivated(true);
 			user.setEmail(profileData.get("emails").get(0).get("value").asText());
@@ -62,7 +63,7 @@ public class SocialController {
 					if(id>0){
 						String token=tokenService.generateToken("", id);
 						response.setHeader("Authorization", token);
-						response.sendRedirect("/home.html");
+						response.sendRedirect("home.html");
 					}else{
 						response.sendRedirect("/");
 						request.getRequestDispatcher("home.html").
@@ -79,26 +80,48 @@ public class SocialController {
 		
 	}
 	@RequestMapping(value = "/loginWithFB")
-	public void facebookConnection(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public void facebookConnection(HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
 	
 		String fbLoginURL = fbConnection.getURI();
 		System.out.println("fbLoginURL  " + fbLoginURL);
 		response.sendRedirect(fbLoginURL);
 	}
 	@RequestMapping(value = "/connectFB")
-	public void connectFacebook(HttpServletRequest request,HttpServletResponse response){
+	public void connectFacebook(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException{
 		String error = request.getParameter("error");
 		System.out.println(error);
 		String code = request.getParameter("code");
 		String fbAccessToken = fbConnection.getAccessToken(code);
 		System.out.println(fbAccessToken);
 		JsonNode profileData=fbConnection.getUserProfile(fbAccessToken);
+		
 		User user=new User();
-		user.setFullName(profileData.get("name").asText());
-		profileData.get("email").asText();
-		String profileImage=profileData.get("picture").get("data").get("url").asText();
-		System.out.println(	profileData.get("email").asText());
-		System.out.println(profileImage);
+		if(profileData.get("name")!=null){
+			user.setFullName(profileData.get("name").asText());
+			user.setActivated(true);
+			user.setEmail(profileData.get("email").asText());
+			user.setProfileUrl(profileData.get("picture").get("data").get("url").asText());
+			User existingUser=userService.getUserByEmail(user.getEmail());
+			if(existingUser==null){
+				int id=userService.saveUserData(user);
+					if(id>0){
+						String token=tokenService.generateToken("", id);
+						response.setHeader("Authorization", token);
+						response.sendRedirect("home.html");
+					}else{
+						response.sendRedirect("/");
+						request.getRequestDispatcher("home.html").
+						forward(request, response);
+					}
+			}else{
+				String token=tokenService.generateToken("",existingUser.getUserId());
+				response.setHeader("Authorization",token);
+				response.sendRedirect("/home.html");
+			}
+		}else{
+			 System.out.println("data is not received");
+			}
 	}
 	
 }

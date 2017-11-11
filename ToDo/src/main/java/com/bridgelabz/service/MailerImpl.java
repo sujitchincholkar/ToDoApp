@@ -9,14 +9,13 @@ public class MailerImpl implements Mailer {
 	private MailSender mailSender;  
 	
 	public  void  send(String to,String message){
-	
-		        //creating message  
+
 		        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();  
 		        simpleMailMessage.setFrom("chincholkarsujit12@gmail");  
 		        simpleMailMessage.setTo(to);  
 		        simpleMailMessage.setSubject("Validate Email");  
 		        simpleMailMessage.setText(message);  
-		        //sending message  
+		       
 		        mailSender.send(simpleMailMessage);     
 		 
 	}
