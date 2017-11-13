@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bridgelabz.dao.UserDao;
+import com.bridgelabz.model.CustomResponse;
 import com.bridgelabz.model.User;
 import com.bridgelabz.service.Mailer;
 import com.bridgelabz.service.TokenService;
@@ -61,8 +62,9 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/Login", method = RequestMethod.POST)
-	public ResponseEntity logIn(@RequestBody User userData,HttpServletRequest request,HttpServletResponse response){
+	public ResponseEntity<CustomResponse> logIn(@RequestBody User userData,HttpServletRequest request,HttpServletResponse response){
 		String email=userData.getEmail();
+		CustomResponse customResponse=new CustomResponse();
 		String password=userData.getPassword();
 		System.out.println(email);
 		User user=userService.getUserByEmail(email);
@@ -75,18 +77,17 @@ public class UserController {
 					response.setHeader("Authorization", token);
 				/*HttpSession session=((HttpServletRequest) request).getSession();
 				session.setAttribute(session.getId(), user);*/
-				return ResponseEntity.ok("Login Successful");
+					customResponse.setMessage("login successfull");
+				return new ResponseEntity<CustomResponse>(HttpStatus.OK);
 				}else{
-					return ResponseEntity.status(HttpStatus.CONFLICT)
-							.body("User is not actiavted");
+					customResponse.setMessage("User is not activated");
+					return new ResponseEntity<CustomResponse>(HttpStatus.BAD_REQUEST);
 				}
 			}else{
-				return ResponseEntity.status(HttpStatus.CONFLICT)
-						.body("Invalid Username and password");
+				return new ResponseEntity<CustomResponse>(HttpStatus.BAD_REQUEST);
 			}	
 		}else{
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-					.body("User not found");
+			return new ResponseEntity<CustomResponse>(HttpStatus.BAD_REQUEST);
 		}	
 	}
 	

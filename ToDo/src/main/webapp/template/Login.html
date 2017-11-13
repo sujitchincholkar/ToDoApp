@@ -1,0 +1,53 @@
+<div class="Container">
+
+	<div class="row">
+		<div class="col-sm-12">
+			<h3>Sign In</h3>
+			<br>
+		</div>
+		<br>
+	</div>
+	<form name="myform" >
+	 
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="form-group">
+					<font color="red"><p ng-bind="error"></p></font>
+					</div>
+					<label for="email">Email:</label> 
+					<input class="form-control"
+						type="email" ng-model="user.email" name="email" Placeholder="Enter email" id="email"
+						required>
+				</div>
+			</div>
+	
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="form-group">
+					<label for="pwd">Password:</label> 
+					<input type="password"
+						class="form-control" name="password" Placeholder="Enter password"
+						ng-model="user.password"id="pwd" required><br>
+				</div>
+			</div>
+		</div>
+
+		<div class="btn-center">
+			<div class="col-sm-6">
+				<button type="submit" class="btn btn-danger" ng-click="loginUser()">Login</button>
+			</div>
+		</div>
+	</form>
+	<div class="btn-margin">
+		<div class="btn-center">
+			<div class="col-sm-6">
+
+		
+				<a href="#!/register">
+				<button type="submit" class="btn btn-primary" >Sign Up</button>
+				</a>
+					
+			</div>
+		</div>
+	</div>
+	</div>

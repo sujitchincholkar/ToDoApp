@@ -48,7 +48,7 @@ public class GoogleConnection {
 		Response response = target.request().accept(MediaType.APPLICATION_JSON).post(Entity.form(form));
 
 		String token = response.readEntity(String.class);
-		
+		System.out.println(token);
 		ObjectMapper mapper=new ObjectMapper();
 		String accessToken = null;
 		try {
