@@ -20,7 +20,7 @@
 
 <link rel="stylesheet" type="text/css" href="css/form.css">
 <script type="text/javascript" src="script/ToDoApp.js"></script>
-
+<script type="text/javascript" src="script/validation.js"></script>
 <script type="text/javascript" src="service/loginService.js"></script>
 <script type="text/javascript" src="service/registerService.js"></script>
 

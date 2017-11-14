@@ -79,10 +79,11 @@ public class NoteController {
 	public ResponseEntity updateNote(@RequestBody Note note,HttpSession session ,HttpServletRequest request){
 		String token=request.getHeader("Authorization");
 		User user=userService.getUserById(tokenService.verifyToken(token));
+		Note oldNote=noteService.getNoteById(note.getNoteId());
 			if(user!=null){
 				Date date=new Date();
 				note.setLastUpdated(date);
-				if(note.getUser().getUserId()==user.getUserId()){
+				if(oldNote.getUser().getUserId()==user.getUserId()){
 				note.setUser(user);
 				if(noteService.updateNote(note)){
 					return ResponseEntity.ok("Note Updated");

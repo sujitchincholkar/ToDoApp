@@ -21,8 +21,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 @RestController
 public class SocialController {
-	/*@Autowired
-	TokenService tokenservice;*/
+
 	@Autowired
 	GoogleConnection googleConnection;
 	@Autowired
@@ -63,15 +62,16 @@ public class SocialController {
 					if(id>0){
 						String token=tokenService.generateToken("", id);
 						response.setHeader("Authorization", token);
+						System.out.println("Jwt"+token);
 						response.sendRedirect("home.html");
 					}else{
-						response.sendRedirect("/");
 						request.getRequestDispatcher("home.html").
 						forward(request, response);
 					}
 			}else{
 				String token=tokenService.generateToken("",existingUser.getUserId());
 				response.setHeader("Authorization",token);
+				System.out.println(token);
 				response.sendRedirect("/home.html");
 			}
 		}else{

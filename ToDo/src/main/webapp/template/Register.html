@@ -1,29 +1,32 @@
+<div class="col-sm-6">
 <div class="Container">
 <h3>Sign up</h3>
-	<form name="myform" >
+	<div class="row">
+			<div class="col-sm-6 col-md-6 col-xs-12">
+	<form name="myForm"  onsubmit="return formValidate()">
 				<div class="row">
-					<div class="col-sm-10">
-						<div class="form-group">
+					<div class="col-sm-12 col-md-6 col-xs-12">
+						<div class="form-group" >
 							<label for="email">Email:</label>
-							<input type="text" name="email" Placeholder="Enter Email"
+							<input type="email" name="email" Placeholder="Enter Email"
 								ng-model="user.email" class="form-control" id="email" required>
-								<font color="red"><span id="emailerr"></span></font>	
+							
 						</div>
 					</div>
 				</div>
 				<div>
 					<div class="row">
-						<div class="col-sm-10">
+						<div class="col-sm-12 col-md-6 col-xs-12">
 							<div class="form-group">
 							<label for="name">Name:</label>
 								<input type="text" name="username" Placeholder="Enter Username"
-									ng-model="user.fullName"class="form-control" required>
+									ng-model="user.fullName" id="name" class="form-control" required>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-sm-10">
+					<div class="col-sm-12 col-md-6 col-xs-12">
 						<div class="form-group">
 						<label for="pwd">Password:</label>
 							<input type="password" name="password" Placeholder="Enter password"
@@ -34,18 +37,19 @@
 				</div>
 
 				<div class="row">
-					<div class="col-sm-10">
+					<div class="col-sm-12 col-md-6 col-xs-12">
 						<div class="form-group">
 						<label for="no">Mobile No:</label>
 							<input type="number" name="mobileno" Placeholder="Mobile Number"
-								ng-model="user.contactNo" id="no"  class="form-control" required>
+								ng-model="user.contactNo" id="no"   class="form-control" required>
 								<font color="red"><span id="noerr" ></span></font>	
 						</div>
 					</div>
 				</div>
-			
-			<input type="submit" value="Sign Up" class="btn btn-success" ng-click="registerUser()" >
-	
 
+			<input type="submit" value="Sign Up" class="btn btn-success" ng-click="registerUser()" >
 	</form>
+	</div>
+	</div>
+	</div>
 	</div>

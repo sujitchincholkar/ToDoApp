@@ -39,8 +39,8 @@ public class UserController {
 	PasswordChecker passwordChecker;
 	static  Logger logger=Logger.getLogger(UserController.class);
 	@RequestMapping(value = "/Register", method = RequestMethod.POST)
-	public ResponseEntity<String> registerUser(@RequestBody User user,HttpServletRequest request) {
-
+	public ResponseEntity<CustomResponse> registerUser(@RequestBody User user,HttpServletRequest request) {
+		CustomResponse customResponse=new CustomResponse();
 		if (validator.userValidate(user)) {
 			logger.info("User register");
 			user.setActivated(false);
@@ -52,12 +52,13 @@ public class UserController {
 				url=url.substring(0, url.lastIndexOf("/"))+"/activate/"+token;
 				System.out.println(url);
 				mailer.send(user.getEmail(),url);
-				return new ResponseEntity<String>("Success", HttpStatus.OK);
+				customResponse.setMessage("Success");
+				return new ResponseEntity<CustomResponse>(customResponse, HttpStatus.OK);
 			} else {
-				return new ResponseEntity<String>("Unsucessful", HttpStatus.CONFLICT);
+				return new ResponseEntity<CustomResponse>(customResponse, HttpStatus.CONFLICT);
 			}
 		} else {
-			return new ResponseEntity<String>("Invalid data", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<CustomResponse>(customResponse, HttpStatus.BAD_REQUEST);
 		}
 	}
 	
@@ -78,21 +79,23 @@ public class UserController {
 				/*HttpSession session=((HttpServletRequest) request).getSession();
 				session.setAttribute(session.getId(), user);*/
 					customResponse.setMessage("login successfull");
-				return new ResponseEntity<CustomResponse>(HttpStatus.OK);
+				return new ResponseEntity<CustomResponse>(customResponse,HttpStatus.OK);
 				}else{
 					customResponse.setMessage("User is not activated");
-					return new ResponseEntity<CustomResponse>(HttpStatus.BAD_REQUEST);
+					return new ResponseEntity<CustomResponse>(customResponse,HttpStatus.BAD_REQUEST);
 				}
 			}else{
-				return new ResponseEntity<CustomResponse>(HttpStatus.BAD_REQUEST);
+				customResponse.setMessage("Password incorrect");
+				return new ResponseEntity<CustomResponse>(customResponse,HttpStatus.BAD_REQUEST);
 			}	
 		}else{
-			return new ResponseEntity<CustomResponse>(HttpStatus.BAD_REQUEST);
+			customResponse.setMessage("User doent't exist");
+			return new ResponseEntity<CustomResponse>(customResponse,HttpStatus.BAD_REQUEST);
 		}	
 	}
 	
 	@RequestMapping(value = "/activate/{token:.+}", method = RequestMethod.GET)
-	public ResponseEntity activateUser(@PathVariable("token") String token){
+	public ResponseEntity activateUser(@PathVariable("token") String token,HttpServletResponse response) throws IOException{
 		System.out.println(token+"token");
 		int id=tokenService.verifyToken(token);
 		if(id>0){
@@ -101,6 +104,7 @@ public class UserController {
 		user.setActivated(true);
 		if(userService.updateUser(user)){
 			logger.info("User activated "+id);
+			response.sendRedirect("home");
 			return ResponseEntity.ok("User Activated");
 		}else{
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -128,14 +132,14 @@ public class UserController {
 		User user=userService.getUserByEmail(email);
 		if(user!=null){
 		String token=tokenService.generateToken(email, user.getUserId());
-		String url=url="http://localhost:8080/ToDo/resetpw/"+token;
+		String url=url="http://localhost:8080/ToDo/resetpassword/"+token;
 		mailer.send(email,url);
 		return ResponseEntity.ok("Redirect");
 		}else{
 			return ResponseEntity.ok("User Does not exist");
 		}
 	}
-	@RequestMapping(value="/resetpw/{token:.+}",method=RequestMethod.POST)
+	@RequestMapping(value="/resetpassword/{token:.+}",method=RequestMethod.POST)
 	public ResponseEntity<String> resetPassword(@PathVariable("token") String token,HttpServletRequest request,HttpServletResponse response,@RequestBody User userData) throws IOException{
 			/*String headerToken=request.getHeader("pwtoken");
 			if(headerToken!=null){*/
