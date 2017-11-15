@@ -64,7 +64,7 @@ public class GoogleConnection {
 		System.out.println("gmail details " + Gmail_GET_USER_URL);
 		ResteasyClient restCall = new ResteasyClientBuilder().build();
 		ResteasyWebTarget target = restCall.target(Gmail_GET_USER_URL);
-
+		System.out.println(accessToken);
 		String headerAuth = "Bearer " + accessToken;
 		Response response = target.request().header("Authorization", headerAuth)
 				.accept(MediaType.APPLICATION_JSON)

@@ -1,11 +1,11 @@
-<div class="col-sm-6">
+
 <div class="Container">
 <h3>Sign up</h3>
 	<div class="row">
-			<div class="col-sm-6 col-md-6 col-xs-12">
+			<div class="col-sm-12">
 	<form name="myForm"  onsubmit="return formValidate()">
 				<div class="row">
-					<div class="col-sm-12 col-md-6 col-xs-12">
+					<div class="col-sm-12">
 						<div class="form-group" >
 							<label for="email">Email:</label>
 							<input type="email" name="email" Placeholder="Enter Email"
@@ -16,7 +16,7 @@
 				</div>
 				<div>
 					<div class="row">
-						<div class="col-sm-12 col-md-6 col-xs-12">
+						<div class="col-sm-12 ">
 							<div class="form-group">
 							<label for="name">Name:</label>
 								<input type="text" name="username" Placeholder="Enter Username"
@@ -26,7 +26,7 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-sm-12 col-md-6 col-xs-12">
+					<div class="col-sm-12">
 						<div class="form-group">
 						<label for="pwd">Password:</label>
 							<input type="password" name="password" Placeholder="Enter password"
@@ -37,19 +37,23 @@
 				</div>
 
 				<div class="row">
-					<div class="col-sm-12 col-md-6 col-xs-12">
+					<div class="col-sm-12">
 						<div class="form-group">
 						<label for="no">Mobile No:</label>
-							<input type="number" name="mobileno" Placeholder="Mobile Number"
+							<input type="number" name="mobileno" Placeholder="Mobile Number" 
 								ng-model="user.contactNo" id="no"   class="form-control" required>
 								<font color="red"><span id="noerr" ></span></font>	
 						</div>
 					</div>
 				</div>
-
+			
 			<input type="submit" value="Sign Up" class="btn btn-success" ng-click="registerUser()" >
+				<a href="#!/login">
+			<input type="button"  class="btn btn-danger" value="Cancel">
+				</a>
 	</form>
+
 	</div>
 	</div>
 	</div>
-	</div>
+	

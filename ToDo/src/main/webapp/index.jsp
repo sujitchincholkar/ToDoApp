@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.js"></script>
 

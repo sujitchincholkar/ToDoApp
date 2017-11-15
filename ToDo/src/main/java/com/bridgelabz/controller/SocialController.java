@@ -63,16 +63,16 @@ public class SocialController {
 						String token=tokenService.generateToken("", id);
 						response.setHeader("Authorization", token);
 						System.out.println("Jwt"+token);
-						response.sendRedirect("home.html");
+						response.sendRedirect("http://localhost:8080/ToDo/#!/home");
 					}else{
-						request.getRequestDispatcher("home.html").
-						forward(request, response);
+						response.sendRedirect("http://localhost:8080/ToDo/#!/home");
+
 					}
 			}else{
 				String token=tokenService.generateToken("",existingUser.getUserId());
 				response.setHeader("Authorization",token);
 				System.out.println(token);
-				response.sendRedirect("/home.html");
+				response.sendRedirect("http://localhost:8080/ToDo/#!/home");
 			}
 		}else{
 			 System.out.println("data is not received");
@@ -108,16 +108,15 @@ public class SocialController {
 					if(id>0){
 						String token=tokenService.generateToken("", id);
 						response.setHeader("Authorization", token);
-						response.sendRedirect("home.html");
+						response.sendRedirect("http://localhost:8080/ToDo/#!/home");
 					}else{
-						response.sendRedirect("/");
-						request.getRequestDispatcher("home.html").
-						forward(request, response);
+					
+						response.sendRedirect("http://localhost:8080/ToDo/#!/home");
 					}
 			}else{
 				String token=tokenService.generateToken("",existingUser.getUserId());
 				response.setHeader("Authorization",token);
-				response.sendRedirect("/home.html");
+				response.sendRedirect("http://localhost:8080/ToDo/#!/home");
 			}
 		}else{
 			 System.out.println("data is not received");
