@@ -20,10 +20,12 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
 <link rel="stylesheet" type="text/css" href="css/form.css">
+<link rel="stylesheet" type="text/css" href="css/sidenav.css">
 <script type="text/javascript" src="script/ToDoApp.js"></script>
 <script type="text/javascript" src="script/validation.js"></script>
 <script type="text/javascript" src="service/loginService.js"></script>
 <script type="text/javascript" src="service/registerService.js"></script>
+<script type="text/javascript" src="directives/CustomDirectives.js"></script>
 
 <script type="text/javascript" src="controller/loginController.js"></script>
 <script type="text/javascript" src="controller/registerController.js"></script>

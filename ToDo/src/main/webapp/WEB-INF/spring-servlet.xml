@@ -68,7 +68,7 @@
 	<bean class="com.bridgelabz.util.PasswordChecker"></bean>
 	<bean class="com.bridgelabz.social.GoogleConnection"></bean>
 	<bean class="com.bridgelabz.social.FBConnnection"></bean>
-	
+	<mvc:resources location="/directives/" mapping="/directives/**" />
 	<mvc:resources location="/template/" mapping="/template/**" />	
 	<mvc:resources location="/script/" mapping="/script/**" />
 	<mvc:resources location="/controller/" mapping="/controller/**" />

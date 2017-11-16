@@ -6,7 +6,10 @@ toDo.controller('homeController', function($scope, loginService,$location){
 				console.log(response.data);
 			},function(response){
 				$scope.error=response.data.message;
-				console.log(response.data);
 			});
+	}
+	$scope.showSidebar=function(){
+		
+		$scope.width="200px";
 	}
 });
