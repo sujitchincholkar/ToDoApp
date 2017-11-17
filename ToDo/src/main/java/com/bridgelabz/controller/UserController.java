@@ -1,6 +1,8 @@
 package com.bridgelabz.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +22,7 @@ import com.bridgelabz.dao.UserDao;
 import com.bridgelabz.model.CustomResponse;
 import com.bridgelabz.model.User;
 import com.bridgelabz.service.Mailer;
+import com.bridgelabz.service.Producer;
 import com.bridgelabz.service.TokenService;
 import com.bridgelabz.service.UserService;
 import com.bridgelabz.util.PasswordChecker;
@@ -32,7 +35,7 @@ public class UserController {
 	@Autowired
 	Validator validator;
 	@Autowired
-	Mailer mailer;
+	Producer producer;
 	@Autowired
 	TokenService tokenService;
 	@Autowired
@@ -50,8 +53,11 @@ public class UserController {
 				String token=tokenService.generateToken(user.getEmail(), id);
 				String url=String.valueOf(request.getRequestURL());
 				url=url.substring(0, url.lastIndexOf("/"))+"/activate/"+token;
-				System.out.println(url);
-				mailer.send(user.getEmail(),url);
+				//System.out.println(""+url);
+				HashMap map=new HashMap();
+				map.put("to", user.getEmail());
+				map.put("message", url);
+				producer.send(map);
 				customResponse.setMessage("Success");
 				return new ResponseEntity<CustomResponse>(customResponse, HttpStatus.OK);
 			} else {
@@ -104,7 +110,7 @@ public class UserController {
 		user.setActivated(true);
 		if(userService.updateUser(user)){
 			logger.info("User activated "+id);
-			response.sendRedirect("home");
+			
 			return ResponseEntity.ok("User Activated");
 		}else{
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -133,7 +139,10 @@ public class UserController {
 		if(user!=null){
 		String token=tokenService.generateToken(email, user.getUserId());
 		String url=url="http://localhost:8080/ToDo/resetpassword/"+token;
-		mailer.send(email,url);
+		HashMap map=new HashMap();
+		map.put("to", user.getEmail());
+		map.put("message",url);
+		producer.send(map);
 		return ResponseEntity.ok("Redirect");
 		}else{
 			return ResponseEntity.ok("User Does not exist");

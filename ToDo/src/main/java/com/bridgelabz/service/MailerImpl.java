@@ -8,7 +8,7 @@ import org.springframework.scheduling.annotation.Async;
 public class MailerImpl implements Mailer {
 	@Autowired
 	private MailSender mailSender;  
-	@Async
+	//@Async
 	public  void  send(String to,String message){
 
 		        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();  

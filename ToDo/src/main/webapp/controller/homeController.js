@@ -10,6 +10,11 @@ toDo.controller('homeController', function($scope, loginService,$location){
 	}
 	$scope.showSidebar=function(){
 		
-		$scope.width="200px";
+		if($scope.width=='0px'){
+			$scope.width='200px';
+		}else{
+			$scope.width='0px';
+		}
+		
 	}
 });
