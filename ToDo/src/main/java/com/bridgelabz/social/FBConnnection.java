@@ -21,6 +21,9 @@ public class FBConnnection {
 	public static final String Secret_Id = "73a627345ca98961162070b310ba2de7";
 	public static final String Redirect_URI = "http://localhost:8080/ToDo/connectFB";
 	
+	/**
+	 * @return
+	 */
 	public String getURI(){
 		String facebookLoginURL="";
 		try {
@@ -33,6 +36,11 @@ public class FBConnnection {
 		}
 		return facebookLoginURL;
 	}
+	
+	/**
+	 * @param code
+	 * @return
+	 */
 	public String getAccessToken(String code) {
 		String accessTokenURL="";
 		try {
@@ -68,6 +76,11 @@ public class FBConnnection {
 		restCall.close();
 		return accessToken;
 	}
+	
+	/**
+	 * @param accessToken
+	 * @return
+	 */
 	public JsonNode getUserProfile(String accessToken) {
 
 		String fbgetUserURL = "https://graph.facebook.com/v2.9/me?access_token=" + accessToken

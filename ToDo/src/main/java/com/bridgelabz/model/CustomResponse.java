@@ -1,6 +1,7 @@
 package com.bridgelabz.model;
 
 public class CustomResponse {
+	
 	private String message;
 
 	public String getMessage() {

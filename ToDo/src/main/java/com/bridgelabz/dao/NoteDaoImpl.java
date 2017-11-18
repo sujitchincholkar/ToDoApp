@@ -12,10 +12,13 @@ import com.bridgelabz.model.Note;
 import com.bridgelabz.model.User;
 
 public class NoteDaoImpl implements NoteDao{
+	
 	@Autowired
-	SessionFactory factory; 
+	private SessionFactory factory; 
+	
 	@Autowired
-	UserDao userDao;
+	private UserDao userDao;
+	
 	public int saveNote(Note note) {
 		int noteId=0;
 		Session session=factory.openSession();

@@ -6,8 +6,10 @@ import com.bridgelabz.dao.UserDao;
 import com.bridgelabz.model.User;
 
 public class UserServiceImpl implements UserService {
+	
 	@Autowired
-	UserDao userDao;
+	private UserDao userDao;
+	
 	public int saveUserData(User user) {
 		return userDao.saveUser(user);
 	}

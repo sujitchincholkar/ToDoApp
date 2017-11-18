@@ -16,11 +16,17 @@ import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class GoogleConnection {
+public class GoogleConnection 
+{
 	public static final String CLIENT_Id = "163222559830-8ngujo28m9q6lrc7coduu568017i47lg.apps.googleusercontent.com";
 	public static final String Secret_Id = "fo6-1nItfoWZ5xeLz4UVVFeS";
+	
 	public static final String Redirect_URI = "http://localhost:8080/ToDo/googlelogin";
 	public String Gmail_GET_USER_URL = "https://www.googleapis.com/plus/v1/people/me";
+
+	/**
+	 * @return
+	 */
 	public String getURI(){
 		String googleLoginURL="";
 		try {
@@ -32,6 +38,11 @@ public class GoogleConnection {
 		}
 		return googleLoginURL;
 	}
+	
+	/**
+	 * @param code
+	 * @return
+	 */
 	public String getAccessToken(String code) {
 		String accessTokenURL = "https://accounts.google.com/o/oauth2/token";
 
@@ -59,6 +70,11 @@ public class GoogleConnection {
 		restCall.close();
 		return accessToken;
 	}
+	
+	/**
+	 * @param accessToken
+	 * @return
+	 */
 	public JsonNode getUserProfile(String accessToken) {
 
 		System.out.println("gmail details " + Gmail_GET_USER_URL);

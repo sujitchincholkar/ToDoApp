@@ -12,7 +12,9 @@ import io.jsonwebtoken.MissingClaimException;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 public class TokenServiceImpl implements TokenService {
+	
 	private String key="hsgamxkasdSxdq";
+	
 	public String generateToken(String email, int id) {
 		String token="";
 		try {

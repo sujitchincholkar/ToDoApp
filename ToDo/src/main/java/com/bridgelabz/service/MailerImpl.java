@@ -6,6 +6,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.scheduling.annotation.Async;
 
 public class MailerImpl implements Mailer {
+	
 	@Autowired
 	private MailSender mailSender;  
 	//@Async

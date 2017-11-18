@@ -16,7 +16,7 @@ import com.bridgelabz.model.User;
 
 public class UserDaoImpl implements UserDao{
 	@Autowired
-	SessionFactory factory;
+	private SessionFactory factory;
 
 	public int saveUser(User user) {
 		// TODO Auto-generated method stub

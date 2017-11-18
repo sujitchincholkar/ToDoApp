@@ -94,5 +94,7 @@
 	<mvc:resources location="/controller/" mapping="/controller/**" />
 	<mvc:resources location="/service/" mapping="/service/**" />
 	<mvc:resources location="/css/" mapping="/css/**" />
+	<mvc:resources location="/images/" mapping="/images/**" />
+	<mvc:resources location="/bower_components/" mapping="/bower_components/**" />
 	
 </beans>

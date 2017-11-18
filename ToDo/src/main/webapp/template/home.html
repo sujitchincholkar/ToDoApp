@@ -1,2 +1,24 @@
 <top-nav-bar></top-nav-bar>
 <side-nav-bar></side-nav-bar>
+<br><br><br>
+
+<div  id="main" style="margin-left:{{mleft}}">
+<div id="note">
+<b><div contenteditable="true" data-text="Title" id="note-title"></div></b>
+<div contenteditable="true" data-text="Take a note" id="note-body" ></div>
+<div class="note-icons">
+ <img src="images/archive.png" >
+ <img src="images/reminder.png" >
+					
+</div>
+</div>
+
+<div ng-repeat="note in notes">
+<div class="card" >
+ <div class="card-block">
+<div class="card-title">{{note.title}}</div>
+<div class="card-text">{{note.body}}</div>
+</div>
+</div>
+</div>
+</div>

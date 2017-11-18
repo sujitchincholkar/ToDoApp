@@ -9,8 +9,10 @@ import com.bridgelabz.dao.UserDao;
 import com.bridgelabz.model.Note;
 
 public class NoteServiceImpl implements NoteService{
+	
 	@Autowired
-	NoteDao noteDao;
+	private NoteDao noteDao;
+	
 	public int saveNote(Note note) {
 		int id=noteDao.saveNote(note);
 		return id;

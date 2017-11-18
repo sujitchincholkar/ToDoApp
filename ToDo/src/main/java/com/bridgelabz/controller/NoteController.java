@@ -25,91 +25,133 @@ import com.bridgelabz.service.UserService;
 
 @RestController
 public class NoteController {
+
 	@Autowired
-	UserService userService;
+	private UserService userService;
+
 	@Autowired
-	NoteService noteService;
+	private NoteService noteService;
+
 	@Autowired
-	TokenService tokenService;
-	static  Logger logger=Logger.getLogger(NoteController.class);
-	@RequestMapping(value="/addNote",method=RequestMethod.POST)
-	public ResponseEntity<String> addNote(@RequestBody Note note,HttpSession session,HttpServletRequest request){
-		//User user=(User) session.getAttribute(session.getId());
-		
-		String token=request.getHeader("Authorization");
+	private TokenService tokenService;
+
+	static Logger logger = Logger.getLogger(NoteController.class);
+
+	/**This method will add notes
+	 * @param note
+	 * @param session
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/addNote", method = RequestMethod.POST)
+	public ResponseEntity<String> addNote(@RequestBody Note note, HttpSession session, HttpServletRequest request) {
+		// User user=(User) session.getAttribute(session.getId());
+
+		String token = request.getHeader("Authorization");
 		System.out.println(token);
-		User user=userService.getUserById(tokenService.verifyToken(token));
-		if(user!=null){
-			Date date=new Date();
+		User user = userService.getUserById(tokenService.verifyToken(token));
+
+		if (user != null) {
+
+			Date date = new Date();
 			note.setUser(user);
 			note.setCreateDate(date);
 			note.setLastUpdated(date);
-			int id=noteService.saveNote(note);
-			if(id>0){
-				 	return ResponseEntity.ok("Note added");
-			}else{
+
+			int id = noteService.saveNote(note);
+
+			if (id > 0) {
+				return ResponseEntity.ok("Note added");
+			} else {
 				return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Failed");
 			}
-		}else{
+
+		} else {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body("User is not logged in");
 		}
 	}
-	@RequestMapping(value="/deletenote/{id}",method=RequestMethod.GET)
-	public ResponseEntity deleteNote(@PathVariable("id") int id,HttpSession session,HttpServletRequest request){
-		//User user=(User) session.getAttribute(session.getId());
-		String token=request.getHeader("Authorization");
-		User user=userService.getUserById(tokenService.verifyToken(token));
-		if(user!=null){
-			Note note=noteService.getNoteById(id);
-				if(note.getUser().getUserId()==user.getUserId()){
-					if(noteService.deleteNote(note)){
-					 	return ResponseEntity.ok("Note deleted");
-				}else{
+
+	/**This method will delete the note of given id
+	 * @param id
+	 * @param session
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/deletenote/{id}", method = RequestMethod.GET)
+	public ResponseEntity deleteNote(@PathVariable("id") int id, HttpSession session, HttpServletRequest request) {
+		// User user=(User) session.getAttribute(session.getId());
+		String token = request.getHeader("Authorization");
+		User user = userService.getUserById(tokenService.verifyToken(token));
+
+		if (user != null) {
+			Note note = noteService.getNoteById(id);
+
+			if (note.getUser().getUserId() == user.getUserId()) {
+
+				if (noteService.deleteNote(note)) {
+					return ResponseEntity.ok("Note deleted");
+				} else {
 					return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Failed");
-				
-			}
-		}
-			return ResponseEntity.ok("Note is not Present");
-		}else{
-			return ResponseEntity.status(HttpStatus.CONFLICT).body("User is not logged in");
-		}
-	}
-	
-	@RequestMapping(value="/updateNote",method=RequestMethod.POST)
-	public ResponseEntity updateNote(@RequestBody Note note,HttpSession session ,HttpServletRequest request){
-		String token=request.getHeader("Authorization");
-		User user=userService.getUserById(tokenService.verifyToken(token));
-		Note oldNote=noteService.getNoteById(note.getNoteId());
-			if(user!=null){
-				Date date=new Date();
-				note.setLastUpdated(date);
-				if(oldNote.getUser().getUserId()==user.getUserId()){
-				note.setUser(user);
-				if(noteService.updateNote(note)){
-					return ResponseEntity.ok("Note Updated");
-				}else{
-					return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Failed");
-					}
-				}else{
-					return ResponseEntity.status(HttpStatus.CONFLICT).body("Note doesnt exist");
+
 				}
-				
-			}else{
-				return ResponseEntity.status(HttpStatus.CONFLICT).body("User is not logged in");
 			}
-			
+			return ResponseEntity.ok("Note is not Present");
+
+		} else {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("User is not logged in");
+		}
 	}
-	
-	@RequestMapping(value="/getAllNotes",method=RequestMethod.POST)
-	public ResponseEntity<Set<Note>> getNotes(HttpSession  session,HttpServletRequest request){
-		//User user=(User) session.getAttribute(session.getId());
-		String token=request.getHeader("Authorization");
-		System.out.println(token);
-		User user=userService.getUserById(tokenService.verifyToken(token));
-		if(user!=null){
-		Set<Note> notes=noteService.getNotes(user.getUserId());
-		return ResponseEntity.ok(notes);
-		}else{
+
+	/**This method  update the note and save it to database
+	 * @param note
+	 * @param session
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/updateNote", method = RequestMethod.POST)
+	public ResponseEntity updateNote(@RequestBody Note note, HttpSession session, HttpServletRequest request) {
+		String token = request.getHeader("Authorization");
+		User user = userService.getUserById(tokenService.verifyToken(token));
+		Note oldNote = noteService.getNoteById(note.getNoteId());
+		if (user != null) {
+
+			Date date = new Date();
+			note.setLastUpdated(date);
+
+			if (oldNote.getUser().getUserId() == user.getUserId()) {
+				note.setUser(user);
+
+				if (noteService.updateNote(note)) {
+					return ResponseEntity.ok("Note Updated");
+				} else {
+					return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Failed");
+				}
+			} else {
+				return ResponseEntity.status(HttpStatus.CONFLICT).body("Note doesnt exist");
+			}
+
+		} else {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("User is not logged in");
+		}
+
+	}
+
+	/**This method will return all the notes of user
+	 * @param session
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/getAllNotes", method = RequestMethod.GET)
+	public ResponseEntity<Set<Note>> getNotes(HttpSession session, HttpServletRequest request) {
+
+		String token = request.getHeader("Authorization");
+
+		User user = userService.getUserById(tokenService.verifyToken(token));
+
+		if (user != null) {
+			Set<Note> notes = noteService.getNotes(user.getUserId());
+			return ResponseEntity.ok(notes);
+		} else {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(null);
 		}
 	}
