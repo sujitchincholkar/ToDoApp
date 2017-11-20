@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bridgelabz.model.CustomResponse;
 import com.bridgelabz.model.Note;
 import com.bridgelabz.model.User;
 import com.bridgelabz.service.NoteService;
@@ -78,27 +79,32 @@ public class NoteController {
 	 * @return
 	 */
 	@RequestMapping(value = "/deletenote/{id}", method = RequestMethod.GET)
-	public ResponseEntity deleteNote(@PathVariable("id") int id, HttpSession session, HttpServletRequest request) {
+	public ResponseEntity<CustomResponse> deleteNote(@PathVariable("id") int id, HttpSession session, HttpServletRequest request) {
 		// User user=(User) session.getAttribute(session.getId());
 		String token = request.getHeader("Authorization");
 		User user = userService.getUserById(tokenService.verifyToken(token));
-
+		CustomResponse response=new CustomResponse();
+		
 		if (user != null) {
 			Note note = noteService.getNoteById(id);
 
 			if (note.getUser().getUserId() == user.getUserId()) {
 
 				if (noteService.deleteNote(note)) {
-					return ResponseEntity.ok("Note deleted");
+					response.setMessage("Note Deleted");
+					return ResponseEntity.ok(response);
 				} else {
-					return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Failed");
+					response.setMessage("Database problem");
+					return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
 
 				}
 			}
-			return ResponseEntity.ok("Note is not Present");
+			response.setMessage("Note is not Present");
+			return ResponseEntity.ok(response);
 
 		} else {
-			return ResponseEntity.status(HttpStatus.CONFLICT).body("User is not logged in");
+			response.setMessage("User is not logged in");
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
 		}
 	}
 
@@ -109,10 +115,13 @@ public class NoteController {
 	 * @return
 	 */
 	@RequestMapping(value = "/updateNote", method = RequestMethod.POST)
-	public ResponseEntity updateNote(@RequestBody Note note, HttpSession session, HttpServletRequest request) {
+	public ResponseEntity<CustomResponse> updateNote(@RequestBody Note note, HttpSession session, HttpServletRequest request) {
 		String token = request.getHeader("Authorization");
 		User user = userService.getUserById(tokenService.verifyToken(token));
+		
 		Note oldNote = noteService.getNoteById(note.getNoteId());
+		CustomResponse response=new CustomResponse();
+		
 		if (user != null) {
 
 			Date date = new Date();
@@ -122,16 +131,20 @@ public class NoteController {
 				note.setUser(user);
 
 				if (noteService.updateNote(note)) {
-					return ResponseEntity.ok("Note Updated");
+					response.setMessage("Note Updated");
+					return ResponseEntity.ok(response);
 				} else {
-					return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Failed");
+					response.setMessage("Database problem");
+					return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
 				}
 			} else {
-				return ResponseEntity.status(HttpStatus.CONFLICT).body("Note doesnt exist");
+				response.setMessage("Note is not Present");
+				return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
 			}
 
 		} else {
-			return ResponseEntity.status(HttpStatus.CONFLICT).body("User is not logged in");
+			response.setMessage("User is not logged in");
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
 		}
 
 	}

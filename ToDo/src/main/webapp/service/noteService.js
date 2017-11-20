@@ -13,5 +13,24 @@ toDo.factory('noteService', function($http,$location) {
 	});
 	
 	}
+	notes.addNote=function(token,note){
+
+		console.log(note);
+
+		return $http({
+
+		    method: 'POST',
+
+		    url: 'addNote',
+
+		    data:note,
+
+		    headers: {
+
+		        'Authorization': token
+
+		    }
+		});
+	}
 	return notes;
 });

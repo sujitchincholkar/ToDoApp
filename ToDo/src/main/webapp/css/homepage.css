@@ -1,0 +1,113 @@
+
+/* a{
+ margin-right: 15px;
+} */
+
+#note{
+	padding:10px;
+	background-color: white;
+	width:400px;
+	margin-left: 300px;
+}
+
+[contentEditable=true]:empty:not(:focus):before{
+    content:attr(data-text)
+}
+
+#note-body:focus{
+	outline: none;
+}
+
+#note-title:focus{
+	outline: none;
+}
+
+.note-icons > img{
+	height: 17px;
+	width:17px;
+	margin-right:5px;
+}
+
+#note-container{
+margin-left: 250px;	
+}
+.card{
+	width:200px;
+	height: auto;
+	background-color: white;
+	margin:5px;
+	padding:10px;
+	box-shadow: 1px 1px 1px black;
+}
+
+.card:hover{
+	box-shadow: 3px 3px 3px black;
+}
+
+#sidebarbtn{
+	font-size: 25px;
+	padding:8px;
+	
+}
+
+#searchbtn{
+	top:20px;
+	width:1%;
+	padding-right: 2px;
+}
+
+#searchbox{
+	padding:5px;
+	border-radius: 5px;
+}
+
+.col-sm-1{
+	width:3%;
+}
+
+.navbar-right{
+margin-right: 5px;	
+}
+
+.profile-pic{
+	height: 40px;
+	width:40px;
+	margin-top: 6px;
+}
+
+.navbar-default{
+	padding:7px;
+	background:#fb0;
+}
+
+.navbar-default input{
+	
+	padding:3px;
+	margin-top:12px;
+	width:200px;
+}
+#note-container{
+	
+	display: inline-block;
+	width:auto;
+}
+ #note-scope{
+	display: inline-block;
+
+} 
+
+@media screen and (max-width: 640px) {
+  #searchbtn,.profile-pic,#searchbox {
+    visibility: hidden;
+    clear: both;
+    float: left;
+    margin: 10px auto 5px 20px;
+    width: 28%;
+    display: none;
+  }
+  
+  /* #note-scope,#note-container,.card{
+ 	 width:100%;
+  } */
+ 
+}

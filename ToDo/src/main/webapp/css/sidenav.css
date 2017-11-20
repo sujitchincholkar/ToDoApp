@@ -32,7 +32,11 @@
     padding: 16px;
 }
 
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
+@media screen and (max-width: 640px) {
+  .sidenav {
+  padding-top: 15px;
+  z-index: 1;
+  overflow: visible;
+  }
   .sidenav a {font-size: 18px;}
 }

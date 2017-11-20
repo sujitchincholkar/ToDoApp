@@ -12,6 +12,23 @@ toDo.factory('loginService', function($http, $location) {
 			data : user
 		})
 	}
+
+	details.forgetPassword = function(user) {
+		console.log(user.password);
+		return $http({
+			method : "POST",
+			url : 'forgetpassword',
+			data : user
+		})
+	}
+	details.resetpassword= function(user,path) {
+		console.log(user.password);
+		return $http({
+			method : "POST",
+			url : path,
+			data : user
+		})
+	}
 	return details;
 	
 

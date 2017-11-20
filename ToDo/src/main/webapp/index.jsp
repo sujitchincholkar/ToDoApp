@@ -19,14 +19,19 @@
 <link rel="stylesheet"
 	href="bower_components/bootstrap/dist/css/bootstrap.min.css">
 
-<link rel="stylesheet" type="text/css" href="css/form.css">
+<link rel="stylesheet" type="text/css" href="css/loginform.css">
 <link rel="stylesheet" type="text/css" href="css/sidenav.css">
+<link rel="stylesheet" type="text/css" href="css/homepage.css">
+
 <script type="text/javascript" src="script/ToDoApp.js"></script>
 <script type="text/javascript" src="script/validation.js"></script>
+
 <script type="text/javascript" src="service/loginService.js"></script>
 <script type="text/javascript" src="service/registerService.js"></script>
 <script type="text/javascript" src="service/noteService.js"></script>
+
 <script type="text/javascript" src="directives/CustomDirectives.js"></script>
+
 <script type="text/javascript" src="controller/homeController.js"></script>
 <script type="text/javascript" src="controller/loginController.js"></script>
 <script type="text/javascript" src="controller/registerController.js"></script>

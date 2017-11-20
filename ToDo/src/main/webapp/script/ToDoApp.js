@@ -19,5 +19,16 @@ ToDo.config([ '$stateProvider', '$urlRouterProvider',
 				templateUrl : 'template/home.html',
 				controller : 'homeController'
 			});
+			$stateProvider.state('forgetpassword', {
+				url : '/forgetpassword',
+				templateUrl : 'template/Forgetpassword.html',
+				controller : 'loginController'
+			});
+			$stateProvider.state('resetpassword', {
+				url : '/resetpassword/:token',
+				templateUrl : 'template/ResetPassword.html',
+				controller : 'loginController'
+			});
 			$urlRouterProvider.otherwise('login');
+			
 }]);

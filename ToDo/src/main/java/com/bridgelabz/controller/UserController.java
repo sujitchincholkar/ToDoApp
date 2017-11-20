@@ -51,6 +51,7 @@ public class UserController {
 	@RequestMapping(value = "/Register", method = RequestMethod.POST)
 	public ResponseEntity<CustomResponse> registerUser(@RequestBody User user, HttpServletRequest request) {
 		CustomResponse customResponse = new CustomResponse();
+		
 		if (validator.userValidate(user)) {
 
 			logger.info("User register");
@@ -76,10 +77,12 @@ public class UserController {
 				return new ResponseEntity<CustomResponse>(customResponse, HttpStatus.OK);
 			} 
 			else {
+				customResponse.setMessage("");
 				return new ResponseEntity<CustomResponse>(customResponse, HttpStatus.CONFLICT);
 			}
 		} 
 		else {
+			customResponse.setMessage("Invalid data");
 			return new ResponseEntity<CustomResponse>(customResponse, HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -163,33 +166,37 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/forgetpassword", method = RequestMethod.POST)
-	public ResponseEntity<String> forgetPassword(@RequestBody User userData, HttpServletRequest request,
+	public ResponseEntity<CustomResponse> forgetPassword(@RequestBody User userData, HttpServletRequest request,
 			HttpServletResponse response) {
-
+		CustomResponse customResponse=new CustomResponse();
 		String email = userData.getEmail();
 		User user = userService.getUserByEmail(email);
 
 		if (user != null) {
 			String token = tokenService.generateToken(email, user.getUserId());
-			String url = url = "http://localhost:8080/ToDo/resetpassword/" + token;
-			HashMap map = new HashMap();
+			String url = url = "http://localhost:8080/ToDo/#!/resetpassword/" + token;
+			HashMap<String,String> map = new HashMap<String,String>();
 			map.put("to", user.getEmail());
 			map.put("message", url);
 			producer.send(map);
-			return ResponseEntity.ok("Redirect");
+			customResponse.setMessage("Mail send");
+			return ResponseEntity.ok(customResponse);
 		} 
 		else {
-			return ResponseEntity.ok("User Does not exist");
+			customResponse.setMessage("User Does not exist");
+			return ResponseEntity.ok(customResponse);
 		}
 	}
 
 	@RequestMapping(value = "/resetpassword/{token:.+}", method = RequestMethod.POST)
-	public ResponseEntity<String> resetPassword(@PathVariable("token") String token, HttpServletRequest request,
+	public ResponseEntity<CustomResponse> resetPassword(@PathVariable("token") String token, HttpServletRequest request,
 			HttpServletResponse response, @RequestBody User userData) throws IOException {
 		/*
 		 * String headerToken=request.getHeader("pwtoken");
 		 * if(headerToken!=null){
 		 */
+		 CustomResponse customResponse=new CustomResponse();
+		 
 		int userId = tokenService.verifyToken(token);
 
 		if (userId > 0) {
@@ -199,16 +206,20 @@ public class UserController {
 				password = passwordChecker.encodePassword(password);
 				user.setPassword(password);
 				if (userService.updateUser(user)) {
-					return ResponseEntity.ok("password changed");
+					customResponse.setMessage("password changed");
+					return ResponseEntity.ok(customResponse);
 				} else {
-					return ResponseEntity.ok("Some problem occured");
+					customResponse.setMessage("Some problem occured");
+					return ResponseEntity.status(HttpStatus.CONFLICT).body(customResponse);
 				}
 			} else {
-				return ResponseEntity.ok("password is short");
+				customResponse.setMessage("password is short");
+				return ResponseEntity.status(HttpStatus.CONFLICT).body(customResponse);
 			}
 
 		} else {
-			return ResponseEntity.ok("Invalid token");
+			customResponse.setMessage("Invalid token");
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(customResponse);
 		}
 		/*
 		 * }else{ if(tokenService.verifyToken(token)>0){
@@ -220,13 +231,4 @@ public class UserController {
 
 	}
 
-	@RequestMapping(value = "/isactive", method = RequestMethod.GET)
-	public ResponseEntity<String> isActivated(HttpSession session) {
-
-		User user = (User) session.getAttribute(session.getId());
-
-		if (user != null)
-			return ResponseEntity.ok().body(user.getFullName());
-		return ResponseEntity.ok("user is not logged in");
-	}
 }

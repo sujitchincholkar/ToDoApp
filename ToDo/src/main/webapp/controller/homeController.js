@@ -1,5 +1,6 @@
 var toDo = angular.module('ToDo');
 toDo.controller('homeController', function($scope, loginService,noteService,$location){
+	
 	$scope.addNote = function(){
 		var message=loginService.loginUser($scope.note,$scope.error);
 		message.then(function(response) {
@@ -8,6 +9,7 @@ toDo.controller('homeController', function($scope, loginService,noteService,$loc
 				$scope.error=response.data.message;
 			});
 	}
+	
 	$scope.showSidebar=function(){
 		
 		if($scope.width=='0px'){
@@ -32,5 +34,30 @@ toDo.controller('homeController', function($scope, loginService,noteService,$loc
 		});
 		$scope.notes=notes;
 	}
+	 
+	 $scope.createNote = function() {
+
+			var token = localStorage.getItem('token');
+			var noteBody = angular.element(document.querySelector('#note-title'));
+			noteBody.empty();
+			var noteTitle = angular.element(document.querySelector('#note-body'));
+			noteTitle.empty();
+			
+			console.log(token);
+
+			var notes = noteService.addNote(token, $scope.newNote);
+
+			notes.then(function(response) {
+				
+				getNotes();
+
+			}, function(response) {
+
+				getNotes();
+
+				$scope.error = response.data.message;
+
+			});
+		}
 	getNotes();
 });
