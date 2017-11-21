@@ -3,33 +3,50 @@
 <br>
 <br>
 <br>
-
-<div id="main" style="margin-left: {{mleft}}">
-	<div id="note">
+<div id="main" style="margin-left:{{mleft}}" >
+<div class="row">
+<div class="col-lg-3 col-md-4"></div>
+	<div id="note" class=" col-sm-12 col-md-6 col-xs-12 col-lg-4">
 		<b><div contenteditable="true" ng-model="newNote.title"
-				data-text="Title" id="note-title"></div></b>
+				data-text="Title" id="note-title" strip-div="true"></div></b>
 		<div contenteditable="true" data-text="Take a note"
 			ng-model="newNote.body" id="note-body"></div>
 		<div class="note-icons">
 			<img src="images/archive.png"> 
 			<img src="images/reminder.png">
+			<img src="images/colors.png"> 
+			<img src="images/collaborator1600.png">
 			<div role="button" ng-click="createNote()"
 				class="btn btn-done pull-right">DONE</div>
+				</div>
+		</div>	
 		</div>
-	</div>
-
-	<div id="note-container">
-	
-		<div ng-repeat="note in notes" id="note-scope">
+	<div id="note-container" class=" col-sm-12 col-md-6 col-xs-12 col-lg-6">
+<!-- 			<div class="row">
+ -->			<div class="col-lg-1 col-md-1" ></div>
+ 	<div class="col-md-10 col-sm-12 col-xs-12 col-lg-10" >
+		<div ng-repeat="note in notes" id="note-scope"  class="col-md-6 col-sm-10 col-xs-12 col-lg-4">
 		
-			<div class="card">
-				<div class="card-block">
+			<div class="card" >
+				<div class="card-block" >
 					<b><div class="card-title" ng-bind-html="note.title"></div></b>
 					<div class="card-text" ng-bind-html="note.body"></div>
-				</div>
+					<div class="note-icons">
+			<img src="images/archive.png"> 
+			<img src="images/reminder.png">
+			<img src="images/colors.png"> 
+			<img src="images/collaborator1600.png">
+			  <div class="dropdown inline pull-right">
+			<img src='images/more.svg' width="17px" height="17px" data-toggle="dropdown">
+    <ul class="dropdown-menu">
+      <li><a href="#!/home" ng-click="deleteNote(note)">Delete</a></li>
+    </ul>
+  </div>
 			</div>
 			
+			</div>
+				</div>
+			</div>
+				<div class="col-lg-1 col-md-1"  ></div>
 		</div>
-	</div>
-
-</div>
+		</div>

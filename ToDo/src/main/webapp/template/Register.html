@@ -9,7 +9,7 @@
 						<div class="form-group" >
 							<label for="email">Email:</label>
 							<input type="email" name="email" Placeholder="Enter Email"
-								ng-model="user.email" class="form-control" id="inputField" required>
+							pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" title="Enter valid email"	ng-model="user.email" class="form-control" id="inputField" required>
 							
 						</div>
 					</div>
@@ -30,7 +30,7 @@
 						<div class="form-group">
 						<label for="pwd">Password:</label>
 							<input type="password" name="password" Placeholder="Enter password"
-								ng-model="user.password"id="inputField" class="form-control" required>
+								pattern =".{8,}" title="password must contain 8 characters" ng-model="user.password"id="inputField" class="form-control" required>
 							<font color="red"><span id="pwderr" ></span></font>	
 						</div>
 					</div>
@@ -41,7 +41,7 @@
 						<div class="form-group">
 						<label for="no">Mobile No:</label>
 							<input type="number" name="mobileno" Placeholder="Mobile Number" 
-								ng-model="user.contactNo" id="inputField"   class="form-control" required>
+								pattern="[0-9]{10,10}" title="Mobile number should be 10 digits" ng-model="user.contactNo" id="inputField"   class="form-control" required>
 								<font color="red"><span id="noerr" ></span></font>	
 						</div>
 					</div>

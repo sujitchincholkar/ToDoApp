@@ -88,7 +88,7 @@ public class NoteController {
 		if (user != null) {
 			Note note = noteService.getNoteById(id);
 
-			if (note.getUser().getUserId() == user.getUserId()) {
+			if (note!=null && note.getUser().getUserId() == user.getUserId()) {
 
 				if (noteService.deleteNote(note)) {
 					response.setMessage("Note Deleted");

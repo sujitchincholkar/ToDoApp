@@ -6,42 +6,64 @@
 #note{
 	padding:10px;
 	background-color: white;
-	width:400px;
-	margin-left: 300px;
+	
+/* 	margin-left: 20%; */
 }
 
 [contentEditable=true]:empty:not(:focus):before{
     content:attr(data-text)
 }
-
-#note-body:focus{
+#note > *:focus{
+	visibility:visible;
+	display:block;
 	outline: none;
 }
+#note > .note-icons{
+	display:none;
+	}
 
+
+#note-body:focus  {
+
+	outline: none;
+}
+#note-title{
+	display:none;
+}
 #note-title:focus{
 	outline: none;
 }
 
 .note-icons > img{
+
 	height: 17px;
 	width:17px;
-	margin-right:5px;
+	margin-right:3px;
+}
+.note-icons {
+	padding :2px;
+	visibility: hidden;
+
 }
 
-#note-container{
-margin-left: 250px;	
-}
 .card{
-	width:200px;
+	width:100%;
 	height: auto;
 	background-color: white;
 	margin:5px;
 	padding:10px;
 	box-shadow: 1px 1px 1px black;
+	 word-break: break-word;
 }
 
-.card:hover{
-	box-shadow: 3px 3px 3px black;
+.card:hover {
+
+	box-shadow: 2px 0px 3px black;
+}
+.card:hover .note-icons{
+	
+	visibility:visible;
+
 }
 
 #sidebarbtn{
@@ -89,14 +111,20 @@ margin-right: 5px;
 #note-container{
 	
 	display: inline-block;
-	width:auto;
+	width:100%;
 }
  #note-scope{
+ 
 	display: inline-block;
 
 } 
 
-@media screen and (max-width: 640px) {
+.inline{
+	display: inline-block;
+}
+
+
+/* @media screen and (max-height: 720px) {
   #searchbtn,.profile-pic,#searchbox {
     visibility: hidden;
     clear: both;
@@ -106,8 +134,9 @@ margin-right: 5px;
     display: none;
   }
   
-  /* #note-scope,#note-container,.card{
+   #note-scope,#note-container,.card{
  	 width:100%;
-  } */
+ 	 margin-left:auto;
+  } 
  
-}
+} */

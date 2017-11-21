@@ -1,19 +1,12 @@
 var toDo = angular.module('ToDo');
 toDo.controller('homeController', function($scope, loginService,noteService,$location){
 	
-	$scope.addNote = function(){
-		var message=loginService.loginUser($scope.note,$scope.error);
-		message.then(function(response) {
-				console.log(response.data);
-			},function(response){
-				$scope.error=response.data.message;
-			});
-	}
+
 	
 	$scope.showSidebar=function(){
 		
 		if($scope.width=='0px'){
-			$scope.width='200px';
+			$scope.width='230px';
 			$scope.mleft="200px";
 		}else{
 			$scope.width='0px';
@@ -34,7 +27,27 @@ toDo.controller('homeController', function($scope, loginService,noteService,$loc
 		});
 		$scope.notes=notes;
 	}
-	 
+	 $scope.deleteNote = function(note) {
+
+			var token = localStorage.getItem('token');
+			
+			
+			console.log(token);
+
+			var notes = noteService.deleteNote(token,note);
+
+			notes.then(function(response) {
+				
+				getNotes();
+
+			}, function(response) {
+
+				getNotes();
+
+				$scope.error = response.data.message;
+
+			});
+		}
 	 $scope.createNote = function() {
 
 			var token = localStorage.getItem('token');

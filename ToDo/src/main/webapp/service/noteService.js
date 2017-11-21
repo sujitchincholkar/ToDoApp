@@ -32,5 +32,25 @@ toDo.factory('noteService', function($http,$location) {
 		    }
 		});
 	}
+	notes.deleteNote=function(token,note){
+
+		console.log(note);
+
+		return $http({
+
+		    method: 'GET',
+
+		    url: 'deletenote/'+note.noteId,
+
+		    data:note,
+
+		    headers: {
+
+		        'Authorization': token
+
+		    }
+		});
+	}
+	
 	return notes;
 });

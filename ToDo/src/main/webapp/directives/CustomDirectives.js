@@ -47,6 +47,11 @@ toDo.directive('contenteditable', ['$sce', function($sce) {
 	          html = '';
 
 	        }
+	        if ( attrs.stripDiv && html == '<div>' &&html=='</div>') {
+
+		          html = '';
+
+		        }
 
 	        ngModel.$setViewValue(html);
 
