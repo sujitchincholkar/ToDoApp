@@ -25,7 +25,7 @@ toDo.controller('loginController', function($scope, loginService,$location){
 	$scope.resetpassword = function(){
 		var path=$location.path();
 		path=path.replace(path.charAt(0),'');
-		if($scope.password===$scope.user.password){
+		if($scope.password==$scope.user.password){
 		var message=loginService.resetpassword($scope.user,path,$scope.error);
 		message.then(function(response) {
 				//localStorage.setItem('token',response.headers('Authorization'));

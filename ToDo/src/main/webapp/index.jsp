@@ -15,7 +15,8 @@
 	src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
  
 <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
- 
+<script src=" bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+
 <link rel="stylesheet"
 	href="bower_components/bootstrap/dist/css/bootstrap.min.css">
 

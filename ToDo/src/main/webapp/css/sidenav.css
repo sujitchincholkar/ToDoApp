@@ -28,6 +28,7 @@
 
 
 #main {
+	margin-top:100px;
     transition: margin-left .5s;
     padding: 16px;
   
