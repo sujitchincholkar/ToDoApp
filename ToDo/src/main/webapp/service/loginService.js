@@ -4,8 +4,14 @@ toDo.factory('loginService', function($http, $location) {
 
 	var details = {};
 	
-	details.loginUser = function(user) {
-		console.log(user.password);
+	details.service = function(method,url,user) {
+		return $http({
+			method : method,
+			url : url,
+			data : user
+		})
+	}
+	/*details.loginUser = function(user) {
 		return $http({
 			method : "POST",
 			url : 'Login',
@@ -14,7 +20,6 @@ toDo.factory('loginService', function($http, $location) {
 	}
 
 	details.forgetPassword = function(user) {
-		console.log(user.password);
 		return $http({
 			method : "POST",
 			url : 'forgetpassword',
@@ -22,13 +27,12 @@ toDo.factory('loginService', function($http, $location) {
 		})
 	}
 	details.resetpassword= function(user,path) {
-		console.log(user.password);
 		return $http({
 			method : "POST",
 			url : path,
 			data : user
 		})
-	}
+	}*/
 	return details;
 	
 

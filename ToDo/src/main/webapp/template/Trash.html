@@ -1,0 +1,33 @@
+	<div ng-controller="homeController">
+	<top-nav-bar></top-nav-bar>
+<side-nav-bar></side-nav-bar>
+<div id="main" style="margin-left: {{mleft}}"  >
+	<div id="note-container"
+		class=" col-sm-12 col-md-12 col-xs-12 col-lg-12">
+		<!-- 			<div class="row">
+ -->
+		<div class="col-lg-1 col-md-1"></div>
+		<div class="col-md-10 col-sm-12 col-xs-12 col-lg-10">
+			<div ng-repeat="note in notes | filter : {trashed : true}" id="note-scope"
+				class="col-md-6 col-sm-6 col-xs-12 col-lg-4">
+
+				<div class="card">
+					<div class="card-block" ng-click="showModal(note)">
+						<b><div class="card-title" ng-bind-html="note.title"></div></b>
+						<div class="card-text" ng-bind-html="note.body"></div>
+					</div>
+					<div class="note-icons">
+						
+							<img src='images/more.svg' width="19px" height="19px"
+								data-toggle="dropdown">
+							<ul class="dropdown-menu">
+								<li><a href="#!/trash" ng-click="deleteNotePermanently(note)">Delete Forever</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-1 col-md-1"></div>
+		</div>
+	</div>

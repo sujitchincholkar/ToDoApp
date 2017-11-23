@@ -41,6 +41,16 @@ public class Note {
 	@Column(name="lasr_update")
 	private Date lastUpdated;
 	
+	@Column
+	private boolean isPinned;
+	
+	@Column
+	private boolean isArchived;
+	
+	@Column
+	private boolean isTrashed;
+	
+
 	@ManyToOne
 	@JsonIgnore
 	@JoinColumn(name="user_id")
@@ -95,6 +105,26 @@ public class Note {
 	public void setUser(User user) {
 		this.user = user;
 	}
-
+	
+	public boolean isPinned() {
+		return isPinned;
+	}
+	public void setPinned(boolean isPinned) {
+		this.isPinned = isPinned;
+	}
+	
+	public boolean isArchived() {
+		return isArchived;
+	}
+	public void setArchived(boolean isArchived) {
+		this.isArchived = isArchived;
+	}
+	
+	public boolean isTrashed() {
+		return isTrashed;
+	}
+	public void setTrashed(boolean isTrashed) {
+		this.isTrashed = isTrashed;
+	}
 	
 }

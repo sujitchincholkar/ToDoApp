@@ -1,7 +1,9 @@
-		
-				<div class="edit-card" >
+		  <div class="modal-content">
+		  <div class="modal-body">
+				
 					<b><div  id="note-title" contenteditable="true" ng-model="note.title" ></div></b>
 					<div  id="note-body" contenteditable="true" ng-model="note.body"></div>
+					
 					<div class="note-icons">
 			<img src="images/archive.png"> 
 			<img src="images/reminder.png">
@@ -10,11 +12,13 @@
 			  <div class="dropdown inline ">
 			<img src='images/more.svg' width="17px" height="17px" data-toggle="dropdown">
     <ul class="dropdown-menu">
-      <li><a href="#!/home" ng-click="deleteNote(note)">Delete</a></li>
+      <li><a href="#!/home" ng-click="deleteNote(note)" data-dismiss="modal">Delete</a></li>
     </ul>
   </div>
+
   <div role="button" ng-click="updateNote(note)"
-				class="btn btn-done pull-right inline">DONE</div>
-			
+				class="btn btn-done pull-right inline" data-dismiss="modal">DONE</div>
+		
 			</div>
+        </div>
           </div>

@@ -11,24 +11,25 @@ toDo.controller('homeController', function($scope, $uibModal, loginService,
 			$scope.width = '0px';
 			$scope.mleft = "0px";
 		}
-
 	}
 
 	var getNotes = function() {
 		var token = localStorage.getItem('token');
 		console.log(token);
 		var url = 'getAllNotes';
-		var notes = noteService.service(url,'GET',token,note);
+		var notes = noteService.service(url,'GET',token);
 		console.log(notes);
 		notes.then(function(response) {
+			console.log('received notes ..,.');
 			$scope.notes = response.data;
 		}, function(response) {
+			console.log('Errr....');
 			$scope.error = response.data.message;
 		});
 		$scope.notes = notes;
 	}
 	
-	$scope.deleteNote = function(note) {
+	$scope.deleteNotePermanently = function(note) {
 
 		var token = localStorage.getItem('token');
 		console.log(token);
@@ -47,20 +48,13 @@ toDo.controller('homeController', function($scope, $uibModal, loginService,
 		});
 	}
 	
-	$scope.createNote = function() {
+	$scope.deleteNote = function(note) {
 
 		var token = localStorage.getItem('token');
-		var noteBody = angular.element(document.querySelector('#note-title'));
-		noteBody.empty();
-		var noteTitle = angular.element(document.querySelector('#note-body'));
-		noteTitle.empty();
-
-		console.log(token);
-		var url='addNote';
-		var notes = noteService.service(url,'POST',token,$scope.newNote);
-		
-		noteTitle.empty();
-		noteBody.empty();
+		console.log(note);
+		note.trashed=true;
+		var url='updateNote';
+		var notes = noteService.service(url,'POST',token,note);
 		notes.then(function(response) {
 
 			getNotes();
@@ -72,6 +66,34 @@ toDo.controller('homeController', function($scope, $uibModal, loginService,
 			$scope.error = response.data.message;
 
 		});
+	}
+	$scope.createNote = function() {
+		
+		var token = localStorage.getItem('token');
+		var noteBody = angular.element(document.querySelector('#note-title'));
+		
+		var noteTitle = angular.element(document.querySelector('#note-body'));
+		
+		if($scope.newNote.title!='' || $scope.newNote.body!=''){
+		var url='addNote';
+		var notes = noteService.service(url,'POST',token,$scope.newNote);
+		
+		noteTitle.empty();
+		noteBody.empty();
+		notes.then(function(response) {
+			$scope.newNote.title="";
+			$scope.newNote.body="";
+			getNotes();
+
+		}, function(response) {
+			$scope.newNote.title="";
+			$scope.newNote.body="";
+			getNotes();
+
+			$scope.error = response.data.message;
+
+		});
+		}
 	}
 
 	$scope.showModal = function(note) {
@@ -82,26 +104,38 @@ toDo.controller('homeController', function($scope, $uibModal, loginService,
 			size : 'md'
 		});
 	};
-
+	$scope.pinned = function(note,pinned) {
+		note.pinned=pinned;
+		$scope.updateNote(note);
+		
+	};
+	$scope.doArchived=function(note,archived){
+		note.archived=archived;
+		$scope.updateNote(note);
+	}
 	$scope.updateNote = function(note) {
 		var token = localStorage.getItem('token');
 		var url="updateNote";
 		var notes = noteService.service(url,'POST',token,note);
 		
-
+		modalInstance.close('resetModel');
 		notes.then(function(response) {
-
-			getNotes();
+		
+		//	getNotes();
+			
 
 		}, function(response) {
-
-			getNotes();
+		
+		//	getNotes();
 
 			$scope.error = response.data.message;
 
 		});
 	}
+	
+
 	$scope.newnote = false;
+	
 	$scope.show = function() {
 		$scope.newnote = true;
 	}

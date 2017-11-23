@@ -29,6 +29,16 @@ ToDo.config([ '$stateProvider', '$urlRouterProvider',
 				templateUrl : 'template/ResetPassword.html',
 				controller : 'loginController'
 			});
+			$stateProvider.state('trash', {
+				url : '/trash',
+				templateUrl : 'template/Trash.html',
+				controller : 'homeController'
+			});
+			$stateProvider.state('archive', {
+				url : '/archive',
+				templateUrl : 'template/Archive.html',
+				controller : 'homeController'
+			});
 			$urlRouterProvider.otherwise('login');
 			
 }]);
