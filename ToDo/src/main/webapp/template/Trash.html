@@ -17,12 +17,14 @@
 						<div class="card-text" ng-bind-html="note.body"></div>
 					</div>
 					<div class="note-icons">
-						
+						<div class="dropup">
 							<img src='images/more.svg' width="19px" height="19px"
 								data-toggle="dropdown">
 							<ul class="dropdown-menu">
 								<li><a href="#!/trash" ng-click="deleteNotePermanently(note)">Delete Forever</a></li>
+								<li><a href="#!/trash" ng-click="restore(note)">Restore</a></li>
 							</ul>
+							</div>
 						</div>
 					</div>
 				</div>

@@ -27,6 +27,7 @@ public class User {
 	@Column(name="contact_no")
 	private String contactNo;
 	
+	@JsonIgnore
 	@Column(name="password")
 	private String password;
 	
@@ -35,7 +36,8 @@ public class User {
 	
 	@Column(name="profile_url")
 	private String profileUrl;
-
+	
+	@JsonIgnore
 	@OneToMany(mappedBy="user")
 	Set<Note> notes;
 	

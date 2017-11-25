@@ -12,6 +12,7 @@
 /* 	margin-left: 20%; */
 }
 
+
 [contentEditable=true]:empty:not(:focus):before{
     content:attr(data-text)
 }
@@ -42,11 +43,18 @@
 
 .note-icons > img{
 
-	height: 17px;
-	width:20px;
+	height: 22px;
+	width:22px;
 	margin-right:5px;
 }
-
+.card-title{
+	padding-bottom:8px;
+	font-size: 19px;
+}
+.card-text{
+	padding-bottom:8px;
+	font-size: 17px;
+}
 .card  > .note-icons{
 		padding :2px;
 	visibility: hidden;
@@ -84,7 +92,7 @@
 }
 
 #searchbox{
-	  width: 100%;
+    width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
@@ -143,6 +151,27 @@ margin-right: 5px;
 .modal {
   text-align: center;
   padding: 0!important;
+}
+.profile-dropdown{
+	padding:5px;
+	min-width:350px;
+	height: auto;
+}
+
+
+/* .dropdown-color{
+	min-width:100px;
+	min-height: 100px;
+} */
+.modal-dialog{
+	margin-top: 15%;
+}
+.color-dropdown-item{
+	margin:2px;
+	border-radius: 50%;
+	min-width: 10px;
+	min-height: 25px;
+	border:2px solid Grey;
 }
 /* @media screen and (max-height: 720px) {
   #searchbtn,.profile-pic,#searchbox {

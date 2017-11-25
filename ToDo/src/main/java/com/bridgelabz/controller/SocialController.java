@@ -6,12 +6,15 @@ import java.util.UUID;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bridgelabz.dao.UserDao;
+import com.bridgelabz.model.CustomResponse;
 import com.bridgelabz.model.User;
 import com.bridgelabz.service.TokenService;
 import com.bridgelabz.service.UserService;
@@ -42,7 +45,7 @@ public class SocialController {
 	}
 	
 	@RequestMapping(value = "/googlelogin")
-	public void connectGoogle(HttpServletRequest request,HttpServletResponse response)
+	public void connectGoogle(HttpServletRequest request,HttpServletResponse response,HttpSession session)
 			throws IOException, ServletException{
 		
 		String error = request.getParameter("error");
@@ -70,8 +73,9 @@ public class SocialController {
 					if(id>0){
 						String token=tokenService.generateToken("", id);
 						response.setHeader("Authorization", token);
-						System.out.println("Jwt"+token);
-						response.sendRedirect("http://localhost:8080/ToDo/#!/home");
+						
+						session.setAttribute("token", token);
+						response.sendRedirect("http://localhost:8080/ToDo/#!/dummy");
 					}
 					else{
 						response.sendRedirect("http://localhost:8080/ToDo/#!/home");
@@ -80,9 +84,11 @@ public class SocialController {
 			}
 			else{
 				String token=tokenService.generateToken("",existingUser.getUserId());
-				response.setHeader("Authorization",token);
-				System.out.println(token);
-				response.sendRedirect("http://localhost:8080/ToDo/#!/home");
+				existingUser.setProfileUrl(user.getProfileUrl());
+				userService.updateUser(existingUser);
+				
+				session.setAttribute("token", token);
+				response.sendRedirect("http://localhost:8080/ToDo/#!/dummy");
 			}
 		}
 		else{
@@ -100,10 +106,9 @@ public class SocialController {
 	}
 	
 	@RequestMapping(value = "/connectFB")
-	public void connectFacebook(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException{
+	public void connectFacebook(HttpServletRequest request,HttpServletResponse response,HttpSession session) throws IOException, ServletException{
 		
 		String error = request.getParameter("error");
-		
 		
 		String code = request.getParameter("code");
 		String fbAccessToken = fbConnection.getAccessToken(code);
@@ -125,23 +130,35 @@ public class SocialController {
 					
 					if(id>0){
 						String token=tokenService.generateToken("", id);
+					
 						response.setHeader("Authorization", token);
-						response.sendRedirect("http://localhost:8080/ToDo/#!/home");
+						session.setAttribute("token", token);
+						response.sendRedirect("http://localhost:8080/ToDo/#!/dummy");
 					}
 					else{
 					
-						response.sendRedirect("http://localhost:8080/ToDo/#!/home");
+						response.sendRedirect("http://localhost:8080/ToDo/#!/login");
 					}
 			}
 			else{
 				String token=tokenService.generateToken("",existingUser.getUserId());
-				response.setHeader("Authorization",token);
-				response.sendRedirect("http://localhost:8080/ToDo/#!/home");
+				existingUser.setProfileUrl(user.getProfileUrl());
+				userService.updateUser(existingUser);
+				session.setAttribute("token", token);
+				response.sendRedirect("http://localhost:8080/ToDo/#!/dummy");
 			}
 		}
 		else{
 			 System.out.println("data is not received");
 		}
+	}
+	
+	@RequestMapping(value="/gettoken")
+	public ResponseEntity<CustomResponse> getToken(HttpSession session){
+		CustomResponse response=new CustomResponse();
+		response.setMessage((String) session.getAttribute("token"));
+		session.removeAttribute("token");
+		return  ResponseEntity.ok(response);
 	}
 	
 }

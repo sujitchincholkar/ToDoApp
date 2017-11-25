@@ -6,7 +6,7 @@
 	<div class="row">
 		<div class="col-lg-3 col-md-3" ></div>
 			<div id="note" ng-click="show()" ng-blur="hide()"
-				class=" col-sm-12 col-md-6 col-xs-12 col-lg-4">
+				class=" col-sm-10 col-md-6 col-xs-10 col-lg-4">
 				<b><div contenteditable="true" ng-model="newNote.title"
 						data-text="Title" id="note-title" ng-show="newnote">
 					</div>
@@ -16,10 +16,10 @@
 					ng-model="newNote.body" id="note-body">
 				</div>
 				<div class="note-icons" ng-show="newnote">
-					<img src="images/archive.png"> 
-					<img src="images/reminder.png">
-					<img src="images/colors.png"> <img
-						src="images/collaborator1600.png">
+					<img ng-src="images/archive.svg"> 
+					<img ng-src="images/reminder.png">
+					<img ng-src="images/colors.png"> <img
+						ng-src="images/collaborator1600.png">
 					<div role="button" ng-click="createNote()"
 						class="btn btn-done pull-right">DONE</div>
 				</div>
@@ -32,24 +32,34 @@
 		class=" col-sm-12 col-md-12 col-xs-12 col-lg-12">
 		<div class="col-lg-1 col-md-1"></div>
 		
-		<div class="col-md-10 col-sm-12 col-xs-12 col-lg-10">
-		<h4>Pinned:</h4>
-			<div ng-repeat="note in notes | filter : {trashed : false,pinned:true,archived:false}" id="note-scope"
-				class="col-md-6 col-sm-6 col-xs-12 col-lg-4">
+		<div class="col-md-10 col-sm-12 col-xs-12 col-lg-10  pinned">
+		<h4 ng-show="pinnedNotes.length">Pinned:</h4>
+			<div ng-repeat="note in notes | filter : {trashed : false,pinned:true,archived:false} as pinnedNotes" id="note-scope"
+				class="col-md-6 col-sm-12 col-xs-12 col-lg-4 pin">
 
-				<div class="card">
+				<div class="card" class="col-sm-12 col-xs-12" style="background-color: {{note.color}}">
 					<div class="card-block" ng-click="showModal(note)">
-						<img class="pull-right" src="images/pinned.svg" ng-click="pinned(note,false)" width="20" height="20">
+						<img class="pull-right" src="images/pinned.svg" ng-click="pinned(note,false)" width="22" height="22">
 						<b><div class="card-title" ng-bind-html="note.title"></div></b>
 						
 						<div class="card-text" ng-bind-html="note.body"></div>
 					</div>
 					<div class="note-icons">
-						<img src="images/archive.png" ng-click="doArchived(note,true)">
-						<img src="images/reminder.png"> <img src="images/colors.png">
-						<img src="images/collaborator.svg">
+						<img ng-src="images/archive.svg" ng-click="doArchived(note,true,false)">
+						<img ng-src="images/reminder.svg"> 
+						<div class="dropup inline " >
+					    <img ng-src="images/colorpallet.svg" data-toggle="dropdown" width="22" height="22">
+					    <ul class="dropdown-menu dropdown-color" >
+					  
+								<li style="background-color:{{color.color}}" class="color-dropdown-item col-xs-2 " ng-repeat="color in colors"
+                                           title="{{color.tooltip}}"    ng-click="changeColor(note,color.color)"></li>
+							
+							</ul>
+							
+					    </div>
+						<img ng-src="images/collaborator.svg">
 						<div class="dropdown inline pull-right">
-							<img src='images/more.svg' width="19px" height="19px"
+							<img ng-src='images/more.svg' width="19px" height="19px"
 								data-toggle="dropdown">
 							<ul class="dropdown-menu">
 								<li><a href="#!/home" ng-click="deleteNote(note)">Delete</a></li>
@@ -68,34 +78,43 @@
 	
 	<div id="note-container"
 		class=" col-sm-12 col-md-12 col-xs-12 col-lg-12">
-		<div class="col-lg-1 col-md-1"></div>
+		<div class="col-lg-1 col-md-1 hidden-sm"></div>
 		<div class="col-md-10 col-sm-12 col-xs-12 col-lg-10">
-		<h4>Others:</h4>
+		<h4 ng-show="pinnedNotes.length">Others:</h4>
 			<div ng-repeat="note in notes | filter : {trashed : false ,pinned:false,archived:false}" id="note-scope"
-				class="col-md-6 col-sm-6 col-xs-12 col-lg-4">
+				class="col-md-6 col-sm-12 col-xs-12 col-lg-4">
 
-				<div class="card">
+				<div class="card" style="background-color: {{note.color}}">
 					<div class="card-block" ng-click="showModal(note)">
-					<img class="pull-right" src="images/unpinned.svg" ng-click="pinned(note,true)" width="20" height="20">
+					<img class="pull-right" src="images/unpinned.svg"  ng-click="pinned(note,true)" width="22" height="22">
 						<b><div class="card-title" ng-bind-html="note.title"></div></b>
 						<div class="card-text" ng-bind-html="note.body"></div>
 					</div>
 					<div class="note-icons">
-						<img src="images/archive.png" ng-click="doArchived(note,true)"> <img
-							src="images/reminder.png"> <img src="images/colors.png">
-						<img src="images/collaborator.svg">
+						<img ng-src="images/archive.svg" ng-click="doArchived(note,true,false)"> 
+						<img ng-src="images/reminder.svg">
+						<div class="dropup inline " >
+					    <img ng-src="images/colorpallet.svg" data-toggle="dropdown" width="22" height="22">
+					    <ul class="dropdown-menu dropdown-color" >
+								<li style="background-color:{{color.color}}" class="color-dropdown-item col-xs-2 " ng-repeat="color in colors"
+                                           title="{{color.tooltip}}"    ng-click="changeColor(note,color.color)"></li>
+							</ul>
+					  </div>
+					  
+						<img ng-src="images/collaborator.svg">
 						<div class="dropdown inline pull-right">
-							<img src='images/more.svg' width="19px" height="19px"
+							<img ng-src='images/more.svg' width="19px" height="19px"
 								data-toggle="dropdown">
 							<ul class="dropdown-menu">
 								<li><a href="#!/home" ng-click="deleteNote(note)">Delete</a></li>
+								<li><a href="#!/home" ng-click="makeCopy(note)">Make a copy</a></li>
 							</ul>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="col-lg-1 col-md-1"></div>
+		<div class="col-lg-1 col-md-1 hidden-sm"></div>
 	</div>
 
 </div>

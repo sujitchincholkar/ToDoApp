@@ -30,10 +30,12 @@
 <script type="text/javascript" src="service/loginService.js"></script>
 <script type="text/javascript" src="service/registerService.js"></script>
 <script type="text/javascript" src="service/noteService.js"></script>
+<script type="text/javascript" src="service/tokenservice.js"></script>
 
 <script type="text/javascript" src="directives/CustomDirectives.js"></script>
 
 <script type="text/javascript" src="controller/homeController.js"></script>
+<script type="text/javascript" src="controller/dummyController.js"></script>
 <script type="text/javascript" src="controller/loginController.js"></script>
 <script type="text/javascript" src="controller/registerController.js"></script>
 </head>

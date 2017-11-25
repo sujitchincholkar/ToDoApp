@@ -1,10 +1,10 @@
-<nav class="navbar navbar-default navbar-fixed-top" class="col-sm-12 col md-12 col-lg-12">
+<nav class="navbar navbar-default navbar-fixed-top" style="background-color:{{navColor}}" class="col-sm-12 col md-12 col-lg-12">
 
 
 
 
 
-		<div class="col-sm-1">
+		<div class="col-sm-1 col-xs-2">
 			<!--  //<a href="#!/home"   > -->
 			<span class="nav navbar-nav" id="sidebarbtn" style="cursor: pointer"
 				ng-click="showSidebar()">&#9776;</span>
@@ -12,11 +12,11 @@
 			<!--  </a> -->
 		</div>
 
-		<div class="col-sm-4 col md-3 col-lg-3">
+		<div class="col-sm-8 col md-3 col-lg-3 col-xs-8">
 
 			<div class="navbar-header">
 				<a class="navbar-brand" href="#!/home"><font color="black"
-					size="5"><b>Google</b> Keep</font></a>
+					size="5">{{navBrand}}</font></a>
 			</div>
 
 			<!-- <button type="button" class="navbar-toggle collapsed"
@@ -32,10 +32,10 @@
 		</div>
 		<div class="col-lg-1 hidden-sm hidden-xs" id="searchbtn">
 
-			<span class="glyphicon glyphicon-search" style="font-size: '25px''"></span>
+			<span class="glyphicon glyphicon-search" style="font-size: '25px'"></span>
 		</div>
 
-		<div class="col-lg-3 hidden-sm hidden-xs">
+		<div class="col-lg-3 hidden-sm hidden-xs hidden-md">
 		
 			<input type="text" id="searchbox" placeholder="search"
 				class="nav navbar-nav ">
@@ -43,19 +43,30 @@
 
 
 
-		<div id="navbar" class="navbar-collapse  collapse">
+		<div id="navbar" class="navbar-collapse  collapse  hidden-sm hidden-xs">
 			<ul class="nav navbar-nav navbar-right">
 				<div class="col-lg-2">
-					<li class="dropdown"><a href="#!/home" class="dropdown-toggle"
+					<li class="dropdown "><!-- <a href="#!/home" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
-						aria-expanded="false"> <img src="images/default-Profile.png"
-							class="img-circle profile-pic" alt="profile1">
+						aria-expanded="false"> --> <img ng-src={{user.profileUrl}}
+							class="img-circle profile-pic dropdown-toggle" data-toggle="dropdown"
+							alt="profile1">
 					</a>
-						<ul class="dropdown-menu">
+						<ul class="dropdown-menu profile-dropdown">
+						<div class="row">
+						     <img ng-src={{user.profileUrl}}
+							class="img-circle col-sm-4" alt="profile1" width="100" height="100">
+							<div class="col-sm-6">
+							<font size="5px"><b>{{user.fullName}}</b></font>
+							{{user.email}}
+						</div>
+						<div class="col-sm-1"></div>
+						</div>
 							<li role="separator" class="divider"></li>
-							<li><a href="#!/home">Sign out</a></li>
+							<li><a href="#!/home" ng-click="signout()">Sign out</a></li>
 
-						</ul></li>
+						</ul>
+						</li>
 				</div>
 			</ul>
 

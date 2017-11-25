@@ -93,7 +93,7 @@ public class FBConnnection {
 				.accept(MediaType.APPLICATION_JSON)
 				.get();
 
-		/*GooglePojo profile = response.readEntity(GooglePojo.class);*/
+		
 		String profile=response.readEntity(String.class);
 		ObjectMapper mapper=new ObjectMapper();
 		JsonNode fbProfile = null;

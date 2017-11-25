@@ -157,7 +157,18 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Sorry token is expired or invalid");
 		}
 	}
-
+	
+	@RequestMapping(value = "/getuser", method = RequestMethod.GET)
+	public ResponseEntity<User> getUser(HttpServletRequest request){
+		String token = request.getHeader("Authorization");
+		User user = userService.getUserById(tokenService.verifyToken(token));
+		if(user!=null){
+			return ResponseEntity.ok(user);
+		}else{
+			return ResponseEntity.ok(user);
+		}
+	}
+	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public ResponseEntity logout(HttpSession session) {
 		session.removeAttribute(session.getId());
