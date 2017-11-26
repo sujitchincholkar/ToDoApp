@@ -27,7 +27,7 @@ public class User {
 	@Column(name="contact_no")
 	private String contactNo;
 	
-	@JsonIgnore
+	
 	@Column(name="password")
 	private String password;
 	

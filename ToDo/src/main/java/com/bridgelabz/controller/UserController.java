@@ -51,7 +51,7 @@ public class UserController {
 	@RequestMapping(value = "/Register", method = RequestMethod.POST)
 	public ResponseEntity<CustomResponse> registerUser(@RequestBody User user, HttpServletRequest request) {
 		CustomResponse customResponse = new CustomResponse();
-		
+		System.out.println(user.getPassword());
 		if (validator.userValidate(user)) {
 
 			logger.info("User register");

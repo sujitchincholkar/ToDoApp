@@ -1,7 +1,10 @@
 package com.bridgelabz.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bridgelabz.model.Collaborater;
 import com.bridgelabz.model.CustomResponse;
 import com.bridgelabz.model.Note;
 import com.bridgelabz.model.User;
@@ -163,9 +167,48 @@ public class NoteController {
 
 		if (user != null) {
 			Set<Note> notes = noteService.getNotes(user.getUserId());
+			Set<Note> collborated =noteService.getCollboratedNotes(user.getUserId());
+			notes.addAll(collborated);
 			return ResponseEntity.ok(notes);
 		} else {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(null);
 		}
+	}
+	
+	
+	@RequestMapping(value = "/collaborate", method = RequestMethod.POST)
+	public ResponseEntity<List<User>> getNotes(@RequestBody Collaborater collborator, HttpServletRequest request){
+		List<User> users=new ArrayList<User>();
+		Collaborater collaborate =new Collaborater();
+		Note note= (Note) collborator.getNote();
+		User shareWith= (User) collborator.getShareWithId();
+		shareWith=userService.getUserByEmail(shareWith.getEmail());
+		User owner= (User) collborator.getOwnerId();
+		String token=request.getHeader("Authorization");
+		users=	noteService.getListOfUser(note.getNoteId());
+		User user=userService.getUserById(tokenService.verifyToken(token));
+		if(user!=null) {
+				if(shareWith!=null && shareWith.getUserId()!=owner.getUserId()) {
+					int i=0;
+					int flag=0;
+					while(users.size()>i) {
+						if(users.get(i).getUserId()==shareWith.getUserId()) {
+							flag=1;
+						}
+						i++;
+					}
+					if(flag==0) {
+						collaborate.setNote(note);
+						collaborate.setOwnerId(owner);
+						collaborate.setShareWithId(shareWith);
+						if(noteService.saveCollborator(collaborate)>0) {
+						  	users.add(shareWith);
+						}else {
+							 ResponseEntity.ok(users);
+						}
+					}
+		}
+		}
+		return ResponseEntity.ok(users);
 	}
 }

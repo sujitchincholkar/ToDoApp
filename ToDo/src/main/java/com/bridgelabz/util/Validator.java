@@ -16,7 +16,7 @@ public class Validator
 		String emailPattern = "^[A-Za-z0-9._]+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$";
 		String  mobilePattern="^((\\+)?(\\d{2}[-]))?(\\d{10})?$";
 		
-		if(user.getFullName()==null||!user.getFullName().matches(nameValidator)){ 	
+/*		if(user.getFullName()==null||!user.getFullName().matches(nameValidator)){ 	
 			isValid=false;
 		}
 		if(user.getEmail()==null||!user.getEmail().matches(emailPattern)){
@@ -30,7 +30,7 @@ public class Validator
 		}
 		if(userDao.getUserByEmail(user.getEmail())!=null){
 			isValid=false;
-		}
+		}*/
 		
 		return isValid;
 	}
