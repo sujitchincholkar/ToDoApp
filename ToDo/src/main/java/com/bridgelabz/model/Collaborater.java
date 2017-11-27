@@ -28,7 +28,6 @@ public class Collaborater{
 	private User shareWithId;
 	
 	@ManyToOne
-	@Access(AccessType.FIELD)
 	@JoinColumn(name="noteId")
 	private Note note;
 

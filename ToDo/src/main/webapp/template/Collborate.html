@@ -1,0 +1,23 @@
+<div class="modal-content" ng-init="getUserlist(note,user)">
+<div class="modal-header"><font size="5px">Collborators</font></div>
+	<div class="modal-body">
+	<div ng-repeat="user in users">
+	<div class="row">
+
+	<div class="col-sm-2">
+	<img ng-src="{{user.profileUrl}}" class="img-circle"/>
+	</div>
+	
+	<div class="col-sm-8"><font size="4px">{{user.fullName}}</font><br>{{user.email}}</div>
+	</div><br>
+	</div><div class="row">
+	<input type="text" class="col-sm-12" id="searchbox" ng-model="$parent.shareWith.email" placeholder="Enter Collborator">
+	</div>
+	</div>
+	<div class="modal-footer">
+	
+	    <div role="button" ng-click="collborate(note,user)"
+				class="btn btn-done pull-right inline" data-dismiss="modal">DONE</div>
+	</div>
+
+</div>

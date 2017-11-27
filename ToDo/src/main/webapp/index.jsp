@@ -2,6 +2,13 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet"
+	href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+
+<link rel="stylesheet" type="text/css" href="css/loginform.css">
+<link rel="stylesheet" type="text/css" href="css/sidenav.css">
+<link rel="stylesheet" type="text/css" href="css/homepage.css">
+
 <script
 	src="bower_components/angular/angular.js"></script>
 
@@ -17,12 +24,6 @@
 <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
 <script src=" bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 
-<link rel="stylesheet"
-	href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-
-<link rel="stylesheet" type="text/css" href="css/loginform.css">
-<link rel="stylesheet" type="text/css" href="css/sidenav.css">
-<link rel="stylesheet" type="text/css" href="css/homepage.css">
 
 <script type="text/javascript" src="script/ToDoApp.js"></script>
 <script type="text/javascript" src="script/validation.js"></script>

@@ -127,6 +127,93 @@ toDo.controller('homeController', function($scope, $uibModal, $state,
 			size : 'md'
 		});
 	};
+	$scope.openCollboarate=function(note,user){
+		$scope.note = note;
+		$scope.user=user;
+		modalInstance = $uibModal.open({
+			templateUrl : 'template/Collborate.html',
+			scope : $scope,
+			
+		});
+	}
+	var collborators=[];
+	$scope.getUserlist=function(note,user,index){
+		var obj={};
+		console.log(note);
+		obj.note=note;
+		obj.ownerId=user;
+		obj.shareWithId={};
+		
+		var url='collaborate';
+		var token = localStorage.getItem('token');
+		var users=noteService.service(url,'POST',token,obj);
+        users.then(function(response) {
+			
+			console.log("Inside collborator");
+			console.log(response.data);
+			$scope.users= response.data; 
+			$scope.notes[index].collabratorUsers = response.data; 
+			
+		}, function(response) {
+			$scope.users={};
+			collborators= response.data; 
+			
+
+		});
+		console.log("Returned");
+		console.log(collborators);
+		console.log(users);
+		return collborators;
+	}
+	
+	
+/*	var collborate=function(obj){
+		var url='collaborate';
+		var token = localStorage.getItem('token');
+		var users = noteService.service(url,'POST',token,obj);
+		var collborators={};
+		users.then(function(response) {
+			
+			console.log("Inside collborator");
+			console.log(response.data);
+			collborators= response.data; 
+		}, function(response) {
+			$scope.users={};
+			collborators= response.data; 
+			
+
+		});
+		return collborators;
+	}*/
+	
+	$scope.collborate=function(note,user){
+		var obj={};
+		console.log(note);
+		obj.note=note;
+		obj.ownerId=user;
+		obj.shareWithId=$scope.shareWith;
+		
+		var url='collaborate';
+		var token = localStorage.getItem('token');
+		var users=noteService.service(url,'POST',token,obj);
+        users.then(function(response) {
+			
+			console.log("Inside collborator");
+			console.log(response.data);
+			$scope.users= response.data; 
+			$scope.notes[index].collabratorUsers = response.data; 
+			
+		}, function(response) {
+			$scope.users={};
+			
+			
+
+		});
+		console.log("Returned");
+		console.log(collborators);
+		console.log(users);
+		
+	}
 	
 	$scope.pinned = function(note,pinned) {
 		note.pinned=pinned;

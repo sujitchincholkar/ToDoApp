@@ -142,8 +142,21 @@ public class NoteController {
 					return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
 				}
 			} else {
-				response.setMessage("Note is not Present");
-				return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+				List<User> users=	noteService.getListOfUser(note.getNoteId());
+				int i=0;
+				int flag=0;
+				while(users.size()>i) {
+					if(users.get(i).getUserId()==user.getUserId()) {
+						flag=1;
+					}
+					i++;
+				}if(flag==1){
+					
+					note.setUser(oldNote.getUser());
+					noteService.updateNote(note);
+				}
+				response.setMessage("Note updated");
+				return ResponseEntity.status(HttpStatus.OK).body(response);
 			}
 
 		} else {

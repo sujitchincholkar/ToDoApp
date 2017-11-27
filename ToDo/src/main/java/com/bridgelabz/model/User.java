@@ -10,6 +10,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 @Entity
 @Table(name="user")
@@ -24,10 +26,11 @@ public class User {
 	@Column(name="email")
 	private String email;
 	
+	@JsonProperty(access = Access.WRITE_ONLY)
 	@Column(name="contact_no")
 	private String contactNo;
 	
-	
+	@JsonProperty(access = Access.WRITE_ONLY)
 	@Column(name="password")
 	private String password;
 	

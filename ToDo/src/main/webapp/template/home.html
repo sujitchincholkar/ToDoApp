@@ -90,6 +90,13 @@
 						<b><div class="card-title" ng-bind-html="note.title"></div></b>
 						<div class="card-text" ng-bind-html="note.body"></div>
 					</div>
+					<div class="row" ng-init="getUserlist(note,user,$index)">
+						<div ng-repeat="user in note.collabratorUsers">
+								<div class="col-sm-1">
+									<img ng-src="{{user.profileUrl}}" title="{{user.email}}" class="img-circle" height="25" width="25"/>
+								</div>
+							</div>
+						</div>
 					<div class="note-icons">
 						<img ng-src="images/archive.svg" ng-click="doArchived(note,true,false)"> 
 						<img ng-src="images/reminder.svg">
@@ -101,13 +108,13 @@
 							</ul>
 					  </div>
 					  
-						<img ng-src="images/collaborator.svg">
+						<img ng-src="images/collaborator.svg" ng-click="openCollboarate(note,user)">
 						<div class="dropdown inline pull-right">
 							<img ng-src='images/more.svg' width="19px" height="19px"
 								data-toggle="dropdown">
 							<ul class="dropdown-menu">
-								<li><a href="#!/home" ng-click="deleteNote(note)">Delete</a></li>
-								<li><a href="#!/home" ng-click="makeCopy(note)">Make a copy</a></li>
+								<li><a  ng-click="deleteNote(note)">Delete</a></li>
+								<li><a  ng-click="makeCopy(note)">Make a copy</a></li>
 							</ul>
 						</div>
 					</div>
