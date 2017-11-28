@@ -9,18 +9,30 @@
 <link rel="stylesheet" type="text/css" href="css/sidenav.css">
 <link rel="stylesheet" type="text/css" href="css/homepage.css">
 
+<link rel="stylesheet" type="text/css" href="bower_components/angular-toastr/dist/angular-toastr.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" />
+ 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+
+
+
+
+
 <script
 	src="bower_components/angular/angular.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>  
 <script type="text/javascript"
 	src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
-
-<script
+<script src="https://connect.facebook.net/enUS/all.js"></script>
+<script src="bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
+<!-- <script
 	src="bower_components/jquery/dist/jquery.min.js"></script>
 
 <script
-	src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
- 
+	src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script> -->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
 <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
 <script src=" bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 

@@ -146,4 +146,15 @@ public class NoteDaoImpl implements NoteDao{
 		return notes;
 	}
 
+	public int removeCollborator(int shareWith,int noteId) {
+		Session session = factory.openSession();
+		Transaction transaction=session.beginTransaction();
+		Query query = session.createQuery("delete  Collaborater c where c.shareWithId= "+shareWith+" and c.note="+noteId );
+	/*	query.setParameter("noteId", noteId);
+		query.setParameter("shareWith", shareWith);*/
+		int status=query.executeUpdate();
+		session.close();
+		return status;
+	}
+
 }

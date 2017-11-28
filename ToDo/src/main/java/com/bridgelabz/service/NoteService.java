@@ -16,5 +16,6 @@ public interface NoteService {
 	public int saveCollborator(Collaborater collborate);
 	public List<User> getListOfUser(int noteId);
 	public Set<Note> getCollboratedNotes(int userId);
+	public int removeCollborator(int shareWith,int noteId);
 
 }

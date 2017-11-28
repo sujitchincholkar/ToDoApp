@@ -54,5 +54,10 @@ public class NoteServiceImpl implements NoteService{
 		// TODO Auto-generated method stub
 		return noteDao.getCollboratedNotes(userId);	
 	}
+
+	public int removeCollborator(int shareWith,int noteId) {
+		// TODO Auto-generated method stub
+		return noteDao.removeCollborator(shareWith, noteId);
+	}
 	
 }

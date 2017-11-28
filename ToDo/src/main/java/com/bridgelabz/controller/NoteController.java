@@ -188,6 +188,7 @@ public class NoteController {
 		}
 	}
 	
+
 	
 	@RequestMapping(value = "/collaborate", method = RequestMethod.POST)
 	public ResponseEntity<List<User>> getNotes(@RequestBody Collaborater collborator, HttpServletRequest request){
@@ -223,5 +224,48 @@ public class NoteController {
 		}
 		}
 		return ResponseEntity.ok(users);
+	}
+	
+	@RequestMapping(value = "/getOwner", method = RequestMethod.POST)
+	public ResponseEntity<User> getOwner(@RequestBody Note note, HttpServletRequest request){
+		String token=request.getHeader("Authorization");
+		User user=userService.getUserById(tokenService.verifyToken(token));
+		if(user!=null) {
+		Note noteComplete=noteService.getNoteById(note.getNoteId());
+		User owner=noteComplete.getUser();
+		return ResponseEntity.ok(owner);
+		}
+		else{
+			return ResponseEntity.ok(null);
+		}
+	}
+	
+	@RequestMapping(value = "/removeCollborator", method = RequestMethod.POST)
+	public ResponseEntity<CustomResponse> removeCollborator(@RequestBody Collaborater collborator, HttpServletRequest request){
+		CustomResponse response=new CustomResponse();
+		int shareWith=collborator.getShareWithId().getUserId();
+		int noteId=collborator.getNote().getNoteId();
+		Note note=noteService.getNoteById(noteId);
+		User owner=note.getUser();
+		String token=request.getHeader("Authorization");
+		User user=userService.getUserById(tokenService.verifyToken(token));
+		if(user!=null) {
+				if(owner.getUserId()!=shareWith){
+					if(noteService.removeCollborator(shareWith, noteId)>0){
+						response.setMessage("Collborator removed");
+						return ResponseEntity.ok(response);
+					}else{
+						response.setMessage("database problem");
+						return ResponseEntity.ok(response);
+					}
+				}else{
+					response.setMessage("Can't remove owner");
+					return ResponseEntity.ok(response);
+				}
+		
+	    }else{
+	    	response.setMessage("Token expired");
+			return ResponseEntity.ok(response);
+	    }
 	}
 }
