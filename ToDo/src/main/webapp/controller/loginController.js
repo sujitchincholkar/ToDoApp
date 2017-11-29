@@ -5,6 +5,7 @@ toDo.controller('loginController', function($scope, loginService,$location){
 		message.then(function(response) {
 				console.log(response.data);
 				localStorage.setItem('token',response.headers('Authorization'));
+				localStorage.setItem('view','images/list.png');
 				$location.path('/home');
 			},function(response){
 				$scope.error=response.data.message;

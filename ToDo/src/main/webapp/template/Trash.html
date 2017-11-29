@@ -9,7 +9,7 @@
 		<div class="col-lg-1 col-md-1"></div>
 		<div class="col-md-10 col-sm-12 col-xs-12 col-lg-10">
 			<div ng-repeat="note in notes | filter : {trashed : true}" id="note-scope"
-				class="col-md-6 col-sm-6 col-xs-12 col-lg-4">
+				class="{{viewcol}}">
 
 				<div class="card">
 					<div class="card-block" ng-click="showModal(note)">
@@ -18,7 +18,7 @@
 					</div>
 					<div class="note-icons">
 						<div class="dropup">
-							<img src='images/more.svg' width="19px" height="19px"
+							<img ng-src='images/more.svg' width="19px" height="19px"
 								data-toggle="dropdown">
 							<ul class="dropdown-menu">
 								<li><a href="#!/trash" ng-click="deleteNotePermanently(note)">Delete Forever</a></li>

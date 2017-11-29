@@ -27,11 +27,22 @@
 	src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 <script src="https://connect.facebook.net/enUS/all.js"></script>
 <script src="bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
+<script type="text/javascript" src="https://cdn.rawgit.com/adonespitogo/angular-base64-upload/master/src/angular-base64-upload.js"></script>
 <!-- <script
 	src="bower_components/jquery/dist/jquery.min.js"></script>
 
 <script
 	src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script> -->
+	
+	
+	<script src="bower_components/ng-file-upload/ng-file-upload-shim.min.js"></script>
+	<script src="bower_components/ng-file-upload/ng-file-upload.min.js"></script>
+	
+	<script src="bower_components/angular-base64/angular-base64.js"></script>
+<script src="bower_components/angular-base64-upload/dist/angular-base64-upload.js"></script>
+<script src="bower_components/angular-base64-upload/dist/angular-base64-upload.min.js"></script>
+	
+	
  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
 <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
 <script src=" bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>

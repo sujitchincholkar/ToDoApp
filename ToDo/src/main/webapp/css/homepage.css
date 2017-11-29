@@ -164,7 +164,7 @@ margin-right: 5px;
 	min-height: 100px;
 } */
 .modal-dialog{
-	margin-top: 15%;
+	margin-top: 10%;
 }
 .color-dropdown-item{
 	margin:2px;
@@ -173,6 +173,28 @@ margin-right: 5px;
 	min-height: 25px;
 	border:2px solid Grey;
 }
+.view{
+	/* mrgin:2px; */
+	
+}
+#reminder{
+	width:48%;
+	background-color: #DADAD9;	
+}
+#reminder:hover .closebtn{
+	visibility: visible;
+}
+.closebtn{
+	cursor:pointer;
+  	visibility:hidden;
+  	height: 15px;
+  	width:15px;
+}
+.grid{
+	width:310px;
+	border: 1px solid red;
+}
+
 /* @media screen and (max-height: 720px) {
   #searchbtn,.profile-pic,#searchbox {
     visibility: hidden;

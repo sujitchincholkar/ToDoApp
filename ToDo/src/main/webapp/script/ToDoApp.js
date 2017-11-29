@@ -1,4 +1,4 @@
-var ToDo = angular.module('ToDo', ['ui.router','ui.bootstrap', 'ngSanitize','toastr','ui.bootstrap.datepicker']);
+var ToDo = angular.module('ToDo', ['ui.router','ui.bootstrap','ngFileUpload', 'ngSanitize','toastr','ui.bootstrap.datepicker','base64']);
 
 ToDo.config([ '$stateProvider', '$urlRouterProvider',
 		function($stateProvider, $urlRouterProvider) {
@@ -44,6 +44,12 @@ ToDo.config([ '$stateProvider', '$urlRouterProvider',
 				url : '/dummy',
 				templateUrl : 'template/Dummypage.html',
 				controller : 'dummycontroller'
+			});
+			
+			$stateProvider.state('reminder', {
+				url : '/reminder',
+				templateUrl : 'template/Reminder.html',
+				controller : 'homeController'
 			});
 			
 			$urlRouterProvider.otherwise('login');

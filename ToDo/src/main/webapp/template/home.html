@@ -35,7 +35,7 @@
 		<div class="col-md-10 col-sm-12 col-xs-12 col-lg-10  pinned">
 		<h4 ng-show="pinnedNotes.length">Pinned:</h4>
 			<div ng-repeat="note in notes | filter : {trashed : false,pinned:true,archived:false} as pinnedNotes" id="note-scope"
-				class="col-md-6 col-sm-12 col-xs-12 col-lg-4 pin">
+				class="{{viewcol}} pin">
 
 				<div class="card" class="col-sm-12 col-xs-12" style="background-color: {{note.color}}">
 					<div class="card-block" ng-click="showModal(note)">
@@ -82,30 +82,37 @@
 		<div class="col-md-10 col-sm-12 col-xs-12 col-lg-10">
 		<h4 ng-show="pinnedNotes.length">Others:</h4>
 			<div ng-repeat="note in notes | filter : {trashed : false ,pinned:false,archived:false}" id="note-scope"
-				class="col-md-6 col-sm-12 col-xs-12 col-lg-4">
-
+				class="{{viewcol}}">
+				
 				<div class="card" style="background-color: {{note.color}}">
+				<img class="pull-right" src="images/unpinned.svg"  ng-click="pinned(note,true)" width="22" height="22">
+				<div ng-if="note.image"><img ng-src="{{note.image}}" height="100" width="100"></div>
 					<div class="card-block" ng-click="showModal(note)">
-					<img class="pull-right" src="images/unpinned.svg"  ng-click="pinned(note,true)" width="22" height="22">
+					
 						<b><div class="card-title" ng-bind-html="note.title"></div></b>
 						<div class="card-text" ng-bind-html="note.body"></div>
 					</div>
-					<div>{{note.reminderStatus}}</div>
+					<div id="reminder" ng-if="note.reminderStatus!=null">
+					{{note.reminderStatus}}<span class="closebtn" ng-click="removeReminder(note)">&#x274C;</span>
+					 
+					</div>  
 					<div class="row" ng-init="getUserlist(note,user,$index)">
 						<div ng-repeat="user in note.collabratorUsers">
 								<div class="col-sm-1">
-									<img ng-src="{{user.profileUrl}}" title="{{user.email}}" class="img-circle" height="25" width="25"/>
+									<img ng-src="{{user.profileUrl}}" title="{{user.email}}" ng-click="openCollboarate(note,user)" class="img-circle" height="25" width="25"/>
 								</div>
 							</div>
 						</div>
-					<div class="note-icons">
+<input ng-show="false" id="image" type='file' ng-model-instant ng-model="file" onchange="angular.element(this).scope().imageUpload(this)" />					<div class="note-icons">
+						
+						 <img ng-src="images/colorpallet.svg" ng-click="openImageUploader(note,'note')" width="22" height="22">
 						<img ng-src="images/archive.svg" ng-click="doArchived(note,true,false)"> 
 						<div class="dropup inline">
-						<span class="btn dropdown-toggle" id="menu1" data-toggle="dropdown">
+						<span class="dropdown-toggle"  data-toggle="dropdown">
 										<img alt="reminder" ng-src="images/reminder.svg" width="22" height="22">
 									</span>
 									
-									<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+									<ul class="dropdown-menu" role="menu" >
 									<li><input type="text" ng-attr-id="datepicker{{note.noteId}}" class="reminder" ng-click="openReminder(note)"></li>
 									<li><button ng-click="openReminder(note)"><span  class="glyphicon glyphicon-calendar"></span></button></li>
 									</ul>

@@ -22,7 +22,8 @@ toDo.controller('homeController',
 					$scope.mleft = "0px";
 				}
 			}
-
+			
+			
 			var colors = [ {
 				'color' : '#FFFFFF',
 				'tooltip' : 'White'
@@ -185,7 +186,7 @@ toDo.controller('homeController',
 					console.log("Inside collborator");
 					console.log(response.data);
 					$scope.users = response.data;
-					$scope.notes[index].collabratorUsers = response.data;
+					note.collabratorUsers = response.data;
 
 				}, function(response) {
 					$scope.users = {};
@@ -211,7 +212,7 @@ toDo.controller('homeController',
 			 * }); return collborators; }
 			 */
 
-			$scope.collborate = function(note, user, index) {
+			$scope.collborate = function(note, user) {
 				var obj = {};
 				console.log(note);
 				obj.note = note;
@@ -226,7 +227,7 @@ toDo.controller('homeController',
 					console.log("Inside collborator");
 					console.log(response.data);
 					$scope.users = response.data;
-					$scope.notes[index].collabratorUsers = response.data;
+					$scope.note.collabratorUsers = response.data;
 
 				}, function(response) {
 					$scope.users = {};
@@ -345,6 +346,7 @@ toDo.controller('homeController',
 			$scope.hide = function() {
 				$scope.newnote = false;
 			}
+			
 			var getUser = function() {
 				var token = localStorage.getItem('token');
 				var url = 'getuser';
@@ -408,7 +410,7 @@ toDo.controller('homeController',
 					action_properties : JSON.stringify({
 						object : {
 							'og:title' : note.title,
-							'og:description' : note.description
+							'og:description' : note.body
 						}
 					})
 				}, function(response) {
@@ -419,7 +421,28 @@ toDo.controller('homeController',
 					}
 				});
 			};
-
+			
+			$scope.viewImage=localStorage.getItem('view');
+			if($scope.viewImage=="images/grid.png"){
+				$scope.viewcol="col-md-12 col-sm-12 col-xs-12 col-lg-12";
+			}else{
+				
+				$scope.viewcol="col-md-6 col-sm-12 col-xs-12 col-lg-4";
+			}
+			
+		
+			$scope.changeview=function(){
+				if($scope.viewImage=="images/list.png"){
+				$scope.viewImage="images/grid.png";
+				localStorage.setItem('view',"images/grid.png");
+				$scope.viewcol="col-md-12 col-sm-12 col-xs-12 col-lg-12";
+			}else{
+				$scope.viewImage="images/list.png";
+				localStorage.setItem('view',"images/list.png");
+				$scope.viewcol="col-md-6 col-sm-12 col-xs-12 col-lg-4";
+			}
+			}
+			
 			$scope.reminder = "";
 			$scope.openReminder = function(note) {
 				$('.reminder').datetimepicker();
@@ -437,6 +460,12 @@ toDo.controller('homeController',
 				}
 			}
 			
+			$scope.removeReminder=function(note){
+				console.log($scope.file);
+				note.reminderStatus=null;
+				update(note);
+			}
+			
 			function interVal() {
 				
 					$interval(function(){
@@ -448,13 +477,64 @@ toDo.controller('homeController',
 								
 								if($scope.notes[i].reminderStatus === currentDate){
 									
-									toastr.success('You have a reminder for a note', 'check it out');
+									toastr.success($scope.notes[i].title, 'Reminder');
+									$scope.notes[i].reminderStatus=null;
+									update($scope.notes[i]);
+									
 								}
 							}
 							
 						}
 					},22000);
 			}
+			
+			/*////////////---Upload Image---/////////////*/
+			
+			
+			$scope.openImageUploader = function(type,typeOfImage) {
+				$scope.type = type;
+				$scope.typeOfImage=typeOfImage;
+				$('#image').trigger('click');
+				return false;
+			}
+			
+			
+			$scope.stepsModel = [];
+
+			$scope.imageUpload = function(element){
+			    var reader = new FileReader();
+			    console.log("ele"+element);
+			    reader.onload = $scope.imageIsLoaded;
+			    reader.readAsDataURL(element.files[0]);
+			    console.log(element.files[0]);
+			}
+		
+			$scope.imageIsLoaded = function(e){
+			    $scope.$apply(function() {
+			        $scope.stepsModel.push(e.target.result);
+			        console.log(e.target.result);
+			        var imageSrc=e.target.result;
+			        
+			        if($scope.typeOfImage=='user'){
+			        	console.log("User pic");
+			        	$scope.type.profileUrl=imageSrc;
+			        	
+			        }else{
+			        $scope.type.image=imageSrc;
+			        console.log(e.target.result);
+			        console.log(imageSrc);
+			        update($scope.type);}
+			    });
+			};
+			
+			
+
+			$scope.$on("fileProgress", function(e, progress) {
+				$scope.progress = progress.loaded / progress.total;
+			});
+			
+			$scope.type = {};
+			$scope.type.image = ''; 
 
 			getNotes();
 			getUser();

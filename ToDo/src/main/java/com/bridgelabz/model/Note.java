@@ -52,7 +52,11 @@ public class Note {
 
 	@Column
 	private String reminderStatus;
+	
+	@Column(columnDefinition = "LONGBLOB")
+	private String image;
 
+	
 	@ManyToOne
 	@JsonIgnore
 	@JoinColumn(name = "user_id")
@@ -62,7 +66,6 @@ public class Note {
 	public int getNoteId() {
 		return noteId;
 	}
-
 	public void setNoteId(int noteId) {
 		this.noteId = noteId;
 	}
@@ -70,7 +73,6 @@ public class Note {
 	public String getTitle() {
 		return title;
 	}
-
 	public void setTitle(String title) {
 		this.title = title;
 	}
@@ -78,7 +80,6 @@ public class Note {
 	public String getBody() {
 		return body;
 	}
-
 	public void setBody(String body) {
 		this.body = body;
 	}
@@ -86,7 +87,6 @@ public class Note {
 	public String getColor() {
 		return color;
 	}
-
 	public void setColor(String color) {
 		this.color = color;
 	}
@@ -94,7 +94,6 @@ public class Note {
 	public Date getCreateDate() {
 		return createDate;
 	}
-
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
@@ -102,7 +101,6 @@ public class Note {
 	public Date getLastUpdated() {
 		return lastUpdated;
 	}
-
 	public void setLastUpdated(Date lastUpdated) {
 		this.lastUpdated = lastUpdated;
 	}
@@ -110,7 +108,6 @@ public class Note {
 	public User getUser() {
 		return user;
 	}
-
 	public void setUser(User user) {
 		this.user = user;
 	}
@@ -118,7 +115,6 @@ public class Note {
 	public boolean isPinned() {
 		return isPinned;
 	}
-
 	public void setPinned(boolean isPinned) {
 		this.isPinned = isPinned;
 	}
@@ -126,7 +122,6 @@ public class Note {
 	public boolean isArchived() {
 		return isArchived;
 	}
-
 	public void setArchived(boolean isArchived) {
 		this.isArchived = isArchived;
 	}
@@ -134,15 +129,21 @@ public class Note {
 	public boolean isTrashed() {
 		return isTrashed;
 	}
-
 	public void setTrashed(boolean isTrashed) {
 		this.isTrashed = isTrashed;
 	}
+	
 	public String getReminderStatus() {
 		return reminderStatus;
 	}
-
 	public void setReminderStatus(String reminderStatus) {
 		this.reminderStatus = reminderStatus;
+	}
+	
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
 	}
 }
