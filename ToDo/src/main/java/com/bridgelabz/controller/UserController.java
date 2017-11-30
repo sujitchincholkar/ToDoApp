@@ -2,11 +2,14 @@ package com.bridgelabz.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bridgelabz.dao.UserDao;
 import com.bridgelabz.model.CustomResponse;
+import com.bridgelabz.model.Label;
 import com.bridgelabz.model.User;
 import com.bridgelabz.service.Mailer;
 import com.bridgelabz.service.Producer;
@@ -241,5 +245,79 @@ public class UserController {
 		 */
 
 	}
-
+	
+	@RequestMapping(value = "/changeprofilePic", method = RequestMethod.POST)
+	public ResponseEntity<CustomResponse> updateUser(@RequestBody User user,HttpServletRequest request){
+		CustomResponse response=new CustomResponse();
+		String token =request.getHeader("Authorization");
+		User oldUser=userService.getUserById(tokenService.verifyToken(token));
+		if(oldUser!=null && user!=null){
+			oldUser.setProfileUrl(user.getProfileUrl());
+			if(userService.updateUser(oldUser)){
+				response.setMessage("Profile pic changed");
+				return ResponseEntity.ok(response);
+			}else{
+				response.setMessage("Some error occurred");
+				return ResponseEntity.ok(response);
+			}
+		}else{
+			response.setMessage("Token expired");
+			return ResponseEntity.ok(response);
+		}
+		
+	}
+	
+	@RequestMapping(value = "/addLabelInUser", method = RequestMethod.POST)
+	public ResponseEntity<CustomResponse> addLabel(@RequestBody Label label,HttpServletRequest request){
+		CustomResponse response=new CustomResponse();
+		String token =request.getHeader("Authorization");
+		User user=userService.getUserById(tokenService.verifyToken(token));
+		if(user!=null){
+			label.setUser(user);
+			int id=userService.addLabel(label);
+			if(id>0){
+				response.setMessage("Label added");
+				return ResponseEntity.ok(response);
+			}else{
+				 response.setMessage("Problem occured");
+				 return ResponseEntity.ok(response);
+			}
+		}else{
+			response.setMessage("Token expired");
+			 return ResponseEntity.ok(response);
+		  
+		}
+	}
+	@RequestMapping(value = "/deleteLabel", method = RequestMethod.POST)
+	public ResponseEntity<CustomResponse> deleteLabel(@RequestBody Label label,HttpServletRequest request){
+		CustomResponse response=new CustomResponse();
+		String token =request.getHeader("Authorization");
+		User user=userService.getUserById(tokenService.verifyToken(token));
+		if(user!=null){
+			userService.deleteLable(label);
+			response.setMessage("Label added");
+			return ResponseEntity.ok(response);
+		}else{
+		   response.setMessage("Problem occured");
+		   return ResponseEntity.ok(response);
+		}
+	}
+	
+	@RequestMapping(value = "/upadteLabel", method = RequestMethod.POST)
+	public ResponseEntity<CustomResponse> update(@RequestBody Label label,HttpServletRequest request){
+		CustomResponse response=new CustomResponse();
+		String token =request.getHeader("Authorization");
+		User user=userService.getUserById(tokenService.verifyToken(token));
+		if(user!=null){
+			userService.deleteLable(label);
+			response.setMessage("Label added");
+			return ResponseEntity.ok(response);
+		}else{
+		   response.setMessage("Problem occured");
+		   return ResponseEntity.ok(response);
+		}
+	}
+	
+	
+	
 }

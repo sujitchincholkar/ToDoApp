@@ -2,13 +2,13 @@ var toDo = angular.module('ToDo');
 
 toDo.factory('noteService', function($http,$location) {
 	var notes={};
-	notes.service=function(url,method,token,note){
+	notes.service=function(url,method,note){
 		return $http({
 		    method: method,
 		    url: url,
 		    data:note,
 		    headers: {
-		        'Authorization': token
+		        'Authorization': localStorage.getItem('token')
 		    }
 		
 		});

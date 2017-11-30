@@ -1,6 +1,7 @@
 package com.bridgelabz.dao;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.TypedQuery;
 
@@ -12,6 +13,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.bridgelabz.model.Label;
 import com.bridgelabz.model.User;
 
 public class UserDaoImpl implements UserDao{
@@ -95,5 +97,65 @@ public class UserDaoImpl implements UserDao{
 		}
 		return user;
 	}
+
+	public int addLabel(Label label) {
+		
+		int labelId=0;
+		Session session=factory.openSession();
+		Transaction transaction=session.beginTransaction();
+		try{
+		labelId=(Integer) session.save(label);
+		transaction.commit();
+		}catch(HibernateException e){
+			e.printStackTrace();
+			transaction.rollback();
+		}finally{
+			session.close();
+		}
+		return labelId;
+	}
+	
+	public boolean updateLable(Label label) {
+		
+		boolean status=false;
+		Session session=factory.openSession();
+		Transaction transaction=session.beginTransaction();
+		try{
+		 session.update(label);
+		 transaction.commit();
+		 status=true;
+		}catch(HibernateException e){
+			e.printStackTrace();
+			transaction.rollback();
+		}finally{
+			session.close();
+		}
+		return status;
+	}
+	
+    public boolean deleteLable(Label label) {
+		
+		boolean status=false;
+		Session session=factory.openSession();
+		Transaction transaction=session.beginTransaction();
+		try{
+		 session.delete(label);
+		 transaction.commit();
+		 status=true;
+		}catch(HibernateException e){
+			e.printStackTrace();
+			transaction.rollback();
+		}finally{
+			session.close();
+		}
+		return status;
+	}
+
+	public Set<Label> getAllLabels(int userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+    
+    
 
 }

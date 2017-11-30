@@ -24,50 +24,60 @@ toDo.controller('homeController',
 			}
 			
 			
-			var colors = [ {
+			var colors = [ 
+			{
 				'color' : '#FFFFFF',
 				'tooltip' : 'White'
-			}, {
+			}, 
+			{
 				'color' : '#F8BBD0',
 				'tooltip' : 'Pink'
-			}, {
+			}, 
+			{
 				'color' : '#DC94F7',
 				'tooltip' : 'purple'
-			}, {
+			}, 
+			{
 				'color' : '#82B1FF',
 				'tooltip' : 'Dark blue'
-			}, {
+			}, 
+			{
 				'color' : '#80D8FF',
 				'tooltip' : 'Blue'
-			}, {
+			},
+			{
 				'color' : '#CCFF90',
 				'tooltip' : 'Green'
-			}, {
+			}, 
+			{
 				'color' : '#FF8A80',
 				'tooltip' : 'Red'
-			}, {
+			}, 
+			{
 				'color' : '#D5DBDB',
 				'tooltip' : 'Grey'
-			}, {
+			}, 
+			{
 				'color' : '#FFD180',
 				'tooltip' : 'Orange'
-			}, {
+			}, 
+			{
 				'color' : '#F5F518',
 				'tooltip' : 'Yellow'
-			}, {
+			},
+			{
 				'color' : '#D7C9C8',
 				'tooltip' : 'Brown'
-			}, {
+			}, 
+			{
 				'color' : '#A7FFEB',
 				'tooltip' : 'Teal'
 			} ];
 			$scope.colors = colors;
 
 			var getNotes = function() {
-				var token = localStorage.getItem('token');
-				console.log(token);
 				var url = 'getAllNotes';
-				var notes = noteService.service(url, 'GET', token);
+				var notes = noteService.service(url, 'GET');
 				console.log(notes);
 				notes.then(function(response) {
 
@@ -81,10 +91,9 @@ toDo.controller('homeController',
 
 			$scope.deleteNotePermanently = function(note) {
 
-				var token = localStorage.getItem('token');
 				console.log(token);
 				var url = 'deletenote/' + note.noteId;
-				var notes = noteService.service(url, 'GET', token, note);
+				var notes = noteService.service(url, 'GET', note);
 				notes.then(function(response) {
 
 					getNotes();
@@ -100,11 +109,10 @@ toDo.controller('homeController',
 
 			$scope.deleteNote = function(note) {
 
-				var token = localStorage.getItem('token');
 				console.log(note);
 				note.trashed = true;
 				var url = 'updateNote';
-				var notes = noteService.service(url, 'POST', token, note);
+				var notes = noteService.service(url, 'POST', note);
 				notes.then(function(response) {
 
 					getNotes();
@@ -120,7 +128,7 @@ toDo.controller('homeController',
 
 			$scope.createNote = function() {
 
-				var token = localStorage.getItem('token');
+				
 				var noteBody = angular.element(document
 						.querySelector('#note-title'));
 
@@ -129,7 +137,7 @@ toDo.controller('homeController',
 
 				if ($scope.newNote.title != '' || $scope.newNote.body != '') {
 					var url = 'addNote';
-					var notes = noteService.service(url, 'POST', token,
+					var notes = noteService.service(url, 'POST', 
 							$scope.newNote);
 
 					noteTitle.empty();
@@ -179,8 +187,8 @@ toDo.controller('homeController',
 				obj.shareWithId = {};
 
 				var url = 'collaborate';
-				var token = localStorage.getItem('token');
-				var users = noteService.service(url, 'POST', token, obj);
+				
+				var users = noteService.service(url, 'POST', obj);
 				users.then(function(response) {
 
 					console.log("Inside collborator");
@@ -220,8 +228,7 @@ toDo.controller('homeController',
 				obj.shareWithId = $scope.shareWith;
 
 				var url = 'collaborate';
-				var token = localStorage.getItem('token');
-				var users = noteService.service(url, 'POST', token, obj);
+				var users = noteService.service(url, 'POST', obj);
 				users.then(function(response) {
 
 					console.log("Inside collborator");
@@ -234,15 +241,14 @@ toDo.controller('homeController',
 
 				});
 				console.log("Returned");
-				console.log(collborators);
 				console.log(users);
 
 			}
 
 			$scope.getOwner = function(note) {
 				var url = 'getOwner';
-				var token = localStorage.getItem('token');
-				var users = noteService.service(url, 'POST', token, note);
+				
+				var users = noteService.service(url, 'POST', note);
 				users.then(function(response) {
 
 					$scope.owner = response.data;
@@ -260,8 +266,8 @@ toDo.controller('homeController',
 					'email' : ''
 				};
 				obj.shareWithId = user;
-				var token = localStorage.getItem('token');
-				var users = noteService.service(url, 'POST', token, obj);
+				
+				var users = noteService.service(url, 'POST', obj);
 				users.then(function(response) {
 					$scope.collborate(note, $scope.owner);
 
@@ -272,7 +278,9 @@ toDo.controller('homeController',
 
 				});
 			}
-			/*-----------------Collaborator End------------------------------*/
+			
+			
+			/*-----------------Collaborator End-----------------------*/
 			$scope.pinned = function(note, pinned) {
 				note.pinned = pinned;
 				update(note);
@@ -286,16 +294,16 @@ toDo.controller('homeController',
 			}
 
 			var update = function(note) {
-				var token = localStorage.getItem('token');
+				
 				var url = "updateNote";
-				var notes = noteService.service(url, 'POST', token, note);
+				var notes = noteService.service(url, 'POST', note);
 
 			}
 
 			$scope.updateNote = function(note) {
-				var token = localStorage.getItem('token');
+				
 				var url = "updateNote";
-				var notes = noteService.service(url, 'POST', token, note);
+				var notes = noteService.service(url, 'POST', note);
 
 				modalInstance.close('resetModel');
 				notes.then(function(response) {
@@ -312,11 +320,11 @@ toDo.controller('homeController',
 			}
 
 			$scope.restore = function(note) {
-				var token = localStorage.getItem('token');
+				
 				console.log(note);
 				note.trashed = false;
 				var url = 'updateNote';
-				var notes = noteService.service(url, 'POST', token, note);
+				var notes = noteService.service(url, 'POST', note);
 				notes.then(function(response) {
 
 					getNotes();
@@ -348,9 +356,9 @@ toDo.controller('homeController',
 			}
 			
 			var getUser = function() {
-				var token = localStorage.getItem('token');
+			
 				var url = 'getuser';
-				var user = noteService.service(url, 'Get', token);
+				var user = noteService.service(url, 'Get');
 
 				user.then(function(response) {
 					var User = response.data;
@@ -373,9 +381,9 @@ toDo.controller('homeController',
 
 			$scope.makeCopy = function(note) {
 				note.noteId = null;
-				var token = localStorage.getItem('token');
+				
 				var url = 'addNote';
-				var notes = noteService.service(url, 'POST', token, note);
+				var notes = noteService.service(url, 'POST', note);
 				notes.then(function(response) {
 
 					getNotes();
@@ -518,6 +526,7 @@ toDo.controller('homeController',
 			        if($scope.typeOfImage=='user'){
 			        	console.log("User pic");
 			        	$scope.type.profileUrl=imageSrc;
+			        	updateUser($scope.type);
 			        	
 			        }else{
 			        $scope.type.image=imageSrc;
@@ -527,8 +536,23 @@ toDo.controller('homeController',
 			    });
 			};
 			
-			
+			var updateUser=function(user){
+				var url = 'changeprofilePic';
+				var notes = noteService.service(url, 'POST', user);
+				notes.then(function(response) {
 
+					getUser();
+
+				}, function(response) {
+
+					getUser();
+					$scope.error = response.data.message;
+
+				});
+				
+			}
+			
+			
 			$scope.$on("fileProgress", function(e, progress) {
 				$scope.progress = progress.loaded / progress.total;
 			});

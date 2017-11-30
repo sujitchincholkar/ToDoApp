@@ -4,8 +4,10 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -37,14 +39,18 @@ public class User {
 	@Column(name="isActivated")
 	private boolean isActivated;
 	
-	@Column(name="profile_url")
+	@Column(name="profile_url",columnDefinition="LONGBLOB")
 	private String profileUrl;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy="user")
 	Set<Note> notes;
 	
-	//===================================//
+	@OneToMany(fetch=FetchType.EAGER)
+	Set<Label> labels;
+	
+	
+	//=========================================//
 	public Set<Note> getNotes() {
 		return notes;
 	}
@@ -99,5 +105,12 @@ public class User {
 	}
 	public void setProfileUrl(String profileUrl) {
 		this.profileUrl = profileUrl;
+	}
+	
+	public Set<Label> getLabels() {
+		return labels;
+	}
+	public void setLabels(Set<Label> labels) {
+		this.labels = labels;
 	}
 }

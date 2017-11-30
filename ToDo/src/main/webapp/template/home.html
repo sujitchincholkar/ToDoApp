@@ -86,9 +86,9 @@
 				
 				<div class="card" style="background-color: {{note.color}}">
 				<img class="pull-right" src="images/unpinned.svg"  ng-click="pinned(note,true)" width="22" height="22">
-				<div ng-if="note.image"><img ng-src="{{note.image}}" height="100" width="100"></div>
 					<div class="card-block" ng-click="showModal(note)">
 					
+				<div ng-if="note.image"><img ng-src="{{note.image}}" height="100%" width="100%"></div>
 						<b><div class="card-title" ng-bind-html="note.title"></div></b>
 						<div class="card-text" ng-bind-html="note.body"></div>
 					</div>
@@ -105,7 +105,7 @@
 						</div>
 <input ng-show="false" id="image" type='file' ng-model-instant ng-model="file" onchange="angular.element(this).scope().imageUpload(this)" />					<div class="note-icons">
 						
-						 <img ng-src="images/colorpallet.svg" ng-click="openImageUploader(note,'note')" width="22" height="22">
+						 <img ng-src="images/image.svg" ng-click="openImageUploader(note,'note')" width="22" height="22">
 						<img ng-src="images/archive.svg" ng-click="doArchived(note,true,false)"> 
 						<div class="dropup inline">
 						<span class="dropdown-toggle"  data-toggle="dropdown">

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bridgelabz.model.Collaborater;
 import com.bridgelabz.model.CustomResponse;
+import com.bridgelabz.model.Label;
 import com.bridgelabz.model.Note;
 import com.bridgelabz.model.User;
 import com.bridgelabz.service.NoteService;
@@ -268,4 +269,17 @@ public class NoteController {
 			return ResponseEntity.ok(response);
 	    }
 	}
+	
+	@RequestMapping(value = "/addNoteLabel", method = RequestMethod.POST)
+	public ResponseEntity<CustomResponse> addLabel(@RequestBody Note note, HttpServletRequest request){
+		String token =request.getHeader("Authorization");
+		User user=userService.getUserById(tokenService.verifyToken(token));
+		if(user!=null){
+			Note oldNote=noteService.getNoteById(note.getNoteId());
+			
+			
+		}
+		return null;
+	}
+	
 }

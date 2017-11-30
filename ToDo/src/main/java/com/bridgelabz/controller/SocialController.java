@@ -84,8 +84,7 @@ public class SocialController {
 			}
 			else{
 				String token=tokenService.generateToken("",existingUser.getUserId());
-				existingUser.setProfileUrl(user.getProfileUrl());
-				userService.updateUser(existingUser);
+				
 				
 				session.setAttribute("token", token);
 				response.sendRedirect("http://localhost:8080/ToDo/#!/dummy");
@@ -142,8 +141,7 @@ public class SocialController {
 			}
 			else{
 				String token=tokenService.generateToken("",existingUser.getUserId());
-				existingUser.setProfileUrl(user.getProfileUrl());
-				userService.updateUser(existingUser);
+			
 				session.setAttribute("token", token);
 				response.sendRedirect("http://localhost:8080/ToDo/#!/dummy");
 			}

@@ -54,12 +54,12 @@
 						data-toggle="dropdown" role="button" aria-haspopup="true"
 						aria-expanded="false"> --> <img ng-src={{user.profileUrl}}
 							class="img-circle profile-pic dropdown-toggle" data-toggle="dropdown"
-							alt="profile1" ng-click="openImageUploader(user,'user')">
+							alt=""{{user.fullName.charAt(0)}}"" >
 					</a>
 						<ul class="dropdown-menu profile-dropdown">
 						<div class="row">
 						     <img ng-src={{user.profileUrl}}
-							class="img-circle col-sm-4" alt="profile1" width="100" height="100">
+							class="img-circle col-sm-4" alt="{{user.fullName.charAt(0)}}" width="100" height="100"  ng-click="openImageUploader(user,'user')">
 							<div class="col-sm-6">
 							<font size="5px"><b>{{user.fullName}}</b></font>
 							{{user.email}}

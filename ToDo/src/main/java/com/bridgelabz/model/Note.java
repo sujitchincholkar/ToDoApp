@@ -2,13 +2,16 @@ package com.bridgelabz.model;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -55,8 +58,12 @@ public class Note {
 	
 	@Column(columnDefinition = "LONGBLOB")
 	private String image;
-
 	
+	@ManyToMany(fetch=FetchType.EAGER)
+	@Column
+	private Set<Label> labels;
+	
+
 	@ManyToOne
 	@JsonIgnore
 	@JoinColumn(name = "user_id")
@@ -145,5 +152,12 @@ public class Note {
 	}
 	public void setImage(String image) {
 		this.image = image;
+	}
+	
+	public Set<Label> getLabels() {
+		return labels;
+	}
+	public void setLabels(Set<Label> labels) {
+		this.labels = labels;
 	}
 }
