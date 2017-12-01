@@ -559,7 +559,58 @@ toDo.controller('homeController',
 			
 			$scope.type = {};
 			$scope.type.image = ''; 
+			
+			/*/////////////////----Label----//////////////////////*/
+			$scope.addlabel=function(){
+				var url = 'addLabelInUser';
+				var addlabel = noteService.service(url, 'POST', $scope.newLabel);
+				addlabel.then(function(response) {
+					
+				},function(response){
+					
+				});
+			}
+			
+			$scope.deleteLabel=function(label){
+				var url = 'deleteLabel';
+				var addlabel = noteService.service(url, 'POST', label);
+				addlabel.then(function(response) {
+					
+				},function(response){
+					
+				});
+			}
+			
+			$scope.updatelabel=function(label){
+				var url = 'updateLabel';
+				var addlabel = noteService.service(url, 'POST', label);
+				addlabel.then(function(response) {
+					
+				},function(response){
+					
+				});
+			}
+			
+			$scope.toggleLabelOfNote = function(note, label) {
+				console.log('clicked');
+				var index = -1;
+				var i = 0;
+				for (i = 0, len = note.labels.length; i < len; i++) {
+					if (note.labels[i].labelName === label.labelName) {
+						index = i;
+						break;
+					}
+				}
 
+				if (index == -1) {
+					note.labels.push(label);
+					update(note);
+				} else {
+					note.labels.splice(index, 1);
+					update(note);
+				}
+			}
+			
 			getNotes();
 			getUser();
 			interVal();

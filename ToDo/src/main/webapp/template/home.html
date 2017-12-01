@@ -96,6 +96,11 @@
 					{{note.reminderStatus}}<span class="closebtn" ng-click="removeReminder(note)">&#x274C;</span>
 					 
 					</div>  
+					<div ng-repeat="label in note.labels">
+						<div id="reminder" ng-if="label.labelName!=null">
+					{{label.labelName}}<span class="closebtn" ng-click="removelabel(note,label)">&#x274C;</span>
+					 </div>
+					</div>  
 					<div class="row" ng-init="getUserlist(note,user,$index)">
 						<div ng-repeat="user in note.collabratorUsers">
 								<div class="col-sm-1">
@@ -124,7 +129,7 @@
                                            title="{{color.tooltip}}"    ng-click="changeColor(note,color.color)"></li>
 							</ul>
 					  </div>
-					  
+					  <div class=""></div>
 						<img ng-src="images/collaborator.svg" ng-click="openCollboarate(note,user,$index)">
 						<div class="dropdown inline pull-right">
 							<img ng-src='images/more.svg' width="19px" height="19px"

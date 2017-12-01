@@ -27,8 +27,6 @@ public class Label {
 	@Column
 	private String labelName;
 	
-
-
 	@ManyToOne
 	@JsonIgnore
 	@JoinColumn(name = "user_id")

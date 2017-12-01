@@ -152,8 +152,12 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	public Set<Label> getAllLabels(int userId) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session=factory.openSession();
+		User user=session.get(User.class,userId);
+		Set<Label> label=user.getLabels();
+		System.out.println(label);
+		session.close();
+		return label;
 	}
     
     

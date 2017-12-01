@@ -46,7 +46,8 @@ public class User {
 	@OneToMany(mappedBy="user")
 	Set<Note> notes;
 	
-	@OneToMany(fetch=FetchType.EAGER)
+	
+	@OneToMany(fetch=FetchType.EAGER,mappedBy="user")
 	Set<Label> labels;
 	
 	

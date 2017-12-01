@@ -193,15 +193,21 @@ public class NoteController {
 	
 	@RequestMapping(value = "/collaborate", method = RequestMethod.POST)
 	public ResponseEntity<List<User>> getNotes(@RequestBody Collaborater collborator, HttpServletRequest request){
+		
 		List<User> users=new ArrayList<User>();
 		Collaborater collaborate =new Collaborater();
+		
 		Note note= (Note) collborator.getNote();
 		User shareWith= (User) collborator.getShareWithId();
 		shareWith=userService.getUserByEmail(shareWith.getEmail());
+		
 		User owner= (User) collborator.getOwnerId();
+		
 		String token=request.getHeader("Authorization");
-		users=	noteService.getListOfUser(note.getNoteId());
 		User user=userService.getUserById(tokenService.verifyToken(token));
+		
+		users=	noteService.getListOfUser(note.getNoteId());
+		
 		if(user!=null) {
 				if(shareWith!=null && shareWith.getUserId()!=owner.getUserId()) {
 					int i=0;
@@ -246,10 +252,13 @@ public class NoteController {
 		CustomResponse response=new CustomResponse();
 		int shareWith=collborator.getShareWithId().getUserId();
 		int noteId=collborator.getNote().getNoteId();
+		
 		Note note=noteService.getNoteById(noteId);
 		User owner=note.getUser();
+	
 		String token=request.getHeader("Authorization");
 		User user=userService.getUserById(tokenService.verifyToken(token));
+		
 		if(user!=null) {
 				if(owner.getUserId()!=shareWith){
 					if(noteService.removeCollborator(shareWith, noteId)>0){
@@ -270,7 +279,7 @@ public class NoteController {
 	    }
 	}
 	
-	@RequestMapping(value = "/addNoteLabel", method = RequestMethod.POST)
+/*	@RequestMapping(value = "/addNoteLabel", method = RequestMethod.POST)
 	public ResponseEntity<CustomResponse> addLabel(@RequestBody Note note, HttpServletRequest request){
 		String token =request.getHeader("Authorization");
 		User user=userService.getUserById(tokenService.verifyToken(token));
@@ -281,5 +290,5 @@ public class NoteController {
 		}
 		return null;
 	}
-	
+	*/
 }

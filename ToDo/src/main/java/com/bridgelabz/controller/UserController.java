@@ -3,6 +3,7 @@ package com.bridgelabz.controller;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -273,6 +274,21 @@ public class UserController {
 		String token =request.getHeader("Authorization");
 		User user=userService.getUserById(tokenService.verifyToken(token));
 		if(user!=null){
+			
+			Set<Label> labels=userService.getAllLabels(user.getUserId());
+			if(labels!=null){
+		    	Iterator<Label> itr = labels.iterator();
+			    while(itr.hasNext())
+			     {
+			    	System.out.println("inside");
+			      	Label oldLabel=(Label) itr.next();
+		         	if(oldLabel.getLabelName().equals(label.getLabelName())){
+		     	    	response.setMessage("label already exist");
+					   return ResponseEntity.ok(response); 
+		         	}
+			     }
+				}
+			
 			label.setUser(user);
 			int id=userService.addLabel(label);
 			if(id>0){
@@ -288,6 +304,7 @@ public class UserController {
 		  
 		}
 	}
+	
 	@RequestMapping(value = "/deleteLabel", method = RequestMethod.POST)
 	public ResponseEntity<CustomResponse> deleteLabel(@RequestBody Label label,HttpServletRequest request){
 		CustomResponse response=new CustomResponse();
@@ -303,7 +320,7 @@ public class UserController {
 		}
 	}
 	
-	@RequestMapping(value = "/upadteLabel", method = RequestMethod.POST)
+	@RequestMapping(value = "/updateLabel", method = RequestMethod.POST)
 	public ResponseEntity<CustomResponse> update(@RequestBody Label label,HttpServletRequest request){
 		CustomResponse response=new CustomResponse();
 		String token =request.getHeader("Authorization");
