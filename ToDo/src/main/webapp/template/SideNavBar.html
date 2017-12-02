@@ -1,7 +1,40 @@
 <div class="sidenav" style="width:{{width}}">
+<!-- <div class="row">
+<div class="col-sm-1"></div>
+
+<div class="col-sm-5">
+<div class="col-sm-6"> -->
 <a href="#!/home">Notes</a>
-<a href="#!/home">Lables</a>
-<a href="#!/reminder">Reminder</a>
+<!-- </div>
+</div>
+</div> -->
+<a href="#!/reminder">Reminders</a>
+<hr>
+<div class="row">
+<div class="col-sm-6">
+	<a href="#!/home">Lables</a>
+	</div>
+	<div class="col-sm-1"></div>
+	<div class="col-sm-4">
+	<a  ng-click="addLabelmodal()" style="font-size: 15px">Edit</a>
+	</div>
+	<div class="col-sm-1"></div>
+</div>
+<div ng-repeat="label in user.labels">
+<div class="row">
+<div class="col-sm-1"></div>
+
+<div class="col-sm-1"><img ng-src="images/label.svg" id="labelIcon"></div>
+<div class="col-sm-5">
+
+<a ng-click="">	{{label.labelName}}</a>
+</div>
+</div>
+
+</div>
+
+<hr>
+
 <a href="#!/archive">Archives</a>
 <a href="#!/trash" >Trash</a>
 </div>

@@ -121,7 +121,9 @@ public class UserDaoImpl implements UserDao{
 		Session session=factory.openSession();
 		Transaction transaction=session.beginTransaction();
 		try{
-		 session.update(label);
+			Label completlabel=	session.get(Label.class, label.getId());
+			completlabel.setLabelName(label.getLabelName());
+		 session.update(completlabel);
 		 transaction.commit();
 		 status=true;
 		}catch(HibernateException e){
@@ -139,7 +141,8 @@ public class UserDaoImpl implements UserDao{
 		Session session=factory.openSession();
 		Transaction transaction=session.beginTransaction();
 		try{
-		 session.delete(label);
+		Label completlabel=	session.get(Label.class, label.getId());
+		 session.delete(completlabel);
 		 transaction.commit();
 		 status=true;
 		}catch(HibernateException e){

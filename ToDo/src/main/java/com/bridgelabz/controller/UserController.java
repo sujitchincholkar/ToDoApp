@@ -326,7 +326,7 @@ public class UserController {
 		String token =request.getHeader("Authorization");
 		User user=userService.getUserById(tokenService.verifyToken(token));
 		if(user!=null){
-			userService.deleteLable(label);
+			userService.updateLable(label);
 			response.setMessage("Label added");
 			return ResponseEntity.ok(response);
 		}else{

@@ -565,9 +565,21 @@ toDo.controller('homeController',
 				var url = 'addLabelInUser';
 				var addlabel = noteService.service(url, 'POST', $scope.newLabel);
 				addlabel.then(function(response) {
-					
+					 $scope.newLabel.labelName="";
+					 getUser();
 				},function(response){
 					
+				});
+			}
+			$scope.addLabelmodal=function(){
+
+				
+			
+				modalInstance = $uibModal.open({
+					templateUrl : 'template/LabelModal.html',
+					scope : $scope,
+					size:"sm"
+
 				});
 			}
 			
@@ -575,7 +587,7 @@ toDo.controller('homeController',
 				var url = 'deleteLabel';
 				var addlabel = noteService.service(url, 'POST', label);
 				addlabel.then(function(response) {
-					
+					getUser();
 				},function(response){
 					
 				});
@@ -609,6 +621,15 @@ toDo.controller('homeController',
 					note.labels.splice(index, 1);
 					update(note);
 				}
+			}
+			
+			$scope.checked = function(note, label) {
+				var checkedLabels = note.labels;
+				for (var labelNo = 0; labelNo < checkedLabels.length; labelNo++) {
+					if (checkedLabels[labelNo].labelName == label.labelName)
+						return true;
+				}
+				return false;
 			}
 			
 			getNotes();
