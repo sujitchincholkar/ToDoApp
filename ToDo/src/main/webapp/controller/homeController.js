@@ -1,6 +1,6 @@
 var toDo = angular.module('ToDo');
 toDo.controller('homeController',
-		function($scope, $uibModal, $state, noteService,toastr,$interval, $location, $interval,$filter) {
+		function($scope, $uibModal, $state, noteService,toastr,$interval, $location,$filter) {
 
 			if ($state.current.name == "home") {
 				$scope.navColor = "#ffbb33";
@@ -11,6 +11,16 @@ toDo.controller('homeController',
 			} else if ($state.current.name == "archive") {
 				$scope.navColor = "#607D8B";
 				$scope.navBrand = "Archive";
+			}else if($state.current.name =="search"){
+				$("#searchbox").focus();
+				
+				$scope.navColor = "#3E50B4";
+				$scope.navBrand = "Google Keep";
+			}else{
+				
+				$scope.currentlabel=$location.path().substr(1) ;
+				$scope.navColor = "#607D8B";
+				$scope.navBrand =$scope.currentlabel ;
 			}
 
 			$scope.showSidebar = function() {
@@ -250,9 +260,9 @@ toDo.controller('homeController',
 				
 				var users = noteService.service(url, 'POST', note);
 				users.then(function(response) {
-
+					
 					$scope.owner = response.data;
-
+					getUsers();
 				}, function(response) {
 					$scope.users = {};
 				});
@@ -270,7 +280,7 @@ toDo.controller('homeController',
 				var users = noteService.service(url, 'POST', obj);
 				users.then(function(response) {
 					$scope.collborate(note, $scope.owner);
-
+					
 					console.log(response.data);
 
 				}, function(response) {
@@ -279,6 +289,16 @@ toDo.controller('homeController',
 				});
 			}
 			
+			var getUsers=function(){
+				var url = "getUserList";
+				var users = noteService.service(url, 'GET');
+				users.then(function(response) {
+					$scope.userList=response.data;
+				}, function(response) {
+					console.log(response.data);
+
+				});
+			}
 			
 			/*-----------------Collaborator End-----------------------*/
 			$scope.pinned = function(note, pinned) {
@@ -450,7 +470,7 @@ toDo.controller('homeController',
 				$scope.viewcol="col-md-6 col-sm-12 col-xs-12 col-lg-4";
 			}
 			}
-			
+			/*////////////////////////------------Reminder---------//////////////////////////////////*/			
 			$scope.reminder = "";
 			$scope.openReminder = function(note) {
 				$('.reminder').datetimepicker();
@@ -485,7 +505,7 @@ toDo.controller('homeController',
 								
 								if($scope.notes[i].reminderStatus === currentDate){
 									
-									toastr.success($scope.notes[i].title, 'Reminder');
+									toastr.success($scope.notes[i].title, 'Reminder Deleted');
 									$scope.notes[i].reminderStatus=null;
 									update($scope.notes[i]);
 									
@@ -494,6 +514,49 @@ toDo.controller('homeController',
 							
 						}
 					},22000);
+			}
+			
+			
+			/*set tomorrows reminder*/
+			$scope.tomorrowsReminder=function(notes){
+				var currentTime=$filter('date')(new Date().getTime() + 24 * 60 * 60 * 1000,'MM/dd/yyyy');
+				notes.reminderStatus=currentTime+" 8:00 AM";
+		     	update(notes);
+			}
+			
+			/*set next week reminder*/
+			$scope.NextweekReminder=function(notes){
+				$scope.currentTime=$filter('date')(new Date().getTime() + 7 * 24 * 60 * 60 * 1000,'MM/dd/yyyy');
+				notes.reminderStatus=$scope.currentTime+" 8:00 AM";
+				update(notes);
+			}
+			
+			/*set later todays reminder*/
+			$scope.todaysReminder=function(notes){
+				$scope.currentTime=$filter('date')(new Date(), 'MM/dd/yyyy');
+				var currentHour=new Date().getHours();
+				if(currentHour >= 7){
+					notes.reminderStatus=$scope.currentTime+" 8:00 PM";	
+				}
+				if(currentHour < 7){
+					notes.reminderStatus=$scope.currentTime+" 8:00 AM";
+				}
+				
+				update(notes);
+			}
+			
+
+			$scope.TodaylaterReminder=true;
+			
+			/*check weather to display later todays reminder or not*/
+			function checktime(){
+				var currentDate=new Date().getHours();
+				if(currentDate > 19){
+					$scope.TodaylaterReminder=false;
+				}
+				if(currentDate > 1){
+					$scope.TodaylaterReminder=true;
+				}
 			}
 			
 			/*////////////---Upload Image---/////////////*/
@@ -560,6 +623,12 @@ toDo.controller('homeController',
 			$scope.type = {};
 			$scope.type.image = ''; 
 			
+			$scope.removeImage=function(note){
+				note.image=null;
+				update(note);
+				getnotes();
+			}
+			
 			/*/////////////////----Label----//////////////////////*/
 			$scope.addlabel=function(){
 				var url = 'addLabelInUser';
@@ -573,8 +642,6 @@ toDo.controller('homeController',
 			}
 			$scope.addLabelmodal=function(){
 
-				
-			
 				modalInstance = $uibModal.open({
 					templateUrl : 'template/LabelModal.html',
 					scope : $scope,
@@ -604,7 +671,6 @@ toDo.controller('homeController',
 			}
 			
 			$scope.toggleLabelOfNote = function(note, label) {
-				console.log('clicked');
 				var index = -1;
 				var i = 0;
 				for (i = 0, len = note.labels.length; i < len; i++) {

@@ -1,5 +1,6 @@
 package com.bridgelabz.service;
 
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,11 @@ public class UserServiceImpl implements UserService {
 	public Set<Label> getAllLabels(int userId) {
 		// TODO Auto-generated method stub
 		return userDao.getAllLabels(userId);
+	}
+
+	public List<User> getUserList() {
+		// TODO Auto-generated method stub
+		return userDao.getUserList();
 	}
 	
 }

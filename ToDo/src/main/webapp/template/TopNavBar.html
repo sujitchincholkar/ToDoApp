@@ -30,6 +30,7 @@
 
 
 		</div>
+		<a ui-sref="search">
 		<div class="col-lg-1 hidden-sm hidden-xs" id="searchbtn">
 
 			<span class="glyphicon glyphicon-search" style="font-size: '25px'"></span>
@@ -38,8 +39,8 @@
 		<div class="col-lg-3 hidden-sm hidden-xs hidden-md">
 		
 			<input type="text" id="searchbox" placeholder="search"
-				class="nav navbar-nav ">
-		</div>
+				class="nav navbar-nav " ng-model="searchText">
+		</div></a>
 
 <input ng-show="false" id="image" type='file' ng-model-instant ng-model="file" onchange="angular.element(this).scope().imageUpload(this)" />					<div class="note-icons">
 

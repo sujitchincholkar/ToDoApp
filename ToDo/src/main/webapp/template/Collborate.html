@@ -27,7 +27,13 @@
 	</div><br>
 	</div>
 	<div class="row">
-	<input type="text" class="col-sm-12" id="searchbox" ng-model="$parent.shareWith.email" placeholder="Enter Collborator">
+	<input type="text" list="userList" class="col-sm-12"  ng-model="$parent.shareWith.email" id="searchbox"  placeholder="Enter Collborator">
+	<datalist id="userList">
+   		 <option  ng-repeat="userEmail in userList">
+   		 {{userEmail}}
+   		 </option>
+ 	 </datalist>
+ 	
 	</div>
 	</div>
 	

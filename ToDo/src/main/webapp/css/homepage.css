@@ -246,6 +246,12 @@ margin-right: 5px;
 .dropdown-submenu.pull-left {
     float: none;
 }
+
+#del-img{
+	  position: absolute;
+    margin-top: -20px;
+     margin-left: -20px;
+}
 /* @media screen and (max-height: 720px) {
   #searchbtn,.profile-pic,#searchbox {
     visibility: hidden;

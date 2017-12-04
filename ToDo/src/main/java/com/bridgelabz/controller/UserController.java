@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -32,6 +33,8 @@ import com.bridgelabz.service.TokenService;
 import com.bridgelabz.service.UserService;
 import com.bridgelabz.util.PasswordChecker;
 import com.bridgelabz.util.Validator;
+
+
 
 @RestController
 public class UserController {
@@ -335,6 +338,17 @@ public class UserController {
 		}
 	}
 	
+	@RequestMapping(value = "/getUserList", method = RequestMethod.GET)
+	public ResponseEntity<List<User>> getUserList(HttpServletRequest request){
+		String token =request.getHeader("Authorization");
+		User user=userService.getUserById(tokenService.verifyToken(token));
+		if(user!=null){
+			List<User> list=userService.getUserList();
+			return ResponseEntity.ok(list);
+		}else{
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+		}
+	}
 	
 	
 }

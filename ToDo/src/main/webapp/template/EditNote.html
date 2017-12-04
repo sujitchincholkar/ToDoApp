@@ -2,6 +2,12 @@
 <div class="modal-content" style="background-color: {{note.color}}">
 	<div class="modal-body">
 		<div class="card-block">
+		<div ng-if="note.image"><img ng-src="{{note.image}}" height="90%" width="100%">
+		<a class="btn-floating blue pull-right" ng-click="removeImage(note)"><img id="del-img" ng-src="images/delete.png" height="20px" width="20px"></a>
+		
+		</div>
+					
+					</div>
 			<b><div id="note-title" contenteditable="true"
 					ng-model="note.title"></div></b>
 					<div class="pull-right " width="30" height="10"

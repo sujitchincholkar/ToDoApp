@@ -10,6 +10,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -161,6 +162,15 @@ public class UserDaoImpl implements UserDao{
 		System.out.println(label);
 		session.close();
 		return label;
+	}
+
+	public List<User> getUserList() {
+		Session session=factory.openSession();
+
+       Criteria criteria = session.createCriteria(User.class);
+       criteria.setProjection(Projections.property("email"));
+        List<User> userList=criteria.list();
+		return userList;
 	}
     
     

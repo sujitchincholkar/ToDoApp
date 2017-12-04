@@ -1,5 +1,6 @@
 package com.bridgelabz.dao;
 
+import java.util.List;
 import java.util.Set;
 
 import com.bridgelabz.model.Label;
@@ -15,5 +16,6 @@ public interface UserDao {
 	public boolean deleteLable(Label label);
 	public boolean updateLable(Label label);
 	public Set<Label> getAllLabels(int userId);
+	List<User> getUserList();
 	
 }
