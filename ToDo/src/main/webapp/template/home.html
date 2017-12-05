@@ -135,7 +135,7 @@
 									<li><button ng-click="openReminder(note)"><span  class="glyphicon glyphicon-calendar"></span></button></li>
 									</ul>
 									</div>
-						<div class="dropup inline " >
+						<div class="dropup inline "   >
 					    <img ng-src="images/colorpallet.svg" data-toggle="dropdown" width="22" height="22">
 					    <ul class="dropdown-menu dropdown-color" >
 								<li style="background-color:{{color.color}}" class="color-dropdown-item col-xs-2 " ng-repeat="color in colors"
@@ -143,12 +143,13 @@
 							</ul>
 					  </div>
 					  
-						<img ng-src="images/collaborator.svg" ng-click="openCollboarate(note,user,$index)">
+						<img ng-src="images/collaborator.svg" ng-click="openCollboarate(note,user,$index)" ng-init="getOwner(note)">
 						<div class="dropdown inline pull-right">
 							<img ng-src='images/more.svg' width="19px" height="19px"
 								data-toggle="dropdown">
 							<ul class="dropdown-menu  multi-level"  role="menu" aria-labelledby="dropdownMenu">
-								<li><a  ng-click="deleteNote(note)">Delete</a></li>
+								<li><a  ng-click="deleteNote(note)" ng-show="note.owner.email==user.email">Delete</a></li>
+								<li><a  ng-click="removeCollborator(note,user)" ng-show="note.owner.email!=user.email">Remove myself</a></li>
 								<li><a  ng-click="makeCopy(note)">Make a copy</a></li>
 								<li><a  ng-click="socialShare(note)">Share</a></li>
 								<li class="divider"></li>

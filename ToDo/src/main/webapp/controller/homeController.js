@@ -260,10 +260,13 @@ toDo.controller('homeController',
 				
 				var users = noteService.service(url, 'POST', note);
 				users.then(function(response) {
-					
+					console.log("owner");
 					$scope.owner = response.data;
+					note.owner=response.data;
 					getUsers();
 				}, function(response) {
+					console.log("owner");
+
 					$scope.users = {};
 				});
 			}
@@ -279,7 +282,8 @@ toDo.controller('homeController',
 				
 				var users = noteService.service(url, 'POST', obj);
 				users.then(function(response) {
-					$scope.collborate(note, $scope.owner);
+					getNotes();
+					$scope.getUserlist(note, $scope.owner);
 					
 					console.log(response.data);
 

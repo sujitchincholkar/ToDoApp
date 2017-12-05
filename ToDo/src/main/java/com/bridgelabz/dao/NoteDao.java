@@ -17,4 +17,5 @@ public interface NoteDao {
 	public List<User> getListOfUser(int noteId);
 	public Set<Note> getCollboratedNotes(int userId);
 	public int removeCollborator(int shareWith,int noteId );
+	public List<Note> getNotesInTrash();
 }

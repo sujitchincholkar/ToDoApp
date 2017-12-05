@@ -22,7 +22,7 @@
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/Keep" />
 		<property name="username" value="root" />
-		<property name="password" value="root" />
+	<!-- 	<property name="password" value="root" /> -->
 	</bean>
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
@@ -45,8 +45,13 @@
 	</bean>
 	 <task:annotation-driven executor="myExecutor"/>
      <task:executor id="myExecutor" pool-size="5" queue-capacity="11"/> 
-	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-    
+
+	<task:scheduler id="noteDelete" pool-size="5" /> 
+	<task:scheduled-tasks scheduler="noteDelete">
+	 <task:scheduled ref="noteDeleter" method="deleteTrashNote" fixed-delay="20000" />
+	  </task:scheduled-tasks>	
+	  <bean id="noteDeleter" class="com.bridgelabz.util.DeleteScheduler"></bean>
+ <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
     <property name="host" value="smtp.gmail.com" />
     <property name="port" value="587" />
     <property name="username" value="chincholkarsujit12@gmail.com" />

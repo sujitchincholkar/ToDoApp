@@ -157,4 +157,12 @@ public class NoteDaoImpl implements NoteDao{
 		return status;
 	}
 
+	public List<Note> getNotesInTrash() {
+		Session session = factory.openSession();
+		Query query = session.createQuery("From Note where isTrashed=true");
+		List<Note> notes = query.list();		
+		session.close();
+		return notes;
+	}
+
 }

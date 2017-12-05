@@ -59,5 +59,10 @@ public class NoteServiceImpl implements NoteService{
 		// TODO Auto-generated method stub
 		return noteDao.removeCollborator(shareWith, noteId);
 	}
+
+	public List<Note> getNotesInTrash() {
+		// TODO Auto-generated method stub
+		return noteDao.getNotesInTrash();
+	}
 	
 }
