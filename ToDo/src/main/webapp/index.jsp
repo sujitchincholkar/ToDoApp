@@ -37,6 +37,8 @@
 	
 	<script src="bower_components/ng-file-upload/ng-file-upload-shim.min.js"></script>
 	<script src="bower_components/ng-file-upload/ng-file-upload.min.js"></script>
+		<script src="bower_components/angular-img-cropper/dist/angular-img-cropper.min.js"></script>
+	
 	
 	<script src="bower_components/angular-base64/angular-base64.js"></script>
 <script src="bower_components/angular-base64-upload/dist/angular-base64-upload.js"></script>

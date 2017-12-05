@@ -283,7 +283,7 @@ toDo.controller('homeController',
 				var users = noteService.service(url, 'POST', obj);
 				users.then(function(response) {
 					getNotes();
-					$scope.getUserlist(note, $scope.owner);
+					$scope.getUserList(note, $scope.owner);
 					
 					console.log(response.data);
 
@@ -572,7 +572,14 @@ toDo.controller('homeController',
 				$('#image').trigger('click');
 				return false;
 			}
-			
+			var openCropper=function(user){
+				
+			modalInstance = $uibModal.open({
+				templateUrl : 'template/ImageUpload.html',
+				scope : $scope,
+				size : 'md'
+			});
+			}
 			
 			$scope.stepsModel = [];
 
@@ -592,8 +599,8 @@ toDo.controller('homeController',
 			        
 			        if($scope.typeOfImage=='user'){
 			        	console.log("User pic");
-			        	$scope.type.profileUrl=imageSrc;
-			        	updateUser($scope.type);
+			        	$scope.imageSrc=imageSrc;
+			        	openCropper($scope.user);	
 			        	
 			        }else{
 			        $scope.type.image=imageSrc;
@@ -602,6 +609,11 @@ toDo.controller('homeController',
 			        update($scope.type);}
 			    });
 			};
+			$scope.updatePic=function(){
+				$scope.user.profileUrl=$scope.profile;
+				updateUser($scope.user);
+				modalInstance.close();
+			}
 			
 			var updateUser=function(user){
 				var url = 'changeprofilePic';

@@ -47,7 +47,7 @@
      <task:executor id="myExecutor" pool-size="5" queue-capacity="11"/> 
 
 	<task:scheduler id="noteDelete" pool-size="5" /> 
-	<task:scheduled-tasks scheduler="noteDelete">
+	<task:scheduled-tasks scheduler="noteDelete" >
 	 <task:scheduled ref="noteDeleter" method="deleteTrashNote" fixed-delay="20000" />
 	  </task:scheduled-tasks>	
 	  <bean id="noteDeleter" class="com.bridgelabz.util.DeleteScheduler"></bean>
