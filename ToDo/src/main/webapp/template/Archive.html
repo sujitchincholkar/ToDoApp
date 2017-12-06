@@ -14,22 +14,17 @@
 				<div class="card">
 				
 					<div class="card-block" ng-click="showModal(note)">
-					<img class="pull-right" src="images/unpinned.svg" ng-click="doArchived(note,false,true)" width="20" height="20">
+					<img class="pull-right" src="images/unpinned.svg" ng-click="doArchived(note,true,true)" width="20" height="20">
 						<b><div class="card-title" ng-bind-html="note.title"></div></b>
 						<div class="card-text" ng-bind-html="note.body"></div>
 					</div>
-							<div class="note-icons">
-						<img ng-src="images/archive.png" ng-click="doArchived(note,false,false)" data-toggle="tooltip" 
-						data-placement="bottom" title="Unarchived"> <img
-							ng-src="images/reminder.png"> <img ng-src="images/colors.png">
-						<img ng-src="images/collaborator.svg">
-						<div class="dropdown inline pull-right">
-							<img ng-src='images/more.svg' width="19px" height="19px"
-								data-toggle="dropdown">
-							<ul class="dropdown-menu">
-								<li><a href="#!/home" ng-click="deleteNote(note)">Delete</a></li>
-							</ul>
-						</div>
+					<div class="note-icons">
+						<reminder-option></reminder-option>	
+						<img ng-src="images/collaborator.svg" ng-click="openCollboarate(note,user,$index)" ng-init="getOwner(note)">
+						<color-pallet></color-pallet>
+						<img ng-src="images/image.svg" ng-click="openImageUploader(note,'note')" width="22" height="22">
+						<img ng-src="images/archive.svg" ng-click="doArchived(note,false,false)"> 
+						<more-options></more-options>
 					</div>
 					</div>
 				</div>

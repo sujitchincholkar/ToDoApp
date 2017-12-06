@@ -17,29 +17,13 @@
 			</div>
 		
 		</div>
-		<div class="note-icons">
-			<img ng-src="images/archive.svg"
-				ng-click="doArchived(note,true,false)"> <img
-				ng-src="images/reminder.svg">
+		<div class="note-icons card-margin">
+	           <reminder-option ></reminder-option>
+				<img ng-src="images/collaborator.svg"ng-click="openCollboarate(note,user,$index)" ng-init="getOwner(note)">
+				<color-pallet></color-pallet>
+				<img ng-src="images/image.svg" ng-click="openImageUploader(note,'note')" width="22" height="22">
+				<img ng-src="images/archive.svg" ng-click="doArchived(note,true,false)"> 
 				
-			<div class="dropup inline ">
-				<img ng-src="images/colorpallet.svg" data-toggle="dropdown"
-					width="22" height="22">
-				<ul class="dropdown-menu dropdown-color">
-					<li style="background-color: {{color.color}}"
-						class="color-dropdown-item col-xs-2 " ng-repeat="color in colors"
-						title="{{color.tooltip}}" ng-click="changeColor(note,color.color)"></li>
-				</ul>
-			</div>
-
-			<img ng-src="images/collaborator.svg">
-			<div class="dropdown inline ">
-				<img ng-src='images/more.svg' width="19px" height="19px"
-					data-toggle="dropdown">
-				<ul class="dropdown-menu">
-					<li><a href="#!/home" ng-click="deleteNote(note)">Delete</a></li>
-				</ul>
-			</div>
 			<div role="button" ng-click="updateNote(note)"
 				class="btn btn-done pull-right inline" data-dismiss="modal">DONE</div>
 		</div>

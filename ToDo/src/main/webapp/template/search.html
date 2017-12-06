@@ -42,49 +42,12 @@
 		<input ng-show="false" id="image" type='file' ng-model-instant 
 		ng-model="file" onchange="angular.element(this).scope().imageUpload(this)" />					
 		<div class="note-icons">
-						
-						 <img ng-src="images/image.svg" ng-click="openImageUploader(note,'note')" width="22" height="22">
-						<img ng-src="images/archive.svg" ng-click="doArchived(note,true,false)"> 
-						<div class="dropup inline">
-						<span class="dropdown-toggle"  data-toggle="dropdown">
-										<img alt="reminder" ng-src="images/reminder.svg" width="22" height="22">
-									</span>
-									
-									<ul class="dropdown-menu" role="menu" >
-									<li><input type="text" ng-attr-id="datepicker{{note.noteId}}" class="reminder" ng-click="openReminder(note)"></li>
-									<li><button ng-click="openReminder(note)"><span  class="glyphicon glyphicon-calendar"></span></button></li>
-									</ul>
-									</div>
-						<div class="dropup inline " >
-					    <img ng-src="images/colorpallet.svg" data-toggle="dropdown" width="22" height="22">
-					    <ul class="dropdown-menu dropdown-color" >
-								<li style="background-color:{{color.color}}" class="color-dropdown-item col-xs-2 " ng-repeat="color in colors"
-                                           title="{{color.tooltip}}"    ng-click="changeColor(note,color.color)"></li>
-							</ul>
-					  </div>
-					  
-						<img ng-src="images/collaborator.svg" ng-click="openCollboarate(note,user,$index)">
-						<div class="dropdown inline pull-right">
-							<img ng-src='images/more.svg' width="19px" height="19px"
-								data-toggle="dropdown">
-							<ul class="dropdown-menu  multi-level"  role="menu" aria-labelledby="dropdownMenu">
-								<li><a  ng-click="deleteNote(note)">Delete</a></li>
-								<li><a  ng-click="makeCopy(note)">Make a copy</a></li>
-								<li><a  ng-click="socialShare(note)">Share</a></li>
-								<li class="divider"></li>
-								<li class="dropdown-submenu">
-								<a   tabindex="-1">Label</a>
-									<ul class="dropdown-menu">
-									
-									<li ng-repeat="label in user.labels">
-										<input type="checkbox" ng-click="toggleLabelOfNote(note,label)" ng-checked="checked(note,label)">{{label.labelName}}
-									</li>
-									</ul>
-									
-								</li>
-								
-							</ul>
-						</div>
+				<reminder-option  class="icons-margin"></reminder-option>
+				<img ng-src="images/collaborator.svg" ng-click="openCollboarate(note,user,$index)" ng-init="getOwner(note)" class="icons-margin">
+				<color-pallet class="icons-margin"></color-pallet>
+				<img ng-src="images/image.svg" ng-click="openImageUploader(note,'note')" width="22" height="22" class="icons-margin">
+				<img ng-src="images/archive.svg" ng-click="doArchived(note,true,false)" class="icons-margin"> 
+				<more-options></more-options>
 					</div>
 				</div>
 			</div>

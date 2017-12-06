@@ -1,0 +1,22 @@
+						<div class="dropdown inline pull-right">
+							<img ng-src='images/more.svg' width="20px" height="22px"
+								data-toggle="dropdown">
+							<ul class="dropdown-menu  multi-level"  role="menu" aria-labelledby="dropdownMenu">
+								<li><a  ng-click="deleteNote(note)" ng-show="note.owner.email==user.email">Delete</a></li>
+								<li><a  ng-click="removeCollborator(note,user)" ng-show="note.owner.email!=user.email">Remove myself</a></li>
+								<li><a  ng-click="makeCopy(note)">Make a copy</a></li>
+								<li><a  ng-click="socialShare(note)">Share</a></li>
+								<li class="divider"></li>
+								<li class="dropdown-submenu">
+								<a   tabindex="-1">Label</a>
+									<ul class="dropdown-menu">
+									
+									<li ng-repeat="label in user.labels">
+										<input type="checkbox" ng-click="toggleLabelOfNote(note,label)" ng-checked="checked(note,label)">{{label.labelName}}
+									</li>
+									</ul>
+									
+								</li>
+								
+							</ul>
+						</div>

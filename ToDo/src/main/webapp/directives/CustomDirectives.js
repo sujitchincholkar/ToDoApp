@@ -6,11 +6,31 @@ toDo.directive('topNavBar', function() {
 
 	
 });
+
 toDo.directive('sideNavBar', function() {
 	return{
 		templateUrl : 'template/SideNavBar.html'
 	}
 });
+
+toDo.directive('moreOptions', function() {
+	return{
+		templateUrl : 'template/icons/moreoption.html'
+	}
+});
+
+toDo.directive('reminderOption', function() {
+	return{
+		templateUrl : 'template/icons/ReminderIcon.html'
+	}
+});
+
+toDo.directive('colorPallet', function() {
+	return{
+		templateUrl : 'template/icons/ColorPallet.html'
+	}
+});
+
 toDo.directive('contenteditable', ['$sce', function($sce) {
 
 	  return {

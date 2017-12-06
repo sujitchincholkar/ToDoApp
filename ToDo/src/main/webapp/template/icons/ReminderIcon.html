@@ -1,0 +1,16 @@
+						<div class="dropup inline">
+						<span class="dropdown-toggle"  data-toggle="dropdown">
+										<img alt="reminder" ng-src="images/reminder.svg" width="22" height="20">
+									</span>
+									
+									<ul class="dropdown-menu" role="menu" >
+									<li ng-click="todaysReminder(notes)">Today</li>
+									<li class="divider"></li>
+									<li  ng-click="tomorrowsReminder(note)">Tomorrow</li>
+									<li class="divider"></li>
+									<li  ng-click="NextweekReminder(note)">Next Week</li>
+									<li class="divider"></li>
+									<li><input type="text" ng-attr-id="datepicker{{note.noteId}}" class="reminder" ng-click="openReminder(note)"></li>
+									<li><button ng-click="openReminder(note)"><span  class="glyphicon glyphicon-calendar"></span></button></li>
+									</ul>
+							</div>
