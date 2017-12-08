@@ -29,7 +29,7 @@ toDo.filter('parseUrlFilter', function () {
     return function (text, target) {
 
         return text.replace(urlPattern, '<a target="' + target + '" href="$&">$&</a>');
-
+        
     };
 
 });

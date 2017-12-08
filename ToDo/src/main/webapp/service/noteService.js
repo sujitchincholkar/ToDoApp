@@ -14,6 +14,17 @@ toDo.factory('noteService', function($http,$location) {
 		});
 	}
 	
+	notes.getUrl=function(urlToSend){
+		return $http({
+		    method: 'POST',
+		    url: 'geturl',
+		    headers: {
+		        'url': urlToSend
+		    }
+		
+		});
+	}
+	
 /*	notes.getNotes=function(token){
 	return $http({
 	    method: 'GET',

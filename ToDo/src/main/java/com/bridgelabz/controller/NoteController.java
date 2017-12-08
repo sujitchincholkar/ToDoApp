@@ -1,5 +1,6 @@
 package com.bridgelabz.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -28,6 +29,8 @@ import com.bridgelabz.model.User;
 import com.bridgelabz.service.NoteService;
 import com.bridgelabz.service.TokenService;
 import com.bridgelabz.service.UserService;
+import com.bridgelabz.util.LinkScrapper;
+import com.bridgelabz.util.pojo.UrlData;
 
 @RestController
 public class NoteController {
@@ -277,6 +280,19 @@ public class NoteController {
 	    	response.setMessage("Token expired");
 			return ResponseEntity.ok(response);
 	    }
+	}
+	
+	@RequestMapping(value = "/geturl", method = RequestMethod.POST)
+	public ResponseEntity<?> getUrlData(HttpServletRequest request){
+		String urlmap=request.getHeader("url");
+		LinkScrapper link=new LinkScrapper();
+		UrlData urlData=null;
+		try {
+			urlData = link.getUrlMetaData(urlmap);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return ResponseEntity.ok(urlData);
 	}
 	
 /*	@RequestMapping(value = "/addNoteLabel", method = RequestMethod.POST)

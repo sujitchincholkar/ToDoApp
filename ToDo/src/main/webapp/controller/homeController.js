@@ -92,6 +92,7 @@ toDo.controller('homeController',
 				notes.then(function(response) {
 
 					$scope.notes = response.data;
+					
 				}, function(response) {
 
 					$scope.error = response.data.message;
@@ -694,9 +695,58 @@ toDo.controller('homeController',
 				}
 				return false;
 			}
+			var urls=[];
+			 $scope.checkUrl=function(note){
+				
+				var urlPattern=/(http|ftp|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/gi;
+				var url=note.body.match(urlPattern);
+				var link=[];
+				var j=0;
+				note.url=[];
+				note.link=[];
+				console.log(urls);
+				if(url!=null || url!=undefined){
+					for(var i=0;i<url.length;i++){
+						
+						console.log(url.length);
+						note.url[i]=url[i];
+						addlabel = noteService.getUrl(url[i]);
+						addlabel.then(function(response) {
+							j++;
+							if(note.size==undefined){
+								note.size=0;
+							}
+							console.log(note.size);
+							/*link[i].url=url[i];*/
+							
+							var responseData=response.data;
+							link[note.size]={
+									title:responseData.title,
+									url:note.url[note.size],
+									imageUrl:responseData.imageUrl,
+									domain:responseData.domain
+									}
+							
+							/*link[i].imageUrl=responseData.imageUrl;*/
+							/*note.url[i].link;
+							note.url[i].link=url[i];*/
+						
+							/*console.log(link);*/
+							note.link[note.size]=link[note.size];
+							note.size=note.size+1;
+							console.log(note.link);
+					},function(response){
+						
+					});
+					
+				}
+			}
+			 }
+			
 			
 			getNotes();
 			getUser();
 			interVal();
+		
 
 		});

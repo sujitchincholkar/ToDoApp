@@ -14,7 +14,7 @@ public class DeleteScheduler {
 	@Autowired
 	NoteService noteService;
 	
-	@Scheduled(fixedDelay=20000)
+	@Scheduled(fixedDelay=200000)
 	public void deleteTrashNote() {
 		List<Note> notes=noteService.getNotesInTrash();
 		int size=notes.size();

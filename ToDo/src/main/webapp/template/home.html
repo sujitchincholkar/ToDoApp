@@ -113,6 +113,24 @@
 				<img ng-src="images/archive.svg" ng-click="doArchived(note,true,false)" class="icons-margin"> 
 				<more-options></more-options>
 			</div>
+			<span ng-init="checkUrl(note)">
+			<div ng-repeat="urlData in note.link">
+			<div ng-if="urlData.title"  >
+			
+			<a ng-href="{{urlData.url}}" target="_blank">
+			<div class="row" style="background-color:#E5E5E5; margin-right:0px;  margin-left:0px; border:1px solid grey">
+			<div class="col-sm-4" style="padding: 0px">
+			<img ng-src="{{urlData.imageUrl}}" height="70" width="80">
+			</div>
+			<div class="col-sm-8"  >
+			<div ng-bind="urlData.title"></div>
+			<div ng-bind="urlData.domain" style="font-size: 10px; color:black;"></div>
+			</div>
+			</div>
+			</a>
+			</div>
+			</div>
+			</span>
 				</div>
 			</div>
 		</div>
