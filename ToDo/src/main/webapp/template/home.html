@@ -47,15 +47,15 @@
 						<b><div class="card-title" ng-bind-html="note.title"></div></b>
 						<div class="card-text" ng-bind-html="note.body | parseUrlFilter"></div>
 					</div>
-					<div class="note-icons">
-						<reminder-option></reminder-option>
-						<img ng-src="images/collaborator.svg" ng-click="openCollboarate(note,user,$index)" ng-init="getOwner(note)">
-						<color-pallet></color-pallet>
-						<img ng-src="images/image.svg" ng-click="openImageUploader(note,'note')" width="22" height="22">
-						<img ng-src="images/archive.svg" ng-click="doArchived(note,true,false)"> 
-						<more-options></more-options>
-						
-					</div>
+				<div class="note-icons card-margin">			
+				<reminder-option  class="icons-margin"></reminder-option>
+				<img ng-src="images/collaborator.svg" ng-click="openCollboarate(note,user,$index)" ng-init="getOwner(note)" class="icons-margin">
+				<color-pallet class="icons-margin"></color-pallet>
+				<img ng-src="images/image.svg" ng-click="openImageUploader(note,'note')" width="22" height="22" class="icons-margin">
+				<img ng-src="images/archive.svg" ng-click="doArchived(note,true,false)" class="icons-margin"> 
+				<more-options></more-options>
+			</div>
+			<link-preview></link-preview>
 
 
 				</div>
@@ -75,7 +75,7 @@
 				class="{{viewcol}}">
 				
 				<div class="card" style="background-color: {{note.color}}">
-				<img class="pinicon" src="images/unpinned.svg"  ng-click="pinned(note,true)" width="22" height="22">
+				<img class="unpinicon" src="images/unpinned.svg"  ng-click="pinned(note,true)" width="22" height="22">
 					<div class="card-block" ng-click="showModal(note)">
 					
 				<div ng-if="note.image"><img ng-src="{{note.image}}" height="100%" width="100%"></div>
@@ -113,24 +113,8 @@
 				<img ng-src="images/archive.svg" ng-click="doArchived(note,true,false)" class="icons-margin"> 
 				<more-options></more-options>
 			</div>
-			<span ng-init="checkUrl(note)">
-			<div ng-repeat="urlData in note.link">
-			<div ng-if="urlData.title"  >
-			
-			<a ng-href="{{urlData.url}}" target="_blank">
-			<div class="row" style="background-color:#E5E5E5; margin-right:0px;  margin-left:0px; border:1px solid grey">
-			<div class="col-sm-4" style="padding: 0px">
-			<img ng-src="{{urlData.imageUrl}}" height="70" width="80">
-			</div>
-			<div class="col-sm-8"  >
-			<div ng-bind="urlData.title"></div>
-			<div ng-bind="urlData.domain" style="font-size: 10px; color:black;"></div>
-			</div>
-			</div>
-			</a>
-			</div>
-			</div>
-			</span>
+			<link-preview></link-preview>
+
 				</div>
 			</div>
 		</div>

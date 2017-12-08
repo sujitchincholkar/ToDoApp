@@ -4,7 +4,7 @@
 
 
 
-		<div class="col-sm-1 col-xs-2">
+		<div class="col-sm-1 col-xs-1 col-lg-1 col-md-1">
 			<!--  //<a href="#!/home"   > -->
 			<span class="nav navbar-nav" id="sidebarbtn" style="cursor: pointer"
 				ng-click="showSidebar()">&#9776;</span>
@@ -45,15 +45,14 @@
 <input ng-show="false" id="image" type='file' ng-model-instant ng-model="file" onchange="angular.element(this).scope().imageUpload(this)" />					<div class="note-icons">
 
 
-		<div id="navbar" class="navbar-collapse  collapse  hidden-sm hidden-xs">
+		<div id="navbar" class="hidden-sm hidden-xs">
 			<ul class="nav navbar-nav navbar-right">
-			<li><div class="col-lg-2" >
+			<li><div class="col-lg-2 col-md-2 col-sm-2 " >
 			<img ng-src="{{viewImage}}" width="30" height="30" ng-click="changeview()" class="profile-pic">
 			</div></li>
-				<div class="col-lg-2">
-					<li class="dropdown "><!-- <a href="#!/home" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-haspopup="true"
-						aria-expanded="false"> --> <img ng-src={{user.profileUrl}}
+				<div class="col-lg-2 col-md-2 col-sm-2 ">
+					<li class="dropdown ">
+					 <img ng-src={{user.profileUrl}}
 							class="img-circle profile-pic dropdown-toggle" data-toggle="dropdown"
 							alt=""{{user.fullName.charAt(0)}}"" >
 					</a>

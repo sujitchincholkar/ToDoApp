@@ -1,35 +1,62 @@
-	<div ng-controller="homeController">
+	
 	<top-nav-bar></top-nav-bar>
 <side-nav-bar></side-nav-bar>
 <div id="main" style="margin-left: {{mleft}}"  >
 	<div id="note-container"
 		class=" col-sm-12 col-md-12 col-xs-12 col-lg-12">
-		<!-- 			<div class="row">
- -->
-		<div class="col-lg-1 col-md-1"></div>
-		<div class="col-md-10 col-sm-12 col-xs-12 col-lg-10">
-			<div ng-repeat="note in notes | filter : {trashed : false,archived:true}" id="note-scope"
+		<div class="col-lg-1 col-md-1 hidden-sm"></div>
+		<div class="col-md-11 col-sm-12 col-xs-12 col-lg-11">
+		<h4 ng-show="pinnedNotes.length">Others:</h4>
+			<div ng-repeat="note in notes | filter : {trashed : false ,pinned:false,archived:true}" id="note-scope"
 				class="{{viewcol}}">
-
-				<div class="card">
 				
+				<div class="card" style="background-color: {{note.color}}">
+				<img class="unpinicon" src="images/unpinned.svg"  ng-click="doArchived(note,false,true)" width="22" height="22">
 					<div class="card-block" ng-click="showModal(note)">
-					<img class="pull-right" src="images/unpinned.svg" ng-click="doArchived(note,true,true)" width="20" height="20">
+					
+				<div ng-if="note.image"><img ng-src="{{note.image}}" height="100%" width="100%"></div>
 						<b><div class="card-title" ng-bind-html="note.title"></div></b>
-						<div class="card-text" ng-bind-html="note.body"></div>
+						<div class="card-text" ng-bind-html="note.body | parseUrlFilter"></div>
 					</div>
-					<div class="note-icons">
-						<reminder-option></reminder-option>	
-						<img ng-src="images/collaborator.svg" ng-click="openCollboarate(note,user,$index)" ng-init="getOwner(note)">
-						<color-pallet></color-pallet>
-						<img ng-src="images/image.svg" ng-click="openImageUploader(note,'note')" width="22" height="22">
-						<img ng-src="images/archive.svg" ng-click="doArchived(note,false,false)"> 
-						<more-options></more-options>
+					<div class="row card-margin">
+					<div class="col-sm-12 labelbox">
+					<div id="reminder" ng-if="note.reminderStatus!=null">
+					{{note.reminderStatus}}<span class="closebtn" ng-click="removeReminder(note)">&#x274C;</span>
+					 
+					</div>  
+					<div ng-repeat="label in note.labels">
+						<div id="reminder" ng-if="label.labelName!=null">
+					   {{label.labelName}}<span class="closebtn" ng-click="toggleLabelOfNote(note,label)">&#x274C;</span>
+					 </div>
+					</div>  
 					</div>
 					</div>
+					<div class="row card-margin" ng-init="getUserlist(note,user,$index)">
+						<div ng-repeat="noteUser in note.collabratorUsers">
+								<div class="col-sm-1">
+									<img ng-src="{{noteUser.profileUrl}}" title="{{noteUser.email}}" 
+									ng-click="openCollboarate(note,user)" class="img-circle" height="25" width="25"/>
+								</div>
+							</div>
+						</div>
+
+		<input ng-show="false" id="image" type='file' ng-model-instant 
+		ng-model="file" onchange="angular.element(this).scope().imageUpload(this)" />					
+			<div class="note-icons card-margin">			
+				<reminder-option  class="icons-margin"></reminder-option>
+				<img ng-src="images/collaborator.svg" ng-click="openCollboarate(note,user,$index)" ng-init="getOwner(note)" class="icons-margin">
+				<color-pallet class="icons-margin"></color-pallet>
+				<img ng-src="images/image.svg" ng-click="openImageUploader(note,'note')" width="22" height="22" class="icons-margin">
+				<img ng-src="images/archive.svg" ng-click="doArchived(note,false,false)" class="icons-margin"> 
+				<more-options></more-options>
+			</div>
+			<link-preview></link-preview>
+
 				</div>
 			</div>
 		</div>
+		<div class="col-lg-1 col-md-1 hidden-sm"></div>
+	</div>
 		<div class="col-lg-1 col-md-1"></div>
 		</div>
 	</div>

@@ -19,6 +19,11 @@ toDo.directive('moreOptions', function() {
 	}
 });
 
+toDo.directive('linkPreview', function() {
+	return{
+		templateUrl : 'template/Link-preview.html'
+	}
+});
 toDo.directive('reminderOption', function() {
 	return{
 		templateUrl : 'template/icons/ReminderIcon.html'
