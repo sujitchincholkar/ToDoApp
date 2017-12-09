@@ -4,6 +4,7 @@
 
 <div class="col-sm-5">
 <div class="col-sm-6"> -->
+<a ng-click="showSidebar(false)" class="hidden-lg hidden-md">&#8249;</a>
 <a href="#!/home">Notes</a>
 <!-- </div>
 </div>
@@ -32,9 +33,16 @@
 </div>
 
 </div>
-
+<div class="row">
+<div class="col-sm-1 col-xs-1"></div>
+<div class="col-sm-1 col-xs-1"><img ng-src="images/add.png" id="labelIcon"></div>
+<a ng-click="addLabelmodal()" class="col-sm-7 col-md-7 col-xs-7" >
+	Create Label
+</a>
+</div>
 <hr>
 
 <a href="#!/archive">Archives</a>
 <a href="#!/trash" >Trash</a>
+<a ng-click="signout()" class="hidden-lg hidden-md" >Sign Out</a>
 </div>

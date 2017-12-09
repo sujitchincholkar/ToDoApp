@@ -70,6 +70,7 @@
 }
 .card{
 	width:100%;
+	
 	height: auto;
 	background-color: white;
 	margin:5px;
@@ -92,8 +93,9 @@
 
 
 #sidebarbtn{
+	margin-top:10px;
+	margin-left:5px;
 	font-size: 25px;
-	padding:8px;
 	
 }
 
@@ -115,10 +117,10 @@
 	border-radius: 5px; */
 }
 
-.col-sm-1{
+/* .col-sm-1{
 	width:3%;
 }
-
+ */
 .navbar-right{
 margin-right: 5px;	
 }
@@ -208,8 +210,11 @@ margin-right: 5px;
   	width:15px;
 }
 .grid{
-	width:280px;
+	min-width:285px;
 	
+}
+.list{
+	max-width:800px;
 }
 #labelIcon{
 	margin-top:5px;

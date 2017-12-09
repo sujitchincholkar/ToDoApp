@@ -4,9 +4,10 @@
 <div id="main" style="margin-left: {{mleft}}" >
 
 	<div class="row">
-		<div class="col-lg-3 col-md-3" ></div>
+		<div class="col-sm-2 col-xs-1 col-lg-3 col-md-3" ></div>
 			<div id="note" ng-click="show()" ng-blur="hide()"
-				class=" col-sm-10 col-md-6 col-xs-10 col-lg-4">
+				class=" col-sm-6 col-md-6 col-xs-10 col-lg-4">
+				<div ng-if="newNote.image"><img ng-src="{{newNote.image}}" height="100%" width="100%"></div>
 				<b><div contenteditable="true" ng-model="newNote.title"
 						data-text="Title" id="note-title" ng-show="newnote">
 					</div>
@@ -30,17 +31,18 @@
 	
 	
 	<!-- ================================================================================== -->
+	<div class="row">
 		<div id="note-container"
 		class=" col-sm-12 col-md-12 col-xs-12 col-lg-12">
-		<div class="col-lg-1 col-md-1"></div>
+		<div class="col-lg-1 col-md-1 hidden-sm hidden-xs "></div>
 		
-		<div class="col-md-10 col-sm-12 col-xs-12 col-lg-10  pinned">
+		<div class="col-md-10 col-sm-12 col-xs-12 col-lg-11  row pinned">
 		<h4 ng-show="pinnedNotes.length">Pinned:</h4>
 			<div ng-repeat="note in notes | filter : {trashed : false,pinned:true,archived:false} as pinnedNotes" id="note-scope"
 				class="{{viewcol}} pin">
 
-				<div class="card" class="col-sm-12 col-xs-12" style="background-color: {{note.color}}">
-				<img class="pinicon" src="images/pinned.svg" ng-click="pinned(note,false)" width="22" height="22">
+				<div class="card" class="col-sm-12 col-xs-12 " style="background-color: {{note.color}}">
+				<img class="pinicon" src="images/pinned.svg" ng-click="togglePin(note)" width="22" height="22">
 			<div class="card-block" ng-click="showModal(note)">
 					
 				<div ng-if="note.image"><img ng-src="{{note.image}}" height="100%" width="100%"></div>
@@ -61,21 +63,21 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-lg-1 col-md-1"></div>
+		<div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
 	</div>
-	
-	<!-- ================================================================================== -->
-	
+	</div>
+	<!-- ====================================================================================== -->
+	<div class="row">
 	<div id="note-container"
-		class=" col-sm-12 col-md-12 col-xs-12 col-lg-12">
+		class=" col-sm-12 col-md-12 col-xs-12 col-lg-12 ">
 		<div class="col-lg-1 col-md-1 hidden-sm"></div>
-		<div class="col-md-11 col-sm-12 col-xs-12 col-lg-11">
+		<div class="col-md-10 col-sm-12 col-xs-12 col-lg-11 row">
 		<h4 ng-show="pinnedNotes.length">Others:</h4>
 			<div ng-repeat="note in notes | filter : {trashed : false ,pinned:false,archived:false}" id="note-scope"
 				class="{{viewcol}}">
 				
 				<div class="card" style="background-color: {{note.color}}">
-				<img class="unpinicon" src="images/unpinned.svg"  ng-click="pinned(note,true)" width="22" height="22">
+				<img class="unpinicon" src="images/unpinned.svg"  ng-click="togglePin(note)" width="22" height="22">
 					<div class="card-block" ng-click="showModal(note)">
 					
 				<div ng-if="note.image"><img ng-src="{{note.image}}" height="100%" width="100%"></div>
@@ -118,8 +120,8 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-lg-1 col-md-1 hidden-sm"></div>
+		<div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
 	</div>
-
+</div>
 </div>
 					

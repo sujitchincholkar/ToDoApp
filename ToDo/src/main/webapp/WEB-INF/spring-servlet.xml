@@ -17,6 +17,7 @@
 		<property name="prefix" value="/WEB-INF/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
+<!-- 	<context:property-placeholder location="classpath:todo.properties"/> -->
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
@@ -71,6 +72,7 @@
     <constructor-arg value="localhost"/>
    
 </bean> -->
+
 <bean class="com.bridgelabz.service.TokenServiceImpl"></bean>
     <bean id="noteDao" class="com.bridgelabz.dao.NoteDaoImpl"></bean>
     <bean class="com.bridgelabz.service.NoteServiceImpl"></bean>

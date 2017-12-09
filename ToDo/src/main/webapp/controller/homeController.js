@@ -24,10 +24,12 @@ toDo.controller('homeController',
 				$scope.navBrand =$scope.currentlabel ;
 			}
 
-			$scope.showSidebar = function() {
+			$scope.showSidebar = function(toggleMain) {
 				if ($scope.width == '0px') {
 					$scope.width = '230px';
+					if(toggleMain==true){
 					$scope.mleft = "200px";
+					}
 				} else {
 					$scope.width = '0px';
 					$scope.mleft = "0px";
@@ -151,6 +153,7 @@ toDo.controller('homeController',
 					noteTitle.empty();
 					noteBody.empty();
 					notes.then(function(response) {
+						$scope.newNote="";
 						$scope.newNote.title = "";
 						$scope.newNote.body = "";
 						getNotes();
@@ -295,7 +298,29 @@ toDo.controller('homeController',
 				update(note);
 
 			};
+			$scope.togglePin = function(note) {
+				if(note.pinned==false || note.pinned==null){
+					note.pinned=true;
+					update(note);
+				} else{
+					note.pinned=false;
+					update(note);
+				}
 
+			};
+			
+			$scope.toggleArchive = function(note,pinned) {
+				if(note.archived==false || note.archived==null){
+					note.archived=true;
+					note.pinned=pinned;
+					update(note);
+				} else{
+					note.archived=false;
+					note.pinned=pinned;
+					update(note);
+				}
+
+			};
 			$scope.doArchived = function(note, archived, pinned) {
 				note.archived = archived;
 				note.pinned = pinned;
@@ -441,10 +466,10 @@ toDo.controller('homeController',
 			
 			$scope.viewImage=localStorage.getItem('view');
 			if($scope.viewImage=="images/grid.png"){
-				$scope.viewcol="col-md-12 col-sm-12 col-xs-12 col-lg-12";
+				$scope.viewcol="col-md-12 col-sm-12 col-xs-12 col-lg-12 list";
 			}else{
 				
-				$scope.viewcol="col-md-6 col-sm-12 col-xs-12 col-lg-4 grid";
+				$scope.viewcol="col-md-3 col-sm-5 col-xs-12 col-lg-3  grid";
 			}
 			
 		
@@ -452,11 +477,11 @@ toDo.controller('homeController',
 				if($scope.viewImage=="images/list.png"){
 				$scope.viewImage="images/grid.png";
 				localStorage.setItem('view',"images/grid.png");
-				$scope.viewcol="col-md-12 col-sm-12 col-xs-12 col-lg-12 ";
+				$scope.viewcol="col-md-10 col-sm-5 col-xs-12 col-lg-10 list";
 			}else{
 				$scope.viewImage="images/list.png";
 				localStorage.setItem('view',"images/list.png");
-				$scope.viewcol="col-md-6 col-sm-12 col-xs-12 col-lg-4 grid";
+				$scope.viewcol="col-md-3 col-sm-5 col-xs-12 col-lg-3  grid";
 			}
 			}
 			/*////////////////////////------------Reminder---------//////////////////////////////////*/			
@@ -717,7 +742,7 @@ toDo.controller('homeController',
 					for(var i=0;i<url.length;i++){
 						
 						note.url[i]=url[i];
-						addlabel = noteService.getUrl(url[i]);
+						var addlabel = noteService.getUrl(url[i]);
 						addlabel.then(function(response) {
 							
 							

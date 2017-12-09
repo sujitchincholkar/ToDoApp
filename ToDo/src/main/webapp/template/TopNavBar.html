@@ -3,12 +3,13 @@
 
 
 
-
-		<div class="col-sm-1 col-xs-1 col-lg-1 col-md-1">
+		
+		<div class=" nav navbar-nav col-sm-2 col-xs-2 col-lg-1 col-md-2" id="sidebarbtn">
 			<!--  //<a href="#!/home"   > -->
-			<span class="nav navbar-nav" id="sidebarbtn" style="cursor: pointer"
-				ng-click="showSidebar()">&#9776;</span>
-
+			<span   style="cursor: pointer" class="hidden-sm hidden-xs"
+				ng-click="showSidebar(true)">&#9776;</span>
+			<span   style="cursor: pointer" class="hidden-lg hidden-md"
+				ng-click="showSidebar(false)">&#9776;</span>
 			<!--  </a> -->
 		</div>
 
@@ -45,7 +46,7 @@
 <input ng-show="false" id="image" type='file' ng-model-instant ng-model="file" onchange="angular.element(this).scope().imageUpload(this)" />					<div class="note-icons">
 
 
-		<div id="navbar" class="hidden-sm hidden-xs">
+		<div  class="hidden-sm hidden-xs">
 			<ul class="nav navbar-nav navbar-right">
 			<li><div class="col-lg-2 col-md-2 col-sm-2 " >
 			<img ng-src="{{viewImage}}" width="30" height="30" ng-click="changeview()" class="profile-pic">

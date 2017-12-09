@@ -1,6 +1,7 @@
 package com.bridgelabz.controller;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.UUID;
 
 import javax.servlet.ServletException;
@@ -75,6 +76,7 @@ public class SocialController {
 						response.setHeader("Authorization", token);
 						
 						session.setAttribute("token", token);
+						
 						response.sendRedirect("http://localhost:8080/ToDo/#!/dummy");
 					}
 					else{
@@ -85,13 +87,14 @@ public class SocialController {
 			else{
 				String token=tokenService.generateToken("",existingUser.getUserId());
 				
-				
+				URL url=new URL(request.getRequestURL()+"");
+				System.out.println(url.getHost()+url.getPort()+url.getPath());
 				session.setAttribute("token", token);
 				response.sendRedirect("http://localhost:8080/ToDo/#!/dummy");
 			}
 		}
 		else{
-			 System.out.println("data is not received");
+				
 			}
 		
 	}

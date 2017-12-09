@@ -34,10 +34,10 @@
   
 }
 
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 985px) {
   .sidenav {
-  padding-top: 15px;
- 
+    z-index: 1200;
+ 	 padding-top: 20px;
  
   }
   .sidenav a {font-size: 18px;}
