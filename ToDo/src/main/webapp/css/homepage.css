@@ -77,7 +77,13 @@
 	box-shadow: 1px 1px 1px black;
 	 word-break: break-word;
 }
-
+.watermark {
+    opacity: 0.5;
+    color: BLACK;
+    position: fixed;
+    top: auto;
+    left: 80%;
+}
 .card:hover {
 
 	box-shadow: 2px 0px 3px black;
@@ -263,8 +269,9 @@ margin-right: 5px;
 }
 
 #del-img{
-	  position: absolute;
-    margin-top: -20px;
+	 position: absolute;
+	 background-color:transparent;
+     margin-top: -20px;
      margin-left: -20px;
 }
 
@@ -281,6 +288,7 @@ margin-right: 5px;
 .unpinicon{
 	visibility:hidden;
 	position: absolute;
+	margin:3px;
 	right: 8px;
 	
 }

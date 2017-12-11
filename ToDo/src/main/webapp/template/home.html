@@ -2,8 +2,9 @@
 <side-nav-bar></side-nav-bar>
 
 <div id="main" style="margin-left: {{mleft}}" >
-
-	<div class="row">
+	<!-- ====================================Create Note============================================ -->
+	<div class="row" style="background-color: {{newNote.color}} ">
+	<img class="unpinicon" src="images/unpinned.svg"  ng-click="togglePin(newNote)" width="22" height="22">
 		<div class="col-sm-2 col-xs-1 col-lg-3 col-md-3" ></div>
 			<div id="note" ng-click="show()" ng-blur="hide()"
 				class=" col-sm-6 col-md-6 col-xs-10 col-lg-4">
@@ -18,9 +19,9 @@
 				</div>
 				<div class="note-icons" ng-show="newnote">
                         <reminder-option></reminder-option>
-						<img ng-src="images/collaborator.svg" ng-click="openCollboarate(note,user,$index)" ng-init="getOwner(note)">
+						<img ng-src="images/collaborator.svg" ng-click="openCollboarate(newNote,user,$index)" ng-init="getOwner(newNote)">
 						<color-pallet></color-pallet>
-						<img ng-src="images/image.svg" ng-click="openImageUploader(note,'note')" width="22" height="22">
+						<img ng-src="images/image.svg" ng-click="openImageUploader(newNote,'newNote')" width="22" height="22">
 						<img ng-src="images/archive.svg" ng-click="doArchived(note,true,false)"> 
 
 					<div role="button" ng-click="createNote()"
@@ -30,7 +31,7 @@
 		</div>
 	
 	
-	<!-- ================================================================================== -->
+	<!-- ====================================PInned Notes============================================ -->
 	<div class="row">
 		<div id="note-container"
 		class=" col-sm-12 col-md-12 col-xs-12 col-lg-12">
@@ -50,7 +51,7 @@
 						<div class="card-text" ng-bind-html="note.body | parseUrlFilter"></div>
 					</div>
 				<div class="note-icons card-margin">			
-				<reminder-option  class="icons-margin"></reminder-option>
+				<reminder-option  ></reminder-option>
 				<img ng-src="images/collaborator.svg" ng-click="openCollboarate(note,user,$index)" ng-init="getOwner(note)" class="icons-margin">
 				<color-pallet class="icons-margin"></color-pallet>
 				<img ng-src="images/image.svg" ng-click="openImageUploader(note,'note')" width="22" height="22" class="icons-margin">
@@ -66,7 +67,7 @@
 		<div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
 	</div>
 	</div>
-	<!-- ====================================================================================== -->
+	<!-- =================================Other notes=================================================== -->
 	<div class="row">
 	<div id="note-container"
 		class=" col-sm-12 col-md-12 col-xs-12 col-lg-12 ">
@@ -108,7 +109,7 @@
 		<input ng-show="false" id="image" type='file' ng-model-instant 
 		ng-model="file" onchange="angular.element(this).scope().imageUpload(this)" />					
 			<div class="note-icons card-margin">			
-				<reminder-option  class="icons-margin"></reminder-option>
+				<reminder-option  ></reminder-option>
 				<img ng-src="images/collaborator.svg" ng-click="openCollboarate(note,user,$index)" ng-init="getOwner(note)" class="icons-margin">
 				<color-pallet class="icons-margin"></color-pallet>
 				<img ng-src="images/image.svg" ng-click="openImageUploader(note,'note')" width="22" height="22" class="icons-margin">

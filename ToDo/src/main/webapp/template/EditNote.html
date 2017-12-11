@@ -1,11 +1,14 @@
-
-<div class="modal-content col-sm-12 col-xs-12" style="background-color: {{note.color}}">
-	<div class="modal-body">
-		<div class="card-block">
-		<div ng-if="note.image"><img ng-src="{{note.image}}" height="90%" width="100%">
+		<img class="pinicon" src="images/unpinned.svg"  ng-click="togglePin(note)" width="22" height="22">
+	<div ng-if="note.image"><img ng-src="{{note.image}}" height="90%" width="100%">
 		<a class="btn-floating blue pull-right" ng-click="removeImage(note)"><img id="del-img" ng-src="images/delete.png" height="20px" width="20px"></a>
 		
 		</div>
+<div class="modal-content col-sm-12 col-xs-12" style="background-color: {{note.color}}">
+	<div class="modal-body">
+	
+		<div class="card-block">
+		
+	
 					
 					</div>
 			<b><div id="note-title" contenteditable="true"

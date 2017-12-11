@@ -1,6 +1,11 @@
 	<div ng-controller="homeController">
 	<top-nav-bar></top-nav-bar>
 <side-nav-bar></side-nav-bar>
+<div ng-show="archivedNotes.length">
+<div class="watermark">
+No notes in Reminder
+</div>
+</div>
 <div id="main" style="margin-left: {{mleft}}"  >
 	<div id="note-container"
 		class=" col-sm-12 col-md-12 col-xs-12 col-lg-12">
@@ -8,7 +13,7 @@
  -->
 		<div class="col-lg-1 col-md-1"></div>
 		<div class="col-md-10 col-sm-12 col-xs-12 col-lg-10">
-			<div ng-repeat="note in notes | filter : {trashed : false,archived:false}" id="note-scope" ng-if="note.reminderStatus!=null"
+			<div ng-repeat="note in notes | filter : {trashed : false,archived:false} as archivedNotes" id="note-scope" ng-if="note.reminderStatus!=null"
 				 class="{{viewcol}}">
 
 				<div class="card" >
@@ -20,17 +25,12 @@
 					</div>
 					<div>{{note.reminderStatus}}</div>
 							<div class="note-icons">
-						<img ng-src="images/archive.png" ng-click="doArchived(note,false,false)" data-toggle="tooltip" 
-						data-placement="bottom" title="Unarchived"> <img
-							ng-src="images/reminder.png"> <img ng-src="images/colors.png">
-						<img ng-src="images/collaborator.svg">
-						<div class="dropdown inline pull-right">
-							<img ng-src='images/more.svg' width="19px" height="19px"
-								data-toggle="dropdown">
-							<ul class="dropdown-menu">
-								<li><a ng-click="deleteNote(note)">Delete</a></li>
-							</ul>
-						</div>
+							<reminder-option></reminder-option>
+				<img ng-src="images/collaborator.svg" ng-click="openCollboarate(note,user,$index)" ng-init="getOwner(note)" class="icons-margin">
+				<color-pallet class="icons-margin"></color-pallet>
+				<img ng-src="images/image.svg" ng-click="openImageUploader(note,'note')" width="22" height="22" class="icons-margin">
+				<img ng-src="images/archive.svg" ng-click="doArchived(note,false,false)" class="icons-margin"> 
+				<more-options></more-options>
 					</div>
 					</div>
 				</div>

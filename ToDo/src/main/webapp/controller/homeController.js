@@ -145,7 +145,7 @@ toDo.controller('homeController',
 				var noteTitle = angular.element(document
 						.querySelector('#note-body'));
 
-				if ($scope.newNote.title != '' || $scope.newNote.body != '') {
+				if ($scope.newNote.title != '' || $scope.newNote.body != '' || $scope.newNote.image!='') {
 					var url = 'addNote';
 					var notes = noteService.service(url, 'POST', 
 							$scope.newNote);
@@ -156,6 +156,7 @@ toDo.controller('homeController',
 						$scope.newNote="";
 						$scope.newNote.title = "";
 						$scope.newNote.body = "";
+						$scope.newNote.image = "";
 						getNotes();
 
 					}, function(response) {
@@ -611,12 +612,18 @@ toDo.controller('homeController',
 			        	$scope.imageSrc=imageSrc;
 			        	openCropper($scope.user);	
 			        	
-			        }else{
+			        }else if($scope.typeOfImage=='newNote'){
 			        $scope.type.image=imageSrc;
-			     
-			        update($scope.type);}
+			        
+			       }
+			        else{
+			        	   $scope.type.image=imageSrc;
+					        
+					        update($scope.type);
+			        }
 			    });
 			};
+			
 			$scope.updatePic=function(){
 				$scope.user.profileUrl=$scope.profile;
 				updateUser($scope.user);
@@ -640,9 +647,9 @@ toDo.controller('homeController',
 			}
 			
 			
-			$scope.$on("fileProgress", function(e, progress) {
+/*			$scope.$on("fileProgress", function(e, progress) {
 				$scope.progress = progress.loaded / progress.total;
-			});
+			});*/
 			
 			$scope.type = {};
 			$scope.type.image = ''; 
