@@ -1,0 +1,8 @@
+			<div class="dropup inline ">
+					    <img ng-src="images/colorpallet.svg" data-toggle="dropdown" width="22" height="22">
+					    <ul class="dropdown-menu dropdown-color" >
+								<li style="background-color:{{color.color}}" class="color-dropdown-item col-xs-2 " ng-repeat="color in colors"
+                                           title="{{color.tooltip}}"    ng-click="changeColor(note,color.color)"></li>
+							</ul>
+					  </div>
+					  

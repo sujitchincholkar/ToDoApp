@@ -59,7 +59,7 @@
 <script type="text/javascript" src="service/tokenservice.js"></script>
 
 <script type="text/javascript" src="directives/CustomDirectives.js"></script>
-<script type="text/javascript" src="directives/LabelFilter.js"></script>
+<script type="text/javascript" src="directives/filters.js"></script>
 
 <script type="text/javascript" src="controller/homeController.js"></script>
 <script type="text/javascript" src="controller/dummyController.js"></script>

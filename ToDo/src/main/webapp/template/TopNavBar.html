@@ -3,12 +3,13 @@
 
 
 
-
-		<div class="col-sm-1 col-xs-2">
+		
+		<div class=" nav navbar-nav col-sm-2 col-xs-2 col-lg-1 col-md-2" id="sidebarbtn">
 			<!--  //<a href="#!/home"   > -->
-			<span class="nav navbar-nav" id="sidebarbtn" style="cursor: pointer"
-				ng-click="showSidebar()">&#9776;</span>
-
+			<span   style="cursor: pointer" class="hidden-sm hidden-xs"
+				ng-click="showSidebar(true)">&#9776;</span>
+			<span   style="cursor: pointer" class="hidden-lg hidden-md"
+				ng-click="showSidebar(false)">&#9776;</span>
 			<!--  </a> -->
 		</div>
 
@@ -31,7 +32,7 @@
 
 		</div>
 		<a ui-sref="search">
-		<div class="col-lg-1 hidden-sm hidden-xs" id="searchbtn">
+		<div class="col-lg-1 hidden-sm hidden-xs hidden-md" id="searchbtn">
 
 			<span class="glyphicon glyphicon-search" style="font-size: '25px'"></span>
 		</div>
@@ -45,15 +46,14 @@
 <input ng-show="false" id="image" type='file' ng-model-instant ng-model="file" onchange="angular.element(this).scope().imageUpload(this)" />					<div class="note-icons">
 
 
-		<div id="navbar" class="navbar-collapse  collapse  hidden-sm hidden-xs">
+		<div  class="hidden-sm hidden-xs">
 			<ul class="nav navbar-nav navbar-right">
-			<li><div class="col-lg-2" >
-			<img ng-src="{{viewImage}}" width="35" height="35" ng-click="changeview()" class="profile-pic">
+			<li><div class="col-lg-2 col-md-2 col-sm-2 " >
+			<img ng-src="{{viewImage}}" width="30" height="30" ng-click="changeview()" class="profile-pic">
 			</div></li>
-				<div class="col-lg-2">
-					<li class="dropdown "><!-- <a href="#!/home" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-haspopup="true"
-						aria-expanded="false"> --> <img ng-src={{user.profileUrl}}
+				<div class="col-lg-2 col-md-2 col-sm-2 ">
+					<li class="dropdown ">
+					 <img ng-src={{user.profileUrl}}
 							class="img-circle profile-pic dropdown-toggle" data-toggle="dropdown"
 							alt=""{{user.fullName.charAt(0)}}"" >
 					</a>

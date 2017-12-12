@@ -45,43 +45,63 @@
 
 	height: 22px;
 	width:22px;
-	margin-right:5px;
+	
+}
+.card-margin{
+	padding-left:10px;
+	padding-right:10px;
+	padding-bottom: 3px;
+	
 }
 .card-title{
-	padding-bottom:8px;
+	margin-left:10px;
+	padding:10px;
 	font-size: 19px;
 }
 .card-text{
-	padding-bottom:8px;
+	padding:10px;
+	margin-left:10px;
+	padding-top:1px;
 	font-size: 17px;
 }
 .card  > .note-icons{
-		padding :2px;
+		padding :6px;
 	visibility: hidden;
 }
 .card{
 	width:100%;
+	
 	height: auto;
 	background-color: white;
 	margin:5px;
-	padding:10px;
 	box-shadow: 1px 1px 1px black;
 	 word-break: break-word;
 }
-
+.watermark {
+    opacity: 0.5;
+    color: BLACK;
+    position: fixed;
+    top: auto;
+    left: 80%;
+}
 .card:hover {
 
 	box-shadow: 2px 0px 3px black;
 }
-.card:hover .note-icons{
+.card:hover .note-icons {
 	
 	visibility:visible;
 
 }
+.card:hover .unpinicon{
+	visibility:visible;
+}
+
 
 #sidebarbtn{
+	margin-top:10px;
+	margin-left:5px;
 	font-size: 25px;
-	padding:8px;
 	
 }
 
@@ -103,10 +123,10 @@
 	border-radius: 5px; */
 }
 
-.col-sm-1{
+/* .col-sm-1{
 	width:3%;
 }
-
+ */
 .navbar-right{
 margin-right: 5px;	
 }
@@ -169,8 +189,8 @@ margin-right: 5px;
 .color-dropdown-item{
 	margin:2px;
 	border-radius: 50%;
-	min-width: 10px;
-	min-height: 25px;
+	width: 10px;
+	min-height: 33px;
 	border:2px solid Grey;
 }
 .view{
@@ -196,16 +216,17 @@ margin-right: 5px;
   	width:15px;
 }
 .grid{
-	width:310px;
-	border: 1px solid red;
+	min-width:285px;
+	
+}
+.list{
+	max-width:800px;
 }
 #labelIcon{
 	margin-top:5px;
 	height: 30px;
 	width:30px;
 }
-
-
 
 .dropdown-submenu {
     position: relative;
@@ -248,10 +269,31 @@ margin-right: 5px;
 }
 
 #del-img{
-	  position: absolute;
-    margin-top: -20px;
+	 position: absolute;
+	 background-color:transparent;
+     margin-top: -20px;
      margin-left: -20px;
 }
+
+.icons-margin{
+	
+	margin-right: 18px;
+}
+.pinicon{
+
+	position: absolute;
+	right: 8px;
+	
+}
+.unpinicon{
+	visibility:hidden;
+	position: absolute;
+	margin:3px;
+	right: 8px;
+	
+}
+
+
 /* @media screen and (max-height: 720px) {
   #searchbtn,.profile-pic,#searchbox {
     visibility: hidden;

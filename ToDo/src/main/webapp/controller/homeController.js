@@ -1,7 +1,8 @@
 var toDo = angular.module('ToDo');
 toDo.controller('homeController',
-		function($scope, $uibModal, $state, noteService,toastr,$interval, $location,$filter) {
-
+		function($scope, $uibModal, $state, noteService,toastr,$interval, $location,$filter,$sanitize) {
+				console.log($sanitize("<div>sanitise</div>"));
+	
 			if ($state.current.name == "home") {
 				$scope.navColor = "#ffbb33";
 				$scope.navBrand = "Google Keep";
@@ -23,10 +24,12 @@ toDo.controller('homeController',
 				$scope.navBrand =$scope.currentlabel ;
 			}
 
-			$scope.showSidebar = function() {
+			$scope.showSidebar = function(toggleMain) {
 				if ($scope.width == '0px') {
 					$scope.width = '230px';
+					if(toggleMain==true){
 					$scope.mleft = "200px";
+					}
 				} else {
 					$scope.width = '0px';
 					$scope.mleft = "0px";
@@ -88,20 +91,18 @@ toDo.controller('homeController',
 			var getNotes = function() {
 				var url = 'getAllNotes';
 				var notes = noteService.service(url, 'GET');
-				console.log(notes);
 				notes.then(function(response) {
 
 					$scope.notes = response.data;
+					
 				}, function(response) {
 
 					$scope.error = response.data.message;
 				});
-				console.log($scope.pinnedNotes);
 			}
 
 			$scope.deleteNotePermanently = function(note) {
 
-				console.log(token);
 				var url = 'deletenote/' + note.noteId;
 				var notes = noteService.service(url, 'GET', note);
 				notes.then(function(response) {
@@ -119,7 +120,6 @@ toDo.controller('homeController',
 
 			$scope.deleteNote = function(note) {
 
-				console.log(note);
 				note.trashed = true;
 				var url = 'updateNote';
 				var notes = noteService.service(url, 'POST', note);
@@ -145,7 +145,7 @@ toDo.controller('homeController',
 				var noteTitle = angular.element(document
 						.querySelector('#note-body'));
 
-				if ($scope.newNote.title != '' || $scope.newNote.body != '') {
+				if ($scope.newNote.title != '' || $scope.newNote.body != '' || $scope.newNote.image!='') {
 					var url = 'addNote';
 					var notes = noteService.service(url, 'POST', 
 							$scope.newNote);
@@ -153,8 +153,10 @@ toDo.controller('homeController',
 					noteTitle.empty();
 					noteBody.empty();
 					notes.then(function(response) {
+						$scope.newNote="";
 						$scope.newNote.title = "";
 						$scope.newNote.body = "";
+						$scope.newNote.image = "";
 						getNotes();
 
 					}, function(response) {
@@ -191,7 +193,6 @@ toDo.controller('homeController',
 			var collborators = [];
 			$scope.getUserlist = function(note, user, index) {
 				var obj = {};
-				console.log(note);
 				obj.note = note;
 				obj.ownerId = user;
 				obj.shareWithId = {};
@@ -201,8 +202,6 @@ toDo.controller('homeController',
 				var users = noteService.service(url, 'POST', obj);
 				users.then(function(response) {
 
-					console.log("Inside collborator");
-					console.log(response.data);
 					$scope.users = response.data;
 					note.collabratorUsers = response.data;
 
@@ -211,9 +210,7 @@ toDo.controller('homeController',
 					collborators = response.data;
 
 				});
-				console.log("Returned");
-				console.log(collborators);
-				console.log(users);
+				
 				return collborators;
 			}
 
@@ -232,7 +229,6 @@ toDo.controller('homeController',
 
 			$scope.collborate = function(note, user) {
 				var obj = {};
-				console.log(note);
 				obj.note = note;
 				obj.ownerId = user;
 				obj.shareWithId = $scope.shareWith;
@@ -241,8 +237,6 @@ toDo.controller('homeController',
 				var users = noteService.service(url, 'POST', obj);
 				users.then(function(response) {
 
-					console.log("Inside collborator");
-					console.log(response.data);
 					$scope.users = response.data;
 					$scope.note.collabratorUsers = response.data;
 
@@ -250,8 +244,7 @@ toDo.controller('homeController',
 					$scope.users = {};
 
 				});
-				console.log("Returned");
-				console.log(users);
+			
 
 			}
 
@@ -260,12 +253,10 @@ toDo.controller('homeController',
 				
 				var users = noteService.service(url, 'POST', note);
 				users.then(function(response) {
-					console.log("owner");
 					$scope.owner = response.data;
 					note.owner=response.data;
 					getUsers();
 				}, function(response) {
-					console.log("owner");
 
 					$scope.users = {};
 				});
@@ -285,7 +276,6 @@ toDo.controller('homeController',
 					getNotes();
 					$scope.getUserList(note, $scope.owner);
 					
-					console.log(response.data);
 
 				}, function(response) {
 					console.log(response.data);
@@ -299,7 +289,6 @@ toDo.controller('homeController',
 				users.then(function(response) {
 					$scope.userList=response.data;
 				}, function(response) {
-					console.log(response.data);
 
 				});
 			}
@@ -310,7 +299,29 @@ toDo.controller('homeController',
 				update(note);
 
 			};
+			$scope.togglePin = function(note) {
+				if(note.pinned==false || note.pinned==null){
+					note.pinned=true;
+					update(note);
+				} else{
+					note.pinned=false;
+					update(note);
+				}
 
+			};
+			
+			$scope.toggleArchive = function(note,pinned) {
+				if(note.archived==false || note.archived==null){
+					note.archived=true;
+					note.pinned=pinned;
+					update(note);
+				} else{
+					note.archived=false;
+					note.pinned=pinned;
+					update(note);
+				}
+
+			};
 			$scope.doArchived = function(note, archived, pinned) {
 				note.archived = archived;
 				note.pinned = pinned;
@@ -321,6 +332,7 @@ toDo.controller('homeController',
 				
 				var url = "updateNote";
 				var notes = noteService.service(url, 'POST', note);
+			
 
 			}
 
@@ -345,7 +357,6 @@ toDo.controller('homeController',
 
 			$scope.restore = function(note) {
 				
-				console.log(note);
 				note.trashed = false;
 				var url = 'updateNote';
 				var notes = noteService.service(url, 'POST', note);
@@ -441,8 +452,8 @@ toDo.controller('homeController',
 					action_type : 'og.likes',
 					action_properties : JSON.stringify({
 						object : {
-							'og:title' : note.title,
-							'og:description' : note.body
+							'og:title' :$sanitize( note.title),
+							'og:description' : $sanitize(note.body)
 						}
 					})
 				}, function(response) {
@@ -456,10 +467,10 @@ toDo.controller('homeController',
 			
 			$scope.viewImage=localStorage.getItem('view');
 			if($scope.viewImage=="images/grid.png"){
-				$scope.viewcol="col-md-12 col-sm-12 col-xs-12 col-lg-12";
+				$scope.viewcol="col-md-12 col-sm-12 col-xs-12 col-lg-12 list";
 			}else{
 				
-				$scope.viewcol="col-md-6 col-sm-12 col-xs-12 col-lg-4";
+				$scope.viewcol="col-md-3 col-sm-5 col-xs-12 col-lg-3  grid";
 			}
 			
 		
@@ -467,11 +478,11 @@ toDo.controller('homeController',
 				if($scope.viewImage=="images/list.png"){
 				$scope.viewImage="images/grid.png";
 				localStorage.setItem('view',"images/grid.png");
-				$scope.viewcol="col-md-12 col-sm-12 col-xs-12 col-lg-12";
+				$scope.viewcol="col-md-10 col-sm-5 col-xs-12 col-lg-10 list";
 			}else{
 				$scope.viewImage="images/list.png";
 				localStorage.setItem('view',"images/list.png");
-				$scope.viewcol="col-md-6 col-sm-12 col-xs-12 col-lg-4";
+				$scope.viewcol="col-md-3 col-sm-5 col-xs-12 col-lg-3  grid";
 			}
 			}
 			/*////////////////////////------------Reminder---------//////////////////////////////////*/			
@@ -482,10 +493,9 @@ toDo.controller('homeController',
 				$scope.reminder = $(id).val();
 				// note.reminderStatus=$scope.reminder;
 				if ($scope.reminder === "" || $scope.reminder === undefined) {
-					console.log(note);
-					console.log($scope.reminder);
+					
 				} else {
-					console.log($scope.reminder);
+					
 					note.reminderStatus = $scope.reminder;
 					update(note);
 					$scope.reminder = "";
@@ -493,7 +503,7 @@ toDo.controller('homeController',
 			}
 			
 			$scope.removeReminder=function(note){
-				console.log($scope.file);
+			
 				note.reminderStatus=null;
 				update(note);
 			}
@@ -585,30 +595,35 @@ toDo.controller('homeController',
 
 			$scope.imageUpload = function(element){
 			    var reader = new FileReader();
-			    console.log("ele"+element);
+			  
 			    reader.onload = $scope.imageIsLoaded;
 			    reader.readAsDataURL(element.files[0]);
-			    console.log(element.files[0]);
+			   
 			}
 		
 			$scope.imageIsLoaded = function(e){
 			    $scope.$apply(function() {
 			        $scope.stepsModel.push(e.target.result);
-			        console.log(e.target.result);
+			        
 			        var imageSrc=e.target.result;
 			        
 			        if($scope.typeOfImage=='user'){
-			        	console.log("User pic");
+			        	
 			        	$scope.imageSrc=imageSrc;
 			        	openCropper($scope.user);	
 			        	
-			        }else{
+			        }else if($scope.typeOfImage=='newNote'){
 			        $scope.type.image=imageSrc;
-			        console.log(e.target.result);
-			        console.log(imageSrc);
-			        update($scope.type);}
+			        
+			       }
+			        else{
+			        	   $scope.type.image=imageSrc;
+					        
+					        update($scope.type);
+			        }
 			    });
 			};
+			
 			$scope.updatePic=function(){
 				$scope.user.profileUrl=$scope.profile;
 				updateUser($scope.user);
@@ -632,9 +647,9 @@ toDo.controller('homeController',
 			}
 			
 			
-			$scope.$on("fileProgress", function(e, progress) {
+/*			$scope.$on("fileProgress", function(e, progress) {
 				$scope.progress = progress.loaded / progress.total;
-			});
+			});*/
 			
 			$scope.type = {};
 			$scope.type.image = ''; 
@@ -642,7 +657,7 @@ toDo.controller('homeController',
 			$scope.removeImage=function(note){
 				note.image=null;
 				update(note);
-				getnotes();
+				getNotes();
 			}
 			
 			/*/////////////////----Label----//////////////////////*/
@@ -714,8 +729,57 @@ toDo.controller('homeController',
 				return false;
 			}
 			
+			
+			
+			/*//////////////////----Link preview--------/////////////////*/
+			var urls=[];
+			 $scope.checkUrl=function(note){
+				
+				var urlPattern=/(http|ftp|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/gi;
+				var url=note.body.match(urlPattern);
+				var link=[];
+				
+				if(note.size==undefined){
+					note.size=0;
+					note.url=[];
+					note.link=[];
+				}
+			
+				if((url!=null || url!=undefined) && note.size<url.length){
+					for(var i=0;i<url.length;i++){
+						
+						note.url[i]=url[i];
+						var addlabel = noteService.getUrl(url[i]);
+						addlabel.then(function(response) {
+							
+							
+							var responseData=response.data;
+							if(responseData.title.length>35){
+								responseData.title=responseData.title.substr(0,35)+'...';
+							}
+							link[note.size]={
+									title:responseData.title,
+									url:note.url[note.size],
+									imageUrl:responseData.imageUrl,
+									domain:responseData.domain
+									}
+							
+						
+							note.link[note.size]=link[note.size];
+							note.size=note.size+1;
+					
+					},function(response){
+						
+					});
+					
+				}
+			}
+			 }
+			
+			
 			getNotes();
 			getUser();
 			interVal();
+		
 
 		});
