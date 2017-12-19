@@ -12,14 +12,17 @@ import javax.ws.rs.core.Response;
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
+import org.springframework.beans.factory.annotation.Value;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class GoogleConnection 
-{
-	public static final String CLIENT_Id = "163222559830-8ngujo28m9q6lrc7coduu568017i47lg.apps.googleusercontent.com";
-	public static final String Secret_Id = "fo6-1nItfoWZ5xeLz4UVVFeS";
+{	
+	@Value("${google.clientId}")
+	public   String CLIENT_Id ;
+	@Value("${google.secret_Id}")
+	public   String Secret_Id ;
 	
 	public static final String Redirect_URI = "http://localhost:8080/ToDo/googlelogin";
 	public String Gmail_GET_USER_URL = "https://www.googleapis.com/plus/v1/people/me";

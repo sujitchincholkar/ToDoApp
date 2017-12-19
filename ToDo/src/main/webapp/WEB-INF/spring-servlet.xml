@@ -17,7 +17,7 @@
 		<property name="prefix" value="/WEB-INF/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
-<!-- 	<context:property-placeholder location="classpath:todo.properties"/> -->
+	<context:property-placeholder location="classpath:application.properties"/>
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
@@ -55,8 +55,8 @@
  <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
     <property name="host" value="smtp.gmail.com" />
     <property name="port" value="587" />
-    <property name="username" value="chincholkarsujit12@gmail.com" />
-    <property name="password" value="sujit1234" />
+    <property name="username" value="${email.username}" />
+    <property name="password" value="${email.password}" />
  
     <property name="javaMailProperties">
 

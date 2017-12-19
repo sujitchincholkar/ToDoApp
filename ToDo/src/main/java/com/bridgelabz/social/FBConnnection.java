@@ -12,13 +12,19 @@ import javax.ws.rs.core.Response;
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
+import org.springframework.beans.factory.annotation.Value;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class FBConnnection {
-	public static final String APP_ID = "438526916544857";
-	public static final String Secret_Id = "73a627345ca98961162070b310ba2de7";
+	
+	@Value("${facebook.AppId}")
+	public  String APP_ID;
+	
+	@Value("${facebook.secret_Id}")
+	public  String Secret_Id;
+	
 	public static final String Redirect_URI = "http://localhost:8080/ToDo/connectFB";
 	
 	/**

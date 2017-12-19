@@ -754,6 +754,7 @@ toDo.controller('homeController',
 							
 							
 							var responseData=response.data;
+							console.log(response.data);
 							if(responseData.title.length>35){
 								responseData.title=responseData.title.substr(0,35)+'...';
 							}
